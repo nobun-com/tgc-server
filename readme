@@ -1,0 +1,17 @@
+To build:
+mvn install
+======================== 
+For production:
+java -jar -Dspring.profiles.active=prod target/gotoclasses-0.0.1-SNAPSHOT.jar
+========================
+For dev:
+java -jar -Dspring.profiles.active=dev target/gotoclasses-0.0.1-SNAPSHOT.jar
+========================
+Configuration:
+Change the database setting in the application.properties file.
+Change the uploadimage path according to OS in application.properties file.
+
+
+TODO
+================
+need to make bat file and sh file
