@@ -5,4 +5,6 @@ import com.go2.classes.models.jpa.StudentEntity;
 
 public interface StudentJpaRepository extends PagingAndSortingRepository<StudentEntity, Long> {
 
+	StudentEntity findByEmail(String email);
+
 }

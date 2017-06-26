@@ -39,6 +39,9 @@ public class CenterEntity implements Serializable {
     @Column(name="logo_url", length=500)
     private String     logoUrl      ;
 
+    @Column(name="amenities", length=500)
+    private String amenities;
+
     @OneToMany(mappedBy="center", targetEntity=CenterAssetEntityEntity.class)
     private List<CenterAssetEntityEntity> listOfCenterAssetEntity;
 
@@ -99,7 +102,15 @@ public class CenterEntity implements Serializable {
         return this.logoUrl;
     }
 
-    public void setListOfCenterAssetEntity( List<CenterAssetEntityEntity> listOfCenterAssetEntity ) {
+    public String getAmenities() {
+		return amenities;
+	}
+
+	public void setAmenities(String amenities) {
+		this.amenities = amenities;
+	}
+
+	public void setListOfCenterAssetEntity( List<CenterAssetEntityEntity> listOfCenterAssetEntity ) {
         this.listOfCenterAssetEntity = listOfCenterAssetEntity;
     }
     public List<CenterAssetEntityEntity> getListOfCenterAssetEntity() {

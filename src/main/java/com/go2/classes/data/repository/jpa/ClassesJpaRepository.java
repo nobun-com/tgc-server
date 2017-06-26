@@ -5,4 +5,6 @@ import com.go2.classes.models.jpa.ClassesEntity;
 
 public interface ClassesJpaRepository extends PagingAndSortingRepository<ClassesEntity, Long> {
 
+	Iterable<ClassesEntity> findAllClassesByCenterId(Long centerId);
+
 }

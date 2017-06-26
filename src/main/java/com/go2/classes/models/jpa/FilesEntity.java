@@ -11,7 +11,7 @@ public class FilesEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name="uuid", nullable=false, length=255)
+    @Column(name="uuid", nullable=false, length=100)
     private String uuid;
 
     @Column(name="path", length=255)

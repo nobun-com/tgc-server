@@ -20,7 +20,7 @@ public class ClassesEntity implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="id", nullable=false)
-    private Long       id           ;
+    private Long id;
 
     @Column(name="class_name", nullable=false, length=50)
     private String className;
@@ -60,7 +60,7 @@ public class ClassesEntity implements Serializable {
     @Column(name="frequency_metadata", length=800)
     private String frequencyMetadata;
 
-    @Column(name="logo_url", length=500)
+    @Column(name="logo_url", length=100)
     private String logoUrl;
 
     @Column(name="rrule", length=255)
