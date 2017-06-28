@@ -1,6 +1,5 @@
 package com.go2.classes.rest.controller;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -16,27 +15,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import com.go2.classes.models.Classes;
 import com.go2.classes.business.service.ClassesService;
-import com.go2.classes.web.listitem.ClassesListItem;
 
 @Controller
 public class ClassesRestController {
 
 	@Resource
 	private ClassesService classesService;
-	
-	@RequestMapping( value="/items/classes",
-			method = RequestMethod.GET,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-	@ResponseBody
-	public List<ClassesListItem> findAllAsListItems() {
-		List<Classes> list = classesService.findAll();
-		List<ClassesListItem> items = new LinkedList<ClassesListItem>();
-		for ( Classes classes : list ) {
-			items.add(new ClassesListItem( classes ) );
-		}
-		return items;
-	}
 	
 	@RequestMapping( value="/getAllClasses",
 			method = RequestMethod.GET,

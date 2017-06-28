@@ -3,7 +3,6 @@ package com.go2.classes.models.jpa;
 import java.io.Serializable;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.*;
 
@@ -46,12 +45,6 @@ public class TeacherEntity implements Serializable {
 
     @Column(name="profile_image_url", length=500)
     private String profileImageUrl;
-
-    @OneToMany(mappedBy="teacher", targetEntity=TeacherClassesEntity.class)
-    private List<TeacherClassesEntity> listOfTeacherClasses;
-
-    @OneToMany(mappedBy="teacher", targetEntity=ClassesTeacherEntity.class)
-    private List<ClassesTeacherEntity> listOfClassesTeacher;
 
     public TeacherEntity() {
 		super();
@@ -126,20 +119,6 @@ public class TeacherEntity implements Serializable {
 	public void setProfileImageUrl(String profileImageUrl) {
 		this.profileImageUrl = profileImageUrl;
 	}
-
-    public void setListOfTeacherClasses( List<TeacherClassesEntity> listOfTeacherClasses ) {
-        this.listOfTeacherClasses = listOfTeacherClasses;
-    }
-    public List<TeacherClassesEntity> getListOfTeacherClasses() {
-        return this.listOfTeacherClasses;
-    }
-
-    public void setListOfClassesTeacher( List<ClassesTeacherEntity> listOfClassesTeacher ) {
-        this.listOfClassesTeacher = listOfClassesTeacher;
-    }
-    public List<ClassesTeacherEntity> getListOfClassesTeacher() {
-        return this.listOfClassesTeacher;
-    }
 
     public String toString() { 
         StringBuffer sb = new StringBuffer(); 

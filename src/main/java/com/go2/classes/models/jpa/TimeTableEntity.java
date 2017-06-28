@@ -3,7 +3,6 @@ package com.go2.classes.models.jpa;
 import java.io.Serializable;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.*;
 
@@ -36,9 +35,6 @@ public class TimeTableEntity implements Serializable {
 
     @Column(name="status", length=255)
     private String     status       ;
-
-    @OneToMany(mappedBy="timeTable", targetEntity=ClassesTimetableEntity.class)
-    private List<ClassesTimetableEntity> listOfClassesTimetable;
 
     public TimeTableEntity() {
 		super();
@@ -81,13 +77,6 @@ public class TimeTableEntity implements Serializable {
     }
     public String getStatus() {
         return this.status;
-    }
-
-    public void setListOfClassesTimetable( List<ClassesTimetableEntity> listOfClassesTimetable ) {
-        this.listOfClassesTimetable = listOfClassesTimetable;
-    }
-    public List<ClassesTimetableEntity> getListOfClassesTimetable() {
-        return this.listOfClassesTimetable;
     }
 
     public String toString() { 

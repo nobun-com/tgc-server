@@ -1,6 +1,5 @@
 package com.go2.classes.rest.controller;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -16,28 +15,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import com.go2.classes.models.Address;
 import com.go2.classes.business.service.AddressService;
-import com.go2.classes.web.listitem.AddressListItem;
 
 @Controller
 public class AddressRestController {
 
 	@Resource
 	private AddressService addressService;
-	
-	@RequestMapping( value="/items/address",
-			method = RequestMethod.GET,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-	@ResponseBody
-	public List<AddressListItem> findAllAsListItems() {
-		List<Address> list = addressService.findAll();
-		List<AddressListItem> items = new LinkedList<AddressListItem>();
-		for ( Address address : list ) {
-			items.add(new AddressListItem( address ) );
-		}
-		return items;
-	}
-	
+		
 	@RequestMapping( value="/address",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)

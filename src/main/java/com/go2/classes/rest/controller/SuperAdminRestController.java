@@ -1,6 +1,5 @@
 package com.go2.classes.rest.controller;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -16,27 +15,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import com.go2.classes.models.SuperAdmin;
 import com.go2.classes.business.service.SuperAdminService;
-import com.go2.classes.web.listitem.SuperAdminListItem;
 
 @Controller
 public class SuperAdminRestController {
 
 	@Resource
 	private SuperAdminService superAdminService;
-	
-	@RequestMapping( value="/items/superAdmin",
-			method = RequestMethod.GET,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-	@ResponseBody
-	public List<SuperAdminListItem> findAllAsListItems() {
-		List<SuperAdmin> list = superAdminService.findAll();
-		List<SuperAdminListItem> items = new LinkedList<SuperAdminListItem>();
-		for ( SuperAdmin superAdmin : list ) {
-			items.add(new SuperAdminListItem( superAdmin ) );
-		}
-		return items;
-	}
 	
 	@RequestMapping( value="/superAdmin",
 			method = RequestMethod.GET,

@@ -1,6 +1,5 @@
 package com.go2.classes.rest.controller;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,27 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import com.go2.classes.models.TimeTable;
 import com.go2.classes.business.service.TimeTableService;
-import com.go2.classes.web.listitem.TimeTableListItem;
 
 @Controller
 public class TimeTableRestController {
 
 	@Resource
 	private TimeTableService timeTableService;
-	
-	@RequestMapping( value="/items/timeTable",
-			method = RequestMethod.GET,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-	@ResponseBody
-	public List<TimeTableListItem> findAllAsListItems() {
-		List<TimeTable> list = timeTableService.findAll();
-		List<TimeTableListItem> items = new LinkedList<TimeTableListItem>();
-		for ( TimeTable timeTable : list ) {
-			items.add(new TimeTableListItem( timeTable ) );
-		}
-		return items;
-	}
 	
 	@RequestMapping( value="/timeTable",
 			method = RequestMethod.GET,

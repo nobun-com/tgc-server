@@ -1,6 +1,5 @@
 package com.go2.classes.rest.controller;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -16,28 +15,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import com.go2.classes.models.Admin;
 import com.go2.classes.business.service.AdminService;
-import com.go2.classes.web.listitem.AdminListItem;
 
 @Controller
 public class AdminRestController {
 
 	@Resource
 	private AdminService adminService;
-	
-	@RequestMapping( value="/items/admin",
-			method = RequestMethod.GET,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-	@ResponseBody
-	public List<AdminListItem> findAllAsListItems() {
-		List<Admin> list = adminService.findAll();
-		List<AdminListItem> items = new LinkedList<AdminListItem>();
-		for ( Admin admin : list ) {
-			items.add(new AdminListItem( admin ) );
-		}
-		return items;
-	}
-	
+		
 	@RequestMapping( value="/admin",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)

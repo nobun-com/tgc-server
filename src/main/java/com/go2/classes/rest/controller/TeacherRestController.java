@@ -1,6 +1,5 @@
 package com.go2.classes.rest.controller;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -16,27 +15,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import com.go2.classes.models.Teacher;
 import com.go2.classes.business.service.TeacherService;
-import com.go2.classes.web.listitem.TeacherListItem;
 
 @Controller
 public class TeacherRestController {
 
 	@Resource
 	private TeacherService teacherService;
-	
-	@RequestMapping( value="/items/teacher",
-			method = RequestMethod.GET,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-	@ResponseBody
-	public List<TeacherListItem> findAllAsListItems() {
-		List<Teacher> list = teacherService.findAll();
-		List<TeacherListItem> items = new LinkedList<TeacherListItem>();
-		for ( Teacher teacher : list ) {
-			items.add(new TeacherListItem( teacher ) );
-		}
-		return items;
-	}
 	
 	@RequestMapping( value="/getAllTeachers",
 			method = RequestMethod.GET,

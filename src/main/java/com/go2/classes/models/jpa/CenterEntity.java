@@ -3,7 +3,6 @@ package com.go2.classes.models.jpa;
 import java.io.Serializable;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.*;
 
@@ -41,9 +40,6 @@ public class CenterEntity implements Serializable {
 
     @Column(name="amenities", length=500)
     private String amenities;
-
-    @OneToMany(mappedBy="center", targetEntity=CenterAssetEntityEntity.class)
-    private List<CenterAssetEntityEntity> listOfCenterAssetEntity;
 
     @ManyToOne
     @JoinColumn(name="admin_id", referencedColumnName="id")
@@ -109,13 +105,6 @@ public class CenterEntity implements Serializable {
 	public void setAmenities(String amenities) {
 		this.amenities = amenities;
 	}
-
-	public void setListOfCenterAssetEntity( List<CenterAssetEntityEntity> listOfCenterAssetEntity ) {
-        this.listOfCenterAssetEntity = listOfCenterAssetEntity;
-    }
-    public List<CenterAssetEntityEntity> getListOfCenterAssetEntity() {
-        return this.listOfCenterAssetEntity;
-    }
 
     public void setAdmin( AdminEntity admin ) {
         this.admin = admin;

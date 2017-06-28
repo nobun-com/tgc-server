@@ -1,6 +1,5 @@
 package com.go2.classes.rest.controller;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -17,27 +16,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.go2.classes.models.Center;
 import com.go2.classes.business.service.CenterService;
-import com.go2.classes.web.listitem.CenterListItem;
 
 @Controller
 public class CenterRestController {
 
 	@Resource
 	private CenterService centerService;
-	
-	@RequestMapping( value="/items/center",
-			method = RequestMethod.GET,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-	@ResponseBody
-	public List<CenterListItem> findAllAsListItems() {
-		List<Center> list = centerService.findAll();
-		List<CenterListItem> items = new LinkedList<CenterListItem>();
-		for ( Center center : list ) {
-			items.add(new CenterListItem( center ) );
-		}
-		return items;
-	}
 	
 	@RequestMapping( value="/getAllCenters",
 			method = RequestMethod.GET,

@@ -2,7 +2,6 @@ package com.go2.classes.models.jpa;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.*;
 
@@ -75,24 +74,6 @@ public class ClassesEntity implements Serializable {
     @Column(name="max_slots", nullable=false)
     private Integer maxSlots;
     
-    @OneToMany(mappedBy="classes", targetEntity=ClassesStudentEntity.class)
-    private List<ClassesStudentEntity> listOfClassesStudent;
-
-    @OneToMany(mappedBy="classes", targetEntity=TeacherClassesEntity.class)
-    private List<TeacherClassesEntity> listOfTeacherClasses;
-
-    @OneToMany(mappedBy="classes", targetEntity=ClassesTeacherEntity.class)
-    private List<ClassesTeacherEntity> listOfClassesTeacher;
-
-    @OneToMany(mappedBy="classes", targetEntity=ClassesAssetEntityEntity.class)
-    private List<ClassesAssetEntityEntity> listOfClassesAssetEntity;
-
-    @OneToMany(mappedBy="classes", targetEntity=ClassesTimetableEntity.class)
-    private List<ClassesTimetableEntity> listOfClassesTimetable;
-
-    @OneToMany(mappedBy="classes", targetEntity=StudentClassesEntity.class)
-    private List<StudentClassesEntity> listOfStudentClasses;
-
     public ClassesEntity() {
 		super();
     }
@@ -197,48 +178,6 @@ public class ClassesEntity implements Serializable {
 	public void setFrequencyMetadata(String frequencyMetadata) {
 		this.frequencyMetadata = frequencyMetadata;
 	}
-
-    public void setListOfClassesStudent( List<ClassesStudentEntity> listOfClassesStudent ) {
-        this.listOfClassesStudent = listOfClassesStudent;
-    }
-    public List<ClassesStudentEntity> getListOfClassesStudent() {
-        return this.listOfClassesStudent;
-    }
-
-    public void setListOfTeacherClasses( List<TeacherClassesEntity> listOfTeacherClasses ) {
-        this.listOfTeacherClasses = listOfTeacherClasses;
-    }
-    public List<TeacherClassesEntity> getListOfTeacherClasses() {
-        return this.listOfTeacherClasses;
-    }
-
-    public void setListOfClassesTeacher( List<ClassesTeacherEntity> listOfClassesTeacher ) {
-        this.listOfClassesTeacher = listOfClassesTeacher;
-    }
-    public List<ClassesTeacherEntity> getListOfClassesTeacher() {
-        return this.listOfClassesTeacher;
-    }
-
-    public void setListOfClassesAssetEntity( List<ClassesAssetEntityEntity> listOfClassesAssetEntity ) {
-        this.listOfClassesAssetEntity = listOfClassesAssetEntity;
-    }
-    public List<ClassesAssetEntityEntity> getListOfClassesAssetEntity() {
-        return this.listOfClassesAssetEntity;
-    }
-
-    public void setListOfClassesTimetable( List<ClassesTimetableEntity> listOfClassesTimetable ) {
-        this.listOfClassesTimetable = listOfClassesTimetable;
-    }
-    public List<ClassesTimetableEntity> getListOfClassesTimetable() {
-        return this.listOfClassesTimetable;
-    }
-
-    public void setListOfStudentClasses( List<StudentClassesEntity> listOfStudentClasses ) {
-        this.listOfStudentClasses = listOfStudentClasses;
-    }
-    public List<StudentClassesEntity> getListOfStudentClasses() {
-        return this.listOfStudentClasses;
-    }
 
     public CenterEntity getCenter() {
 		return center;

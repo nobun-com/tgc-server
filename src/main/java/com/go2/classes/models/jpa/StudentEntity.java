@@ -3,7 +3,6 @@ package com.go2.classes.models.jpa;
 import java.io.Serializable;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.*;
 
@@ -44,12 +43,6 @@ public class StudentEntity implements Serializable {
     @Column(name="refrralCode", length=12)
     private String refrralCode;
     
-    @OneToMany(mappedBy="student", targetEntity=ClassesStudentEntity.class)
-    private List<ClassesStudentEntity> listOfClassesStudent;
-
-    @OneToMany(mappedBy="student", targetEntity=StudentClassesEntity.class)
-    private List<StudentClassesEntity> listOfStudentClasses;
-
     public StudentEntity() {
 		super();
     }
@@ -115,20 +108,6 @@ public class StudentEntity implements Serializable {
 	public void setRefrralCode(String refrralCode) {
 		this.refrralCode = refrralCode;
 	}
-
-	public void setListOfClassesStudent( List<ClassesStudentEntity> listOfClassesStudent ) {
-        this.listOfClassesStudent = listOfClassesStudent;
-    }
-    public List<ClassesStudentEntity> getListOfClassesStudent() {
-        return this.listOfClassesStudent;
-    }
-
-    public void setListOfStudentClasses( List<StudentClassesEntity> listOfStudentClasses ) {
-        this.listOfStudentClasses = listOfStudentClasses;
-    }
-    public List<StudentClassesEntity> getListOfStudentClasses() {
-        return this.listOfStudentClasses;
-    }
 
     public String toString() { 
         StringBuffer sb = new StringBuffer(); 
