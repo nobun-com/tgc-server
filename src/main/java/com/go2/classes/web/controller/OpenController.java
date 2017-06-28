@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+import com.go2.classes.models.Address;
+import com.go2.classes.models.ClassesSearch;
 import com.go2.classes.models.Student;
 import com.go2.classes.business.service.AddressService;
 import com.go2.classes.business.service.CenterService;
@@ -52,12 +56,28 @@ public class OpenController {
 		return "centers";
 	}
 
-	@RequestMapping(value="/classes")
-	public String openClasses(Model model, @RequestParam(name="centerId") Long centerId) {
-		System.out.println("############################" + centerId);
+	@RequestMapping(value="/center-classes")
+	public String openClassesByCenter(Model model, @RequestParam(name="centerId") Long centerId) {
         model.addAttribute("center", centerService.findById(centerId));
         model.addAttribute("classes", timeTableService.findAllClassInstancesByCenter(centerId));
-		return "classes";
+		return "center-classes";
+	}
+
+	@RequestMapping(value="/search-classes")
+	public String openClasses(Model model) {
+		return "search-classes";
+	}
+
+	@RequestMapping(value="/map")
+	public String openMap(Model model, @RequestParam(name="centerId") Long centerId) {
+        model.addAttribute("address", centerService.findById(centerId).getAddress());
+		return "map";
+	}
+
+	@RequestMapping(value="/searchClasses", method=RequestMethod.POST)
+	public String searchClasses(Model model, @ModelAttribute ClassesSearch classesSearch) {
+		System.out.println(classesSearch);
+		return "search-classes";
 	}
 
 	@RequestMapping(value="/openLogin", method=RequestMethod.POST)

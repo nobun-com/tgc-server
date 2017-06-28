@@ -1,0 +1,38 @@
+<html>
+<head></head>
+<body>
+<div id="map_canvas" style="width: 100%; height: 100%;">
+</div>
+
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD42aiyY1KpGr-PNxASc-iwlSdbiE1e8aI" type="text/javascript"></script>
+
+    <script th:inline="javascript">
+	    var geocoder;
+	    var map;
+	    function codeAddress() {
+	    geocoder = new google.maps.Geocoder();
+	    var myOptions = {
+	      zoom: 16,
+	      mapTypeId: google.maps.MapTypeId.ROADMAP
+	    }
+	    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+	    var address = [[${address.district}]] + ",  " + [[${address.area}]];
+	            geocoder.geocode( { 'address': address}, function(results, status) {
+	              if (status == google.maps.GeocoderStatus.OK) {
+	                map.setCenter(results[0].geometry.location);
+	                var marker = new google.maps.Marker({
+	                    map: map,
+	                    position: results[0].geometry.location
+	                });
+	              } else {
+	                alert("Geocode was not successful for the following reason: " + status);
+	              }
+	            });
+	          }
+	    window.onload = function(){
+	            codeAddress();
+	       }
+	</script>
+
+</body>
+</html>
