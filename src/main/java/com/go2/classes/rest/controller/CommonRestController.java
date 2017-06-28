@@ -76,10 +76,10 @@ public class CommonRestController {
 	
 	@RequestMapping(value="/teacherLogin", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, String> teacherLogin(HttpServletRequest request) {
+	public Map<String, String> teacherLogin(@RequestBody Map<String, String> data) {
 		Map<String, String> result = new HashMap<String, String>();
-		String email = request.getParameter("email");
-		String password = request.getParameter("password");
+		String email = data.get("email");
+		String password = data.get("password");
 		
 		Teacher teacher = teacherService.findByEmail(email);
 		String token = "";
