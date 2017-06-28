@@ -6,7 +6,8 @@ echo "==========running maven==========="
 sudo mvn install
 
 pid="/home/ubuntu/Apps/tgc-server/run.pid"
-
+echo `sudo lsof -ti tcp:8080`
+sudo kill -9 `sudo lsof -ti tcp:8080`
 if [  -f "$pid" ]
 then
     echo "=========Old running instance=========="
