@@ -6,7 +6,11 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
+import com.go2.classes.models.ClassesSearch;
 import com.go2.classes.models.TimeTable;
 import com.go2.classes.models.jpa.TimeTableEntity;
 import com.go2.classes.business.service.TimeTableService;
@@ -24,7 +28,10 @@ public class TimeTableServiceImpl implements TimeTableService {
 
 	@Resource
 	private TimeTableServiceMapper timeTableServiceMapper;
-	
+
+	@PersistenceContext
+	private EntityManager entityManager;
+	 
 	@Override
 	public TimeTable findById(Long id) {
 		TimeTableEntity timeTableEntity = timeTableJpaRepository.findOne(id);
@@ -113,6 +120,23 @@ public class TimeTableServiceImpl implements TimeTableService {
 	@Override
 	public List<Map<String, Object>> findAllClassInstancesByClass(Long classId) {
 		Iterable<TimeTableEntity> entities = timeTableJpaRepository.findAllByclassesId(classId);
+		List<Map<String, Object>> beans = new ArrayList<Map<String, Object>>();
+		for(TimeTableEntity timeTableEntity : entities) {
+			beans.add(timeTableServiceMapper.mapTimeTableEntityToJSONMap(timeTableEntity));
+		}
+		return beans;
+	}
+
+	@Override
+	public List<Map<String, Object>> getClassesSearchResult(ClassesSearch classesSearch) {
+
+		System.out.println("#####################################");
+		System.out.println(classesSearch.getSearchQuery());
+		System.out.println("#####################################");
+
+		Query q = entityManager.createNativeQuery(classesSearch.getSearchQuery(), TimeTableEntity.class);
+		List<TimeTableEntity> entities = q.getResultList();
+		
 		List<Map<String, Object>> beans = new ArrayList<Map<String, Object>>();
 		for(TimeTableEntity timeTableEntity : entities) {
 			beans.add(timeTableServiceMapper.mapTimeTableEntityToJSONMap(timeTableEntity));

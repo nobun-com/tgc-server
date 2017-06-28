@@ -58,6 +58,16 @@ public class ClassesServiceImpl implements ClassesService {
 	}
 
 	@Override
+	public List<Classes> getAllClassesByTeacher(Long teacherId) {
+		Iterable<ClassesEntity> entities = classesJpaRepository.findAllClassesByTeacherId(teacherId);
+		List<Classes> beans = new ArrayList<Classes>();
+		for(ClassesEntity classesEntity : entities) {
+			beans.add(classesServiceMapper.mapClassesEntityToClasses(classesEntity));
+		}
+		return beans;
+	}
+
+	@Override
 	public Classes save(Classes classes) {
 		return update(classes) ;
 	}

@@ -19,4 +19,6 @@ public interface ClassesService {
 	void delete( Long id );
 
 	List<Classes> getAllClassesByCenter(Long centerId);
+
+	List<Classes> getAllClassesByTeacher(Long teacherId);
 }

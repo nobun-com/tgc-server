@@ -74,8 +74,9 @@ public class OpenController {
 
 	@RequestMapping(value="/searchClasses", method=RequestMethod.POST)
 	public String searchClasses(Model model, @ModelAttribute ClassesSearch classesSearch) {
-		System.out.println(classesSearch);
-		return "search-classes";
+        model.addAttribute("center", centerService.findById(1l));
+        model.addAttribute("classes", timeTableService.getClassesSearchResult(classesSearch));
+		return "center-classes";
 	}
 
 	@RequestMapping(value="/openLogin", method=RequestMethod.POST)
@@ -119,7 +120,7 @@ public class OpenController {
 			if(password.equals(confirmPassword)) {
 				student = new Student();
 				student.setEmail(email);
-				student.setFirstName(name);
+				student.setName(name);
 				student.setPassword(password);
 				student.setGender(gender);
 				student.setPhone(mobile);

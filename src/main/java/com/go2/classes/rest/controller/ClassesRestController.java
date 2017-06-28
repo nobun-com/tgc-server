@@ -56,6 +56,15 @@ public class ClassesRestController {
 		return classesService.getAllClassesByCenter(centerId);
 	}
 
+	@RequestMapping( value="/getAllClassesByTeacher/{teacherId}",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public List<Classes> getAllClassesByTeacher(@PathVariable("teacherId") Long teacherId) {
+		return classesService.getAllClassesByTeacher(teacherId);
+	}
+
 	@RequestMapping( value="/getClass/{id}",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)

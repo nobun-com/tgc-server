@@ -29,14 +29,11 @@ public class StudentEntity implements Serializable {
     @Column(name="email", nullable=false, unique=true, length=60)
     private String     email        ;
 
-    @Column(name="first_name", nullable=false, length=20)
-    private String     firstName    ;
+    @Column(name="name", nullable=false, length=20)
+    private String name    ;
 
     @Column(name="gender", length=6)
     private String     gender       ;
-
-    @Column(name="last_name", length=20)
-    private String     lastName     ;
 
     @Column(name="password", nullable=false, length=20)
     private String     password     ;
@@ -79,12 +76,12 @@ public class StudentEntity implements Serializable {
         return this.email;
     }
 
-    //--- DATABASE MAPPING : first_name ( VARCHAR ) 
-    public void setFirstName( String firstName ) {
-        this.firstName = firstName;
+    //--- DATABASE MAPPING : name ( VARCHAR ) 
+    public void setName( String name ) {
+        this.name = name;
     }
     public String getFirstName() {
-        return this.firstName;
+        return this.name;
     }
 
     //--- DATABASE MAPPING : gender ( VARCHAR ) 
@@ -93,14 +90,6 @@ public class StudentEntity implements Serializable {
     }
     public String getGender() {
         return this.gender;
-    }
-
-    //--- DATABASE MAPPING : last_name ( VARCHAR ) 
-    public void setLastName( String lastName ) {
-        this.lastName = lastName;
-    }
-    public String getLastName() {
-        return this.lastName;
     }
 
     //--- DATABASE MAPPING : password ( VARCHAR ) 
@@ -150,11 +139,9 @@ public class StudentEntity implements Serializable {
         sb.append("|");
         sb.append(email);
         sb.append("|");
-        sb.append(firstName);
-        sb.append("|");
         sb.append(gender);
         sb.append("|");
-        sb.append(lastName);
+        sb.append(name);
         sb.append("|");
         sb.append(password);
         sb.append("|");

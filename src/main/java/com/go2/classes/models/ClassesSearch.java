@@ -1,6 +1,9 @@
 package com.go2.classes.models;
 
 import java.io.Serializable;
+import java.util.Objects;
+
+import com.go2.classes.rest.common.Utilities;
 
 public class ClassesSearch implements Serializable {
 
@@ -80,5 +83,41 @@ public class ClassesSearch implements Serializable {
         sb.append(center);
         sb.append("|");
         return sb.toString(); 
-    } 
+    }
+	
+	public String getSearchQuery(){
+		String sql = "select TT.* from time_table TT, classes CC where TT.classes_id = CC.id";
+		sql = sql + getAgePredicate();
+		sql = sql + getStartDatePredicate();
+		sql = sql + getCenterPredicate();
+		
+		return sql;
+	}
+	
+	private String getAgePredicate() {
+		if(isEmpty(age)) { return ""; }
+		String sql = " and CC.max_age >= " + age + " and CC.min_age <= " + age;
+		return sql;
+	}
+	
+	private String getStartDatePredicate() {
+		if(isEmpty(startDate)) { return ""; }
+		String sql = " and CC.start_date >= '" + Utilities.dateWithoutTime.format(startDate) + "'";
+		return sql;
+	}
+	
+	private String getCenterPredicate() {
+		if(isEmpty(center)) { return ""; }
+		String sql = " and CC.class_name like '%" + center + "%'";
+		return sql;
+	}
+	
+	private boolean isEmpty(String val) {
+		if(Objects.isNull(val))
+			return true;
+		if(val.trim().equals(""))
+			return true;
+		return false;
+	}
+	
 }

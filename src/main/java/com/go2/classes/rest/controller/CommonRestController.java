@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -53,8 +52,8 @@ public class CommonRestController {
 
 	@RequestMapping(value="/adminLogin", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, String> adminLogin(@RequestBody Map<String, String> data) {
-		Map<String, String> result = new HashMap<String, String>();
+	public Map<String, Object> adminLogin(@RequestBody Map<String, String> data) {
+		Map<String, Object> result = new HashMap<String, Object>();
 		String email = data.get("email");
 		String password = data.get("password");
 		
@@ -67,6 +66,7 @@ public class CommonRestController {
 				token = getToken(admin.getEmail(), admin.getId());
 		        result.put("message", "login success");
 				result.put("token", token);
+				result.put("admin", admin);
 			} else {
 		        result.put("message", "login failed");
 			}
@@ -76,8 +76,8 @@ public class CommonRestController {
 	
 	@RequestMapping(value="/teacherLogin", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, String> teacherLogin(@RequestBody Map<String, String> data) {
-		Map<String, String> result = new HashMap<String, String>();
+	public Map<String, Object> teacherLogin(@RequestBody Map<String, String> data) {
+		Map<String, Object> result = new HashMap<String, Object>();
 		String email = data.get("email");
 		String password = data.get("password");
 		
@@ -90,6 +90,7 @@ public class CommonRestController {
 				token = getToken(teacher.getEmail(), teacher.getId());
 		        result.put("message", "login success");
 				result.put("token", token);
+				result.put("teacher", teacher);
 			} else {
 		        result.put("message", "login failed");
 			}

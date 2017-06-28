@@ -7,4 +7,6 @@ public interface ClassesJpaRepository extends PagingAndSortingRepository<Classes
 
 	Iterable<ClassesEntity> findAllClassesByCenterId(Long centerId);
 
+	Iterable<ClassesEntity> findAllClassesByTeacherId(Long teacherId);
+
 }

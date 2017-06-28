@@ -20,14 +20,10 @@ public class Student implements Serializable {
 
     @NotNull
     @Size( min = 1, max = 20 )
-    private String firstName;
+    private String name;
 
     @Size( max = 6 )
     private String gender;
-
-    @NotNull
-    @Size( min = 1, max = 20 )
-    private String lastName;
 
     @NotNull
     @Size( min = 1, max = 20 )
@@ -61,11 +57,11 @@ public class Student implements Serializable {
         return this.email;
     }
 
-    public void setFirstName( String firstName ) {
-        this.firstName = firstName;
+    public void setName( String name ) {
+        this.name = name;
     }
-    public String getFirstName() {
-        return this.firstName;
+    public String getName() {
+        return this.name;
     }
 
     public void setGender( String gender ) {
@@ -73,13 +69,6 @@ public class Student implements Serializable {
     }
     public String getGender() {
         return this.gender;
-    }
-
-    public void setLastName( String lastName ) {
-        this.lastName = lastName;
-    }
-    public String getLastName() {
-        return this.lastName;
     }
 
     public void setPassword( String password ) {
@@ -111,11 +100,9 @@ public class Student implements Serializable {
         sb.append("|");
         sb.append(email);
         sb.append("|");
-        sb.append(firstName);
+        sb.append(name);
         sb.append("|");
         sb.append(gender);
-        sb.append("|");
-        sb.append(lastName);
         sb.append("|");
         sb.append(password);
         sb.append("|");
