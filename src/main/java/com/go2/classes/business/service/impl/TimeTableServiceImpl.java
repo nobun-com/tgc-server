@@ -130,9 +130,7 @@ public class TimeTableServiceImpl implements TimeTableService {
 	@Override
 	public List<Map<String, Object>> getClassesSearchResult(ClassesSearch classesSearch) {
 
-		System.out.println("#####################################");
-		System.out.println(classesSearch.getSearchQuery());
-		System.out.println("#####################################");
+		System.out.println("#####################################\n" + classesSearch.getSearchQuery() + "\n#####################################");
 
 		Query q = entityManager.createNativeQuery(classesSearch.getSearchQuery(), TimeTableEntity.class);
 		List<TimeTableEntity> entities = q.getResultList();

@@ -7,10 +7,12 @@ import java.util.Objects;
 import javax.annotation.Resource;
 
 import com.go2.classes.models.Classes;
+import com.go2.classes.models.jpa.ClassesCategoryEntity;
 import com.go2.classes.models.jpa.ClassesEntity;
 import com.go2.classes.business.service.ClassesService;
 import com.go2.classes.business.service.impl.helper.ClassMetadataHelper;
 import com.go2.classes.business.service.mapping.ClassesServiceMapper;
+import com.go2.classes.data.repository.jpa.ClassesCategoryJpaRepository;
 import com.go2.classes.data.repository.jpa.ClassesJpaRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +23,9 @@ public class ClassesServiceImpl implements ClassesService {
 
 	@Resource
 	private ClassesJpaRepository classesJpaRepository;
+
+	@Resource
+	private ClassesCategoryJpaRepository classesCategoryJpaRepository;
 
 	@Resource
 	private ClassMetadataHelper classMetadataHelper;
@@ -129,6 +134,11 @@ public class ClassesServiceImpl implements ClassesService {
 
 	public void setClassesServiceMapper(ClassesServiceMapper classesServiceMapper) {
 		this.classesServiceMapper = classesServiceMapper;
+	}
+
+	@Override
+	public Iterable<ClassesCategoryEntity> findAllClassesCategory() {
+		return classesCategoryJpaRepository.findAll();
 	}
 
 }

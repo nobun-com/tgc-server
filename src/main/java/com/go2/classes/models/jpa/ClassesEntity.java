@@ -74,6 +74,9 @@ public class ClassesEntity implements Serializable {
     @Column(name="max_slots", nullable=false)
     private Integer maxSlots;
     
+    @Column(name="category_id", nullable=false)
+    private Integer categoryId;
+    
     public ClassesEntity() {
 		super();
     }
@@ -85,7 +88,15 @@ public class ClassesEntity implements Serializable {
         return this.id;
     }
 
-    public void setAbout( String about ) {
+    public Integer getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public void setAbout( String about ) {
         this.about = about;
     }
     public String getAbout() {

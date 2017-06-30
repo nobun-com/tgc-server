@@ -3,6 +3,7 @@ package com.go2.classes.business.service;
 import java.util.List;
 
 import com.go2.classes.models.Classes;
+import com.go2.classes.models.jpa.ClassesCategoryEntity;
 
 public interface ClassesService { 
 
@@ -21,4 +22,6 @@ public interface ClassesService {
 	List<Classes> getAllClassesByCenter(Long centerId);
 
 	List<Classes> getAllClassesByTeacher(Long teacherId);
+
+	Iterable<ClassesCategoryEntity> findAllClassesCategory();
 }

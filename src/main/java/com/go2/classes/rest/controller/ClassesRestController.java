@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import com.go2.classes.models.Classes;
+import com.go2.classes.models.jpa.ClassesCategoryEntity;
 import com.go2.classes.business.service.ClassesService;
 
 @Controller
@@ -22,6 +23,15 @@ public class ClassesRestController {
 	@Resource
 	private ClassesService classesService;
 	
+	@RequestMapping( value="/getAllClassesCategories",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public Iterable<ClassesCategoryEntity> findAllClassesCategory() {
+		return classesService.findAllClassesCategory();
+	}
+
 	@RequestMapping( value="/getAllClasses",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)

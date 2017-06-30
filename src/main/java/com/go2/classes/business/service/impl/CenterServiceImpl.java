@@ -2,13 +2,19 @@ package com.go2.classes.business.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import com.go2.classes.models.Center;
+import com.go2.classes.models.ClassesSearch;
 import com.go2.classes.models.jpa.AddressEntity;
 import com.go2.classes.models.jpa.CenterEntity;
+import com.go2.classes.models.jpa.TimeTableEntity;
 import com.go2.classes.business.service.CenterService;
 import com.go2.classes.business.service.mapping.AddressServiceMapper;
 import com.go2.classes.business.service.mapping.CenterServiceMapper;
@@ -36,6 +42,9 @@ public class CenterServiceImpl implements CenterService {
 	@Resource
 	private AddressServiceImpl addressServiceImpl;
 	
+	@PersistenceContext
+	private EntityManager entityManager;
+	 
 	@Override
 	public Center findById(Long id) {
 		CenterEntity centerEntity = centerJpaRepository.findOne(id);
@@ -123,6 +132,20 @@ public class CenterServiceImpl implements CenterService {
 
 	public void setCenterServiceMapper(CenterServiceMapper centerServiceMapper) {
 		this.centerServiceMapper = centerServiceMapper;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getCentersSearchResult(ClassesSearch classesSearch) {
+
+		System.out.println("#####################################\n" + classesSearch.getSearchByCenterQuery() + "\n#####################################");
+
+		Query query = entityManager.createNativeQuery(classesSearch.getSearchByCenterQuery());
+		List<Object[] > entities = query.getResultList();
+		List<Map<String, Object>> beans = new ArrayList<Map<String, Object>>();
+		for(Object[] entitie : entities) {
+			beans.add(centerServiceMapper.mapResultToJSONMap(entitie));
+		}
+		return beans;
 	}
 
 }

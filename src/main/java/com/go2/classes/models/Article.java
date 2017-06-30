@@ -10,26 +10,18 @@ public class Article implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotNull
     private Long id;
 
-    @NotNull
-    @Size( min = 1, max = 100)
     private String title;
 
-    @Size(max = 100)
     private String preview;
 
-    @Size(max = 100)
     private String category;
 
-    @Size(max = 100)
     private String thumbnailUrl;
 
-    @Size(max = 100)
     private String imageUrl;
 
-    @Size(max = 100)
     private String body;
 
     private Date postDate;

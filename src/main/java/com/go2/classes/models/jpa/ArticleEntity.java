@@ -25,10 +25,10 @@ public class ArticleEntity implements Serializable {
     @Column(name="category", nullable=false, length=50)
     private String category;
 
-    @Column(name="thumbnail_url", nullable=false, length=100)
+    @Column(name="thumbnail_url", nullable=false, length=200)
     private String thumbnailUrl;
 
-    @Column(name="image_url", nullable=false, length=100)
+    @Column(name="image_url", nullable=false, length=200)
     private String imageUrl;
 
     @Column(name="body", nullable=false)

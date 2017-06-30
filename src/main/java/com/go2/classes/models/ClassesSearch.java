@@ -13,7 +13,8 @@ public class ClassesSearch implements Serializable {
 	String age;
 	String area;
 	String center;
-	String[] fees;
+	String minFees;
+	String maxFees;
 	String[] day;
 	String[] time;
 	String[] interest;
@@ -42,11 +43,17 @@ public class ClassesSearch implements Serializable {
 	public void setCenter(String center) {
 		this.center = center;
 	}
-	public String[] getFees() {
-		return fees;
+	public String getMinFees() {
+		return minFees;
 	}
-	public void setFees(String[] fees) {
-		this.fees = fees;
+	public void setMinFees(String minFees) {
+		this.minFees = minFees;
+	}
+	public String getMaxFees() {
+		return maxFees;
+	}
+	public void setMaxFees(String maxFees) {
+		this.maxFees = maxFees;
 	}
 	public String[] getDay() {
 		return day;
@@ -78,25 +85,52 @@ public class ClassesSearch implements Serializable {
         sb.append("|");
         sb.append(center);
         sb.append("|[");
-        sb.append(fees);
+        sb.append(minFees);
         sb.append("]|");
         sb.append(center);
         sb.append("|");
         return sb.toString(); 
     }
-	
-	public String getSearchQuery(){
-		String sql = "select TT.* from time_table TT, classes CC where TT.classes_id = CC.id";
+
+	public String getSearchByCenterQuery() {
+		String sql = "select CN.center_name as 'centerName', CN.logo_name as 'logo', CN.id as 'id', count(*) as 'count' from time_table TT, classes CC, center CN, address AD where TT.classes_id = CC.id and CC.center_id = CN.id and CN.address_id = AD.id";
 		sql = sql + getAgePredicate();
 		sql = sql + getStartDatePredicate();
 		sql = sql + getCenterPredicate();
-		
+		sql = sql + getFeesPredicate();
+		sql = sql + getAreaPredicate();
+		sql = sql + getInterestPredicate();
+		sql = sql + getDayPredicate();
+		sql = sql + " GROUP BY CN.id";
+		return sql;
+	}
+	
+	public String getSearchQuery(){
+		String sql = "select TT.* from time_table TT, classes CC, center CN, address AD where TT.classes_id = CC.id and CC.center_id = CN.id and CN.address_id = AD.id";
+		sql = sql + getAgePredicate();
+		sql = sql + getStartDatePredicate();
+		sql = sql + getCenterPredicate();
+		sql = sql + getFeesPredicate();
+		sql = sql + getAreaPredicate();
+		sql = sql + getInterestPredicate();
+		sql = sql + getDayPredicate();
 		return sql;
 	}
 	
 	private String getAgePredicate() {
 		if(isEmpty(age)) { return ""; }
 		String sql = " and CC.max_age >= " + age + " and CC.min_age <= " + age;
+		return sql;
+	}
+	
+	private String getFeesPredicate() {
+		String sql = "";
+		if(!isEmpty(minFees)) {
+			sql = " and CC.fee >= " + minFees.substring(1);
+		}
+		if(!isEmpty(maxFees)) {
+			sql += " and CC.fee <= " + maxFees.substring(1);
+		}
 		return sql;
 	}
 	
@@ -110,6 +144,25 @@ public class ClassesSearch implements Serializable {
 		if(isEmpty(center)) { return ""; }
 		String sql = " and CC.class_name like '%" + center + "%'";
 		return sql;
+	}
+	
+	private String getAreaPredicate() {
+		if(isEmpty(area)) { return ""; }
+		if(area.equals("ALL")) { return ""; }
+		String sql = " and AD.area = '" + area + "'";
+		return sql;
+	}
+	
+	private String getInterestPredicate() {
+		if(Objects.isNull(interest) || interest.length == 0) { return ""; }
+		String sql = " and CC.category_id IN (" + String.join(", ", interest) + ")";
+		return sql;  
+	}
+	
+	private String getDayPredicate() {
+		if(Objects.isNull(day) || day.length == 0) { return ""; }
+		String sql = " and DAYNAME(TT.start_time) IN ('" + String.join("', '", day) + "')";
+		return sql;  
 	}
 	
 	private boolean isEmpty(String val) {

@@ -1,5 +1,8 @@
 package com.go2.classes.business.service.mapping;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.modelmapper.ModelMapper;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.go2.classes.business.service.AddressService;
 import com.go2.classes.models.Center;
 import com.go2.classes.models.jpa.CenterEntity;
+import com.go2.classes.rest.common.Utilities;
 import com.go2.classes.models.jpa.AdminEntity;
 import com.go2.classes.models.jpa.AddressEntity;
 
@@ -89,6 +93,15 @@ public class CenterServiceMapper extends AbstractServiceMapper {
 
 	protected void setModelMapper(ModelMapper modelMapper) {
 		this.modelMapper = modelMapper;
+	}
+
+	public Map<String, Object> mapResultToJSONMap(Object[] entitie) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("centerName", entitie[0]);
+		map.put("logoName", entitie[1]);
+		map.put("centerId", entitie[2]);
+		map.put("classCount", entitie[3]);
+		return map;
 	}
 
 }

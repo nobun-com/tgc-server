@@ -72,11 +72,11 @@ public class OpenController {
 		return "map";
 	}
 
-	@RequestMapping(value="/searchClasses", method=RequestMethod.POST)
+	@RequestMapping(value="/searchCenters", method=RequestMethod.POST)
 	public String searchClasses(Model model, @ModelAttribute ClassesSearch classesSearch) {
-        model.addAttribute("center", centerService.findById(1l));
-        model.addAttribute("classes", timeTableService.getClassesSearchResult(classesSearch));
-		return "center-classes";
+        model.addAttribute("centers", centerService.getCentersSearchResult(classesSearch));
+        model.addAttribute("classesSearchOld", classesSearch);
+		return "search-classes";
 	}
 
 	@RequestMapping(value="/openLogin", method=RequestMethod.POST)
