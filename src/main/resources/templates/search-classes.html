@@ -95,7 +95,7 @@
                 <nav id="mobile-menu-01" class="mobile-menu collapse">
                     <ul id="mobile-primary-menu" class="menu">
                         <li class="menu-item-has-children">
-                            <a href="/l">Home</a>
+                            <a href="/">Home</a>
                         </li>
                         <li class="menu-item-has-children">
                                 <a href="search-classes">Classes</a>
@@ -267,8 +267,8 @@
                                         <div class="panel-content">
                                             <div id="price-range"></div>
                                             <br />
-                                            <input name="minFees" style="border:none;" class="min-price-label pull-left"></input>
-                                            <input name="maxFees" style="border:none; text-align:end;" class="max-price-label pull-right"></input>
+                                            <input name="minFees" style="border:none;width:50%;" class="min-price-label pull-left"></input>
+                                            <input name="maxFees" style="border:none;text-align:end;width:50%;" class="max-price-label pull-right"></input>
                                             <div class="clearer"></div>
                                         </div><!-- end content -->
                                     </div>
@@ -280,34 +280,26 @@
                             </form>
                             </div>
                         </div>
-                        <!-- <div class="col-sm-8 col-md-9" style="background: white; height: 100%;">
+                        <div th:if="${centers == null}" class="col-sm-8 col-md-9" style="background: white; height: 100%;">
 					       	 <div id="slideshow">
 					            <div class="fullwidthbanner-container">
 					                <div class="revolution-slider" style="height: 0; overflow: hidden;">
-					                    <ul>    SLIDE 
-					                        Slide1
+					                    <ul>
 					                        <li data-transition="zoomin" data-slotamount="7" data-masterspeed="1500">
-					                            MAIN IMAGE
 					                            <img src="images/classes/classes-home-1.jpg" alt=""/>
 					                        </li>
-					                        
-					                        Slide2
 					                        <li data-transition="zoomout" data-slotamount="7" data-masterspeed="1500">
-					                            MAIN IMAGE
 					                            <img src="images/classes/classes-home-2.jpg" alt=""/>
 					                        </li>
-					                        
-					                        Slide3
 					                        <li data-transition="zoomin" data-slotamount="7" data-masterspeed="1500">
-					                            MAIN IMAGE
 					                            <img src="images/classes/classes-home-3.jpg" alt=""/>
 					                        </li>
 					                    </ul>
 					                </div>
 					            </div>
 					        </div>
-						</div> -->
-						<div class="col-sm-8 col-md-9">
+						</div>
+						<div th:if="${centers != null}" class="col-sm-8 col-md-9">
                             <div class="row image-box listing-style2">
                                 <div class="col-sms-6 col-sm-6 col-md-4" th:each="center : ${centers}">
                                     <article class="box">
@@ -412,14 +404,14 @@
                 range: true,
                 min: 0,
                 max: 1000,
-                values: [ 100, 800 ],
+                values: [ 0, 1000 ],
                 slide: function( event, ui ) {
                     tjq(".min-price-label").val( "$" + ui.values[ 0 ]);
                     tjq(".max-price-label").val( "$" + ui.values[ 1 ]);
                 }
             });
-            tjq(".min-price-label").html( "$" + tjq("#price-range").slider( "values", 0 ));
-            tjq(".max-price-label").html( "$" + tjq("#price-range").slider( "values", 1 ));
+            tjq(".min-price-label").val( "$" + tjq("#price-range").slider( "values", 0 ));
+            tjq(".max-price-label").val( "$" + tjq("#price-range").slider( "values", 1 ));
         });
     </script>
     
