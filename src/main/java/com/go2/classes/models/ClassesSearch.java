@@ -105,7 +105,7 @@ public class ClassesSearch implements Serializable {
 		return sql;
 	}
 	
-	public String getSearchQuery(){
+	public String getSearchClassesByCenretQuery(Long centerId){
 		String sql = "select TT.* from time_table TT, classes CC, center CN, address AD where TT.classes_id = CC.id and CC.center_id = CN.id and CN.address_id = AD.id";
 		sql = sql + getAgePredicate();
 		sql = sql + getStartDatePredicate();
@@ -114,6 +114,7 @@ public class ClassesSearch implements Serializable {
 		sql = sql + getAreaPredicate();
 		sql = sql + getInterestPredicate();
 		sql = sql + getDayPredicate();
+		sql = sql + " and CN.id = " + centerId;
 		return sql;
 	}
 	

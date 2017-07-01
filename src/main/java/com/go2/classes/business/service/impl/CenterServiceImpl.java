@@ -14,7 +14,6 @@ import com.go2.classes.models.Center;
 import com.go2.classes.models.ClassesSearch;
 import com.go2.classes.models.jpa.AddressEntity;
 import com.go2.classes.models.jpa.CenterEntity;
-import com.go2.classes.models.jpa.TimeTableEntity;
 import com.go2.classes.business.service.CenterService;
 import com.go2.classes.business.service.mapping.AddressServiceMapper;
 import com.go2.classes.business.service.mapping.CenterServiceMapper;

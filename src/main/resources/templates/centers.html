@@ -1,23 +1,22 @@
-<!DOCTYPE html>
 <!--[if IE 8]>          <html class="ie ie8"> <![endif]-->
 <!--[if IE 9]>          <html class="ie ie9"> <![endif]-->
 <!--[if gt IE 9]><!-->  <html> <!--<![endif]-->
 <head>
     <!-- Page Title -->
-    <title>Travelo | Responsive HTML5 Travel Template</title>
+    <title>TGC</title>
     
     <!-- Meta Tags -->
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <meta name="keywords" content="HTML5 Template" />
     <meta name="description" content="Travelo | Responsive HTML5 Travel Template"/>
     <meta name="author" content="SoapTheme"/>
 
-	    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     
     <!-- Theme Styles -->
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/font-awesome.min.css"/>
-    <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'/>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'/>
     <link rel="stylesheet" href="css/animate.min.css"/>
     
     <!-- Current Page Styles -->
@@ -31,6 +30,9 @@
     
     <!-- Custom Styles -->
     <link rel="stylesheet" href="css/custom.css"/>
+
+    <!-- Updated Styles -->
+    <link rel="stylesheet" href="css/updates.css"/>
 
     <!-- Updated Styles -->
     <link rel="stylesheet" href="css/updates.css"/>
@@ -49,38 +51,14 @@
       <script type='text/javascript' src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
       <script type='text/javascript' src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
     <![endif]-->
+
+    <!-- Javascript Page Loader -->
+    <!-- <script type="text/javascript" src="js/pace.min.js" data-pace-options='{ "ajax": false }'></script>
+    <script type="text/javascript" src="js/page-loading.js"></script> -->
 </head>
 <body>
-    
     <div id="page-wrapper">
         <header id="header" class="navbar-static-top">
-            <div class="topnav hidden-xs">
-                <div class="container">
-                    <ul class="quick-menu pull-left">
-                        <li><a href="#">MY ACCOUNT</a></li>
-                        <li class="ribbon">
-                            <a href="#">English</a>
-                            <ul class="menu mini">
-                                <li><a href="#" title="Dansk">Dansk</a></li>
-                                <li><a href="#" title="Deutsch">Deutsch</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="quick-menu pull-right">
-                        <li><a href="#travelo-login" class="soap-popupbox">LOGIN</a></li>
-                        <li><a href="#travelo-signup" class="soap-popupbox">SIGNUP</a></li>
-                        <li class="ribbon currency">
-                            <a href="#" title="">USD</a>
-                            <ul class="menu mini">
-                                <li><a href="#" title="AUD">AUD</a></li>
-                                <li class="active"><a href="#" title="USD">USD</a></li>
-                                <li><a href="#" title="CAD">CAD</a></li>
-                                <li><a href="#" title="IDR">IDR</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
             
             <div class="main-header">
                 
@@ -89,141 +67,53 @@
                 </a>
 
                 <div class="container">
-                    <h1 class="logo navbar-brand">
-                        <a href="index.html" title="Travelo - home">
-                            <img src="images/logo.png" alt="Travelo HTML5 Template" />
+                    <h1 class="navbar-brand">
+                        <a href="" title="Travelo - home">
+                            <img src="images/tgclogo.png" alt="Travelo HTML5 Template" />
                         </a>
                     </h1>
-                    
                     <nav id="main-menu" role="navigation">
                         <ul class="menu">
                             <li class="menu-item-has-children">
-                                <a href="index.html">Home</a>
-                                <ul>
-                                    <li><a href="index.html">Home Layout 1</a></li>
-                                    <li><a href="homepage2.html">Home Layout 2</a></li>
-                                    <li><a href="homepage11.html">Home Layout 11</a></li>
-                                </ul>
+                                <a href="/">Home</a>
                             </li>
                             <li class="menu-item-has-children">
-                                <a href="hotel-index.html">Hotels</a>
-                                <ul>
-                                    <li><a href="hotel-index.html">Home Hotels</a></li>
-                                    <li><a href="hotel-thankyou.html">Thank You</a></li>
-                                </ul>
+                                <a href="search-classes">Classes</a>
                             </li>
                             <li class="menu-item-has-children">
-                                <a href="flight-index.html">Flights</a>
-                                <ul>
-                                    <li><a href="flight-index.html">Home Flights</a></li>
-                                    <li><a href="flight-thankyou.html">Thank You</a></li>
-                                </ul>
+                                <a href="centers">Centers</a>
                             </li>
                             <li class="menu-item-has-children">
-                                <a href="car-index.html">Cars</a>
-                                <ul>
-                                    <li><a href="car-index.html">Home Cars</a></li>
-                                    <li><a href="car-list-view.html">List View</a></li>
-                                </ul>
+                            	<a id="login-link" href="#travelo-login" onclick="clearErrorSpan()" class="soap-popupbox">LOGIN</a>
                             </li>
                             <li class="menu-item-has-children">
-                                <a href="cruise-index.html">Cruises</a>
-                                <ul>
-                                    <li><a href="cruise-detailed.html">Detailed</a></li>
-                                    <li><a href="cruise-booking.html">Booking</a></li>
-                                    <li><a href="cruise-thankyou.html">Thank You</a></li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children megamenu-menu">
-                                <a href="#">Pages</a>
-                                <div class="megamenu-wrapper container" data-items-per-column="8">
-                                    <div class="megamenu-holder">
-                                        <ul class="megamenu">
-                                            <li class="menu-item-has-children">
-                                                <a href="#">Standard Pages</a>
-                                                <ul class="clearfix">
-                                                    <li><a href="pages-aboutus1.html">About Us 1</a></li>
-                                                    <li><a href="pages-sitemap.html">Site Map</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="menu-item-has-children">
-                                                <a href="#">Extra Pages</a>
-                                                <ul class="clearfix">
-                                                    <li><a href="extra-pages-travel-ideas.html">Travel Ideas</a></li>
-                                                    <li><a href="extra-pages-travel-insurance.html">Travel Insurance</a></li>
-                                                    <li><a href="extra-pages-group-booking.html">Group Bookings</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="menu-item-has-children">
-                                                <a href="#">Special Pages</a>
-                                                <ul class="clearfix">
-                                                    <li><a href="pages-login1.html">Login Page 1</a></li>
-                                                    <li><a href="pages-login2.html">Login Page 2</a></li>
-                                                    <li><a href="pages-login3.html">Login Page 3</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="menu-item-has-children">
-                                <a href="#">Shortcodes</a>
-                                <ul>
-                                    <li><a href="shortcode-gallery-styles.html">Image &amp; Gallery Styles</a></li>
-                                    <li><a href="shortcode-image-box-styles.html">Image Box Styles</a></li>
-                                    <li class="menu-item-has-children">
-                                        <a href="#">Listing Styles</a>
-                                        <ul>
-                                            <li><a href="shortcode-listing-style1.html">Listing Style 01</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="shortcode-dropdowns.html">Dropdowns</a></li>
-                                    <li><a href="shortcode-pricing-tables.html">Pricing Tables</a></li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children">
-                                <a href="#">Bonus</a>
-                                <ul>
-                                    <li><a href="dashboard1.html">Dashboard 1</a></li>
-                                    <li class="menu-item-has-children">
-                                        <a href="#">7 Footer Styles</a>
-                                        <ul>
-                                            <li><a href="#">Default Style</a></li>
-                                            <li><a href="footer-style1.html">Footer Style 1</a></li>
-                                            <li><a href="footer-style2.html">Footer Style 2</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children">
-                                        <a href="#">8 Header Styles</a>
-                                        <ul>
-                                            <li><a href="#">Default Style</a></li>
-                                            <li><a href="header-style1.html">Header Style 1</a></li>
-                                            <li><a href="header-style2.html">Header Style 2</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children">
-                                        <a href="#">7 Inner Start Styles</a>
-                                        <ul>
-                                            <li><a href="#">Default Style</a></li>
-                                            <li><a href="inner-starts-style5.html">Inner Start Style 5</a></li>
-                                            <li><a href="inner-starts-style6.html">Inner Start Style 6</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children">
-                                        <a href="#">3 Search Styles</a>
-                                        <ul>
-                                            <li><a href="search-style1.html">Search Style 1</a></li>
-                                            <li><a href="search-style2.html">Search Style 2</a></li>
-                                            <li><a href="search-style3.html">Search Style 3</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                        		<a id="signup-link" href="#travelo-signup"  onclick="clearErrorSpan()" class="soap-popupbox">SIGNUP</a>
                             </li>
                         </ul>
                     </nav>
                 </div>
+                <nav id="mobile-menu-01" class="mobile-menu collapse">
+                    <ul id="mobile-primary-menu" class="menu">
+                        <li class="menu-item-has-children">
+                            <a href="/l">Home</a>
+                        </li>
+                        <li class="menu-item-has-children">
+                                <a href="search-classes">Classes</a>
+                        </li>
+                        <li class="menu-item-has-children">
+                                <a href="centers">Centers</a>
+                        </li>
+                        <li class="menu-item-has-children">
+                            	<a id="login-link" href="#travelo-login" onclick="clearErrorSpan()" class="soap-popupbox">LOGIN</a>
+                        </li>
+                        <li class="menu-item-has-children">
+                        		<a id="signup-link" href="#travelo-signup"  onclick="clearErrorSpan()" class="soap-popupbox">SIGNUP</a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </header>
+
         <div class="page-title-container">
             <div class="container">
                 <div class="page-title pull-left">
@@ -277,24 +167,24 @@
         </section>
         
         <footer id="footer">
-            <div class="footer-wrapper">
+<!--             <div class="footer-wrapper">
                 <div class="container">
                     <div class="row">
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="bottom gray-area">
                 <div class="container">
-                    <div class="logo pull-left">
-                        <a href="index.html" title="Travelo - home">
-                            <img src="images/logo.png" alt="Travelo HTML5 Template" />
+                    <div class="pull-left">
+                        <a href="/" title="Travelo - home">
+                            <img src="images/tgclogo.png" alt="Travelo HTML5 Template" />
                         </a>
                     </div>
                     <div class="pull-right">
                         <a id="back-to-top" href="#" class="animated" data-animation-type="bounce"><i class="soap-icon-longarrow-up circle"></i></a>
                     </div>
                     <div class="copyright pull-right">
-                        <p>&copy; 2014 Travelo</p>
+                        <p>&copy; 2017 TGC</p>
                     </div>
                 </div>
             </div>

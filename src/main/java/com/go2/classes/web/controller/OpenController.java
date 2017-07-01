@@ -5,6 +5,8 @@ import java.util.Objects;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -61,9 +63,12 @@ public class OpenController {
 		return "center-classes";
 	}
 
-	@RequestMapping(value="/search-classes")
-	public String openClasses(Model model) {
-		return "search-classes";
+	@RequestMapping(value="/center-classes-search")
+	public String openSearchClassesByCenter(Model model, @RequestParam(name="centerId") Long centerId, HttpSession session) {
+        ClassesSearch classesSearch = (ClassesSearch) session.getAttribute("classesSearchObj");
+        model.addAttribute("center", centerService.findById(centerId));
+        model.addAttribute("classes", timeTableService.getClassesSearchResult(classesSearch, centerId));
+		return "center-classes";
 	}
 
 	@RequestMapping(value="/map")
@@ -72,10 +77,15 @@ public class OpenController {
 		return "map";
 	}
 
+	@RequestMapping(value="/search-classes")
+	public String openClasses(Model model) {
+		return "search-classes";
+	}
+
 	@RequestMapping(value="/searchCenters", method=RequestMethod.POST)
-	public String searchClasses(Model model, @ModelAttribute ClassesSearch classesSearch) {
+	public String searchClasses(Model model, @ModelAttribute ClassesSearch classesSearch, HttpSession session) {
         model.addAttribute("centers", centerService.getCentersSearchResult(classesSearch));
-        model.addAttribute("classesSearchOld", classesSearch);
+        session.setAttribute("classesSearchObj", classesSearch);
 		return "search-classes";
 	}
 
