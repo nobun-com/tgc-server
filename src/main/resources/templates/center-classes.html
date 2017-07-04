@@ -176,7 +176,8 @@
 			                                               <u><h4 class="box-title" th:text="${classObj.slots}"></h4></u><br></br>
 				                                       </div>
 			                                           <div>
-			                                               <a class="button btn-small full-width text-center" title="" th:href="${'/classes?centerId=' + center.id}">BOOK NOW</a>
+			                                               <!-- <a class="button btn-small full-width text-center" title="" th:href="${'/addToCart?classId=' + classObj.id}">BOOK NOW</a> -->
+			                                               <a class="button btn-small full-width text-center" title="" th:onclick="'checkLogin(\'' + ${classObj.id} + '\');'" >BOOK NOW</a>
 			                                           </div>
 			                                       </div>
 			                                   </div>
@@ -251,7 +252,29 @@
             </div>
         </footer>
     </div>
-
+		<div id="travelo-login" class="travelo-login-box travelo-box">
+                <div class="seperator"><label>LOG IN</label></div>
+                <form action="openLogin" method="POST">
+                    <div class="form-group">
+	                    <input id="login-redirectUrl" type="hidden" name="redirectUrl" value="index"/>
+                        <input id="login-email" type="email" name="email" class="input-text full-width" placeholder="EMAIL ADDRESS" required="true"/>
+                    </div>
+                    <div class="form-group">
+                        <input id="login-password" type="password" name="password" class="input-text full-width" placeholder="PASSWORD" required="true"/>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="full-width btn-medium">LOGIN IN NOW</button>
+                    </div>
+                    <div class="form-group">
+                        <a href="#" class="forgot-password pull-right">Reset password?</a>
+                    </div>
+                </form>
+                <div class="seperator"></div>
+                <div style="color: red;">
+                	<span id="login-error-span"></span>
+                </div>
+                
+            </div>
 
     <!-- Javascript -->
     <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
@@ -339,7 +362,79 @@
 	            codeAddress();
 	       }
 	</script>
-    
+   <script th:inline="javascript">
+
+	    var popup = [[${popup}]];
+	    var message = [[${message}]];
+	    var email = [[${email}]];
+	    var password = [[${password}]];
+	    var name = [[${name}]];
+	    var confirmPassword = [[${confirmPassword}]];
+	    var mobile = [[${mobile}]];
+	    var refrralCode = [[${refrralCode}]];
+
+	    var openDialog = function() {
+    		if(popup == 'LOGIN') {
+    	    	document.getElementById('login-link').click();
+    	    	setTimeout(function() {
+    	    		jQuery('#login-error-span').after('<p id="notfind">' + message + '</p>');
+    	    		jQuery('#login-email').val(email);
+    	    		jQuery('#login-password').val(password);
+    	    	},300);
+
+    		} else if(popup = 'SIGNUP') {
+    	    	document.getElementById('signup-link').click();
+    	    	setTimeout(function() {
+    	    		jQuery('#signup-error-span').after('<p id="notfind">' + message + '</p>');
+    	    		jQuery('#signup-email').val(email);
+    	    		jQuery('#signup-password').val(password);
+    	    		jQuery('#signup-name').val(name);
+    	    		jQuery('#signup-confirmPassword').val(confirmPassword);
+    	    		jQuery('#signup-mobile').val(mobile);
+    	    		jQuery('#signup-refrralCode').val(refrralCode);
+    	    	},300);
+    		}
+    	}
+	    
+	    function clearErrorSpan(){
+	    	setTimeout(function() {
+	    		jQuery('#notfind').hide();
+	    		jQuery('#login-email').val("");
+	    		jQuery('#login-password').val("");
+	    		jQuery('#signup-email').val("");
+	    		jQuery('#signup-password').val("");
+	    		jQuery('#signup-name').val("");
+	    		jQuery('#signup-confirmPassword').val("");
+	    		jQuery('#signup-mobile').val("");
+	    		jQuery('#signup-refrralCode').val("");
+	    	},100);
+	    	
+	    }
+	   
+	    if(message) {
+	    	setTimeout(openDialog,500);
+	    }
+	    
+	    
+	    function checkLogin(classId)
+	    {
+			if(getCookie("token")==null){
+				jQuery('#login-redirectUrl').val("addToCart?classId="+classId);				
+				document.getElementById('login-link').click();
+				
+			}else{
+				window.location.href = "addToCart?classId="+classId;
+			}
+			return false;
+	    }
+	    
+	    function getCookie(name)
+	    {
+	      var re = new RegExp(name + "=([^;]+)");
+	      var value = re.exec(document.cookie);
+	      return (value != null) ? unescape(value[1]) : null;
+	    }
+	</script> 
 </body>
 </html>
 

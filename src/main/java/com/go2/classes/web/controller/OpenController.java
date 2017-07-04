@@ -1,14 +1,18 @@
 package com.go2.classes.web.controller;
 
+import java.io.IOException;
+import java.util.Date;
 import java.util.Objects;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,6 +27,15 @@ import com.go2.classes.business.service.AddressService;
 import com.go2.classes.business.service.CenterService;
 import com.go2.classes.business.service.StudentService;
 import com.go2.classes.business.service.TimeTableService;
+import com.go2.classes.business.service.UserCartService;
+import com.go2.classes.models.ClassesSearch;
+import com.go2.classes.models.Student;
+import com.go2.classes.models.UserCart;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 
 @Controller
@@ -41,6 +54,9 @@ public class OpenController {
 
 	@Resource
     private StudentService studentService; // Injected by Spring
+	
+	@Resource
+    private UserCartService userCartService; // Injected by Spring
 
 	public OpenController() {
 	}
@@ -90,9 +106,10 @@ public class OpenController {
 	}
 
 	@RequestMapping(value="/openLogin", method=RequestMethod.POST)
-	public String openLogin(Model model, HttpServletRequest request, HttpServletResponse response) {
+	public void openLogin(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		String redirectUrl = request.getParameter("redirectUrl");
 		Student student = studentService.findByEmail(email);
 		String token = "";
 		if(Objects.isNull(student)) {
@@ -105,10 +122,13 @@ public class OpenController {
 		        model.addAttribute("message", "login failed");
 			}
 		}
+		
 		model.addAttribute("popup", "LOGIN");
 		model.addAttribute("email", email);
 		model.addAttribute("password", password);
-		return "index";
+		response.addCookie(new Cookie("token", token));
+
+		response.sendRedirect(redirectUrl);
 	}
 
 	@RequestMapping(value="/openRegister", method=RequestMethod.POST)
@@ -159,5 +179,34 @@ public class OpenController {
 		String token = Jwts.builder().setSubject(email).setId(id+"").signWith(SignatureAlgorithm.HS512, "GO2CLASSES.COM").compact();
 		return token;
 	};
-
+	
+	public String getIdFromToken(String token){
+		String userId = null;
+		if(token != null) {
+			Jws<Claims> jws = Jwts.parser().setSigningKey("GO2CLASSES.COM").parseClaimsJws(token);
+			userId = jws.getBody().getId();
+		}
+		return userId;
+	}
+	
+	@RequestMapping(value="/my-cart")
+	public String openMyCart(Model model, @CookieValue(value = "token") String token) {
+		Long userId=Long.parseLong(getIdFromToken(token));
+		model.addAttribute("userCartClasses", timeTableService.getAllUserCartsClasses(userId));
+		model.addAttribute("total", "$" + userCartService.getToatlFees(userId));
+		return "my-cart";
+	}
+	
+	@RequestMapping(value="/addToCart")
+	public void addToCart(Model model, @RequestParam(name="classId") Long classId, @CookieValue(value = "token") String token, HttpServletResponse response) throws IOException {
+		Long userId=Long.parseLong(getIdFromToken(token));
+		userCartService.create(new UserCart(userId, classId));
+		response.sendRedirect("my-cart");
+	}
+	
+	@RequestMapping(value="/removeFromCart")
+	public void removeFromCart(Model model, @RequestParam(name="userCartId") Long userCartId, HttpServletResponse response) throws IOException {
+		userCartService.delete(userCartId);
+		response.sendRedirect("my-cart");
+	}
 }

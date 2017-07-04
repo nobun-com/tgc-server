@@ -13,9 +13,12 @@ import javax.persistence.Query;
 import com.go2.classes.models.ClassesSearch;
 import com.go2.classes.models.TimeTable;
 import com.go2.classes.models.jpa.TimeTableEntity;
+import com.go2.classes.models.jpa.UserCartEntity;
 import com.go2.classes.business.service.TimeTableService;
 import com.go2.classes.business.service.mapping.TimeTableServiceMapper;
 import com.go2.classes.data.repository.jpa.TimeTableJpaRepository;
+import com.go2.classes.data.repository.jpa.UserCartJpaRepository;
+
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +31,9 @@ public class TimeTableServiceImpl implements TimeTableService {
 
 	@Resource
 	private TimeTableServiceMapper timeTableServiceMapper;
+
+	@Resource
+	private UserCartJpaRepository userCartJpaRepository;
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -138,6 +144,18 @@ public class TimeTableServiceImpl implements TimeTableService {
 		List<Map<String, Object>> beans = new ArrayList<Map<String, Object>>();
 		for(TimeTableEntity timeTableEntity : entities) {
 			beans.add(timeTableServiceMapper.mapTimeTableEntityToJSONMap(timeTableEntity));
+		}
+		return beans;
+	}
+
+	@Override
+	public Object getAllUserCartsClasses(Long userId) {
+		List<Map<String, Object>> beans = new ArrayList<Map<String, Object>>();
+		Iterable<UserCartEntity> userCarts = userCartJpaRepository.findAllUserCartsByStudentId(userId);
+		for(UserCartEntity userCart : userCarts) {
+			Map<String, Object> bean = timeTableServiceMapper.mapTimeTableEntityToJSONMap(userCart.getTimeTable());
+			bean.put("userCartId", userCart.getId());
+			beans.add(bean);
 		}
 		return beans;
 	}

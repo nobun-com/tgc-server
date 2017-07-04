@@ -28,4 +28,6 @@ public interface TimeTableService {
 	List<Map<String, Object>> findAllClassInstancesByCenter(Long centerId);
 
 	List<Map<String, Object>> getClassesSearchResult(ClassesSearch classesSearch, Long centerId);
+
+	Object getAllUserCartsClasses(Long userId);
 }

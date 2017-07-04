@@ -47,6 +47,7 @@ public class TimeTableServiceMapper extends AbstractServiceMapper {
 			return null;
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", timeTableEntity.getId());
 		map.put("day", Utilities.dayOnly.format(timeTableEntity.getStartTime()));
 		map.put("time", Utilities.timeOnly.format(timeTableEntity.getStartTime()) + " to " + Utilities.timeOnly.format(timeTableEntity.getEndTime()));
 		map.put("date", Utilities.dateWithoutTime.format(timeTableEntity.getStartTime()));
