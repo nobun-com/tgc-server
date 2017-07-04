@@ -160,4 +160,9 @@ public class TimeTableServiceImpl implements TimeTableService {
 		return beans;
 	}
 
+	@Override
+	public Integer getUserCartSize(Long userId) {
+		return userCartJpaRepository.getUserCartSize(userId);
+	}
+
 }

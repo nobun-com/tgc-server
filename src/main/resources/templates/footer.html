@@ -1,0 +1,71 @@
+<div th:fragment="footer">
+<footer id="footer" >
+            <div class="bottom gray-area">
+                <div class="container">
+                    <div class="pull-left">
+                        <a href="/" title="Travelo - home">
+                            <img src="images/tgclogo.png" alt="Travelo HTML5 Template" />
+                        </a>
+                    </div>
+                    <div class="pull-right">
+                        <a id="back-to-top" href="#" class="animated" data-animation-type="bounce"><i class="soap-icon-longarrow-up circle"></i></a>
+                    </div>
+                    <div class="copyright pull-right">
+                        <p>&copy; 2017 TGC</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+</div>
+    <script th:inline="javascript" th:fragment="loginScript">
+	    var popup = [[${popup}]];
+	    var message = [[${message}]];
+	    var email = [[${email}]];
+	    var password = [[${password}]];
+	    var name = [[${name}]];
+	    var confirmPassword = [[${confirmPassword}]];
+	    var mobile = [[${mobile}]];
+	    var refrralCode = [[${refrralCode}]];
+
+	    var openDialog = function() {
+    		if(popup == 'LOGIN') {
+    	    	document.getElementById('login-link').click();
+    	    	setTimeout(function() {
+    	    		jQuery('#login-error-span').after('<p id="notfind">' + message + '</p>');
+    	    		jQuery('#login-email').val(email);
+    	    		jQuery('#login-password').val(password);
+    	    	},300);
+
+    		} else if(popup = 'SIGNUP') {
+    	    	document.getElementById('signup-link').click();
+    	    	setTimeout(function() {
+    	    		jQuery('#signup-error-span').after('<p id="notfind">' + message + '</p>');
+    	    		jQuery('#signup-email').val(email);
+    	    		jQuery('#signup-password').val(password);
+    	    		jQuery('#signup-name').val(name);
+    	    		jQuery('#signup-confirmPassword').val(confirmPassword);
+    	    		jQuery('#signup-mobile').val(mobile);
+    	    		jQuery('#signup-refrralCode').val(refrralCode);
+    	    	},300);
+    		}
+    	}
+	    
+	    function clearErrorSpan(){
+	    	setTimeout(function() {
+	    		jQuery('#notfind').hide();
+	    		jQuery('#login-email').val("");
+	    		jQuery('#login-password').val("");
+	    		jQuery('#signup-email').val("");
+	    		jQuery('#signup-password').val("");
+	    		jQuery('#signup-name').val("");
+	    		jQuery('#signup-confirmPassword').val("");
+	    		jQuery('#signup-mobile').val("");
+	    		jQuery('#signup-refrralCode').val("");
+	    	},100);
+	    	
+	    }
+	   
+	    if(message) {
+	    	setTimeout(openDialog,500);
+	    }
+	</script>

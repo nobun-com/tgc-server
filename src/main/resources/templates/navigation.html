@@ -1,0 +1,159 @@
+<div id="page-wrapper" th:fragment="navigation">
+        <header id="header" class="navbar-static-top">
+            
+            <div class="main-header">
+                
+                <a href="#mobile-menu-01" data-toggle="collapse" class="mobile-menu-toggle">
+                    Mobile Menu Toggle
+                </a>
+
+                <div class="container">
+                    <h1 class="navbar-brand">
+                        <a href="" title="Travelo - home">
+                            <img src="images/tgclogo.png" alt="Travelo HTML5 Template" />
+                        </a>
+                    </h1>
+                    <nav id="main-menu" role="navigation">
+                        <ul class="menu">
+                           <li class="menu-item-has-children">
+                                <a href="/">Home</a>
+                            </li>
+                            <li class="menu-item-has-children">
+                                <a href="search-classes">Classes</a>
+                            </li>
+                            <li class="menu-item-has-children">
+                                <a href="centers">Centers</a>
+                            </li>
+                            <li class="menu-item-has-children" th:if="${session.isEmpty()==false and session.isLoggedIn==true}">
+                            	<a class="soap-icon-shopping" href="my-cart">My Cart<span class="badge" th:text="${session.userCartSize}"></span> </a>
+                            </li>
+                            <li class="menu-item-has-children" th:if="${session.isEmpty()}">
+                            	<a id="login-link" href="#travelo-login" onclick="clearErrorSpan()" class="soap-popupbox">LOGIN</a>
+                            </li>
+                            <li class="menu-item-has-children"  th:if="${session.isEmpty()}">
+                        		<a id="signup-link" href="#travelo-signup"  onclick="clearErrorSpan()" class="soap-popupbox">SIGNUP</a>
+                            </li>
+                            <li class="menu-item-has-children"  th:if="${!session.isEmpty() and session.isLoggedIn==true }">
+                        		<span th:text="${session.userName}"></span> 
+                            </li>
+                             <li class="menu-item-has-children"  th:if="${!session.isEmpty() and session.isLoggedIn==true}">
+                        		<a href="logout">SIGN OUT</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <nav id="mobile-menu-01" class="mobile-menu collapse">
+                
+                    <ul id="mobile-primary-menu" class="menu">
+                            <li class="menu-item-has-children">
+                                <a href="/">Home</a>
+                            </li>
+                            <li class="menu-item-has-children">
+                                <a href="search-classes">Classes</a>
+                            </li>
+                            <li class="menu-item-has-children">
+                                <a href="centers">Centers</a>
+                            </li>
+                            <li class="menu-item-has-children" th:if="${session.isEmpty()==false and session.isLoggedIn==true}">
+                            	<a class="soap-icon-shopping" href="my-cart">My Cart<span class="badge" th:text="${session.userCartSize}"></span> </a>
+                            </li>
+                            <li class="menu-item-has-children" th:if="${session.isEmpty()}">
+                            	<a id="login-link" href="#travelo-login" onclick="clearErrorSpan()" class="soap-popupbox">LOGIN</a>
+                            </li>
+                            <li class="menu-item-has-children"  th:if="${session.isEmpty()}">
+                        		<a id="signup-link" href="#travelo-signup"  onclick="clearErrorSpan()" class="soap-popupbox">SIGNUP</a>
+                            </li>
+                            <li class="menu-item-has-children"  th:if="${!session.isEmpty()}">
+                        		<p th:text="${session.userName}">User Name</p> 
+                            </li>
+                             <li class="menu-item-has-children"  th:if="${!session.isEmpty()}">
+                        		<a href="logout">SIGN OUT</a>
+                            </li>
+                        </ul>
+                </nav>
+            </div>
+
+            <div id="travelo-signup" class="travelo-signup-box travelo-box">
+                <div class="seperator"><label>SIGN UP</label></div>
+                    <form action="openRegister" method="POST">
+                        <div class="form-group">
+                            <input id="signup-name" type="text" name="name" class="input-text full-width" placeholder="NAME" required="true"/>
+                        </div>
+                        <div class="form-group">
+                            <div class="selector">
+                                <select class="full-width" name="gender" placeholder="GENDER" required="true">
+                                    <option value="Male">MALE</option>
+                                    <option value="Female">FEMALE</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input id="signup-email" type="email" name="email" class="input-text full-width" placeholder="EMAIL ADDRESS" required="true"/>
+                        </div>
+                        <div class="form-group">
+                            <input id="signup-password" type="password" name="password" class="input-text full-width" placeholder="PASSWORD" required="true"/>
+                        </div>
+                        <div class="form-group">
+                            <input id="signup-confirmPassword" type="password" name="confirmPassword" class="input-text full-width" placeholder="CONFIRM PASSWORD" required="true"/>
+                        </div>
+                        <div class="form-group">
+                            <input id="signup-mobile" type="text" name="mobile" class="input-text full-width" placeholder="MOBILE" required="true"/>
+                        </div>
+                        <div class="form-group">
+                            <input id="signup-refrralCode" type="text" name="refrralCode" class="input-text full-width" placeholder="REFRRAL CODE" required="true"/>
+                        </div>
+                        <button type="submit" class="full-width btn-medium">SIGN UP NOW</button>
+                    </form>
+                <div class="seperator"></div>
+                <p>Have an Account? <a href="#travelo-login" class="goto-login soap-popupbox">Log in here</a></p>
+                <div style="color: red;">
+                	<span id="signup-error-span"></span>
+                </div>
+            </div>
+
+            <div id="travelo-login" class="travelo-login-box travelo-box">
+                <div class="seperator"><label>LOG IN</label></div>
+                <form action="openLogin" method="POST">
+                    <div class="form-group">
+                    	<input id="login-redirectUrl" type="hidden" name="redirectUrl" value="/"/>
+                        <input id="login-email" type="email" name="email" class="input-text full-width" placeholder="EMAIL ADDRESS" required="true"/>
+                    </div>
+                    <div class="form-group">
+                        <input id="login-password" type="password" name="password" class="input-text full-width" placeholder="PASSWORD" required="true"/>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="full-width btn-medium">LOGIN IN NOW</button>
+                    </div>
+                    <div class="form-group">
+                        <a href="#" class="forgot-password pull-right">Reset password?</a>
+                    </div>
+                </form>
+                <div class="seperator"></div>
+               <a href="#travelo-signup" class="goto-signup soap-popupbox">Sign Up</a>
+               <div class="seperator"></div>
+                <div style="color: red;">
+                	<span id="login-error-span"></span>
+                </div>
+                
+            </div>
+
+        </header>
+    </div>
+     <script th:inline="javascript">
+	    function isLoggedIn()
+	    {
+			if(getCookie("token")==null){
+				return false;
+			}else{
+				return true;
+			}
+	    }
+	    
+	    function getCookie(name)
+	    {
+	      var re = new RegExp(name + "=([^;]+)");
+	      var value = re.exec(document.cookie);
+	      return (value != null) ? unescape(value[1]) : null;
+	    }
+	</script> 
+   

@@ -106,18 +106,19 @@ public class OpenController {
 	}
 
 	@RequestMapping(value="/openLogin", method=RequestMethod.POST)
-	public void openLogin(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void openLogin(Model model, HttpServletRequest request, HttpServletResponse response,HttpSession session) throws IOException {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String redirectUrl = request.getParameter("redirectUrl");
 		Student student = studentService.findByEmail(email);
-		String token = "";
 		if(Objects.isNull(student)) {
 	        model.addAttribute("message", "user not found");
 		} else {
 			if(password.equals(student.getPassword())) {
-				token = getToken(student.getEmail(), student.getId());
-		        model.addAttribute("token", token);
+		        session.setAttribute("userName", student.getName());
+		        session.setAttribute("userId", student.getId());
+		        session.setAttribute("isLoggedIn", true);
+		        session.setAttribute("userCartSize",timeTableService.getUserCartSize(student.getId()));
 			} else {
 		        model.addAttribute("message", "login failed");
 			}
@@ -126,8 +127,7 @@ public class OpenController {
 		model.addAttribute("popup", "LOGIN");
 		model.addAttribute("email", email);
 		model.addAttribute("password", password);
-		response.addCookie(new Cookie("token", token));
-
+		
 		response.sendRedirect(redirectUrl);
 	}
 
@@ -190,23 +190,34 @@ public class OpenController {
 	}
 	
 	@RequestMapping(value="/my-cart")
-	public String openMyCart(Model model, @CookieValue(value = "token") String token) {
-		Long userId=Long.parseLong(getIdFromToken(token));
-		model.addAttribute("userCartClasses", timeTableService.getAllUserCartsClasses(userId));
-		model.addAttribute("total", "$" + userCartService.getToatlFees(userId));
+	public String openMyCart(Model model,HttpSession session) {
+		if(session != null){
+			Long userId=(Long) session.getAttribute("userId");
+			model.addAttribute("userCartClasses", timeTableService.getAllUserCartsClasses(userId));
+			model.addAttribute("total", "$" + userCartService.getToatlFees(userId));
+		}
 		return "my-cart";
 	}
 	
 	@RequestMapping(value="/addToCart")
-	public void addToCart(Model model, @RequestParam(name="classId") Long classId, @CookieValue(value = "token") String token, HttpServletResponse response) throws IOException {
-		Long userId=Long.parseLong(getIdFromToken(token));
+	public void addToCart(Model model, @RequestParam(name="classId") Long classId,HttpSession session, HttpServletResponse response) throws IOException {
+		Long userId=(Long) session.getAttribute("userId");
 		userCartService.create(new UserCart(userId, classId));
+		session.setAttribute("userCartSize",timeTableService.getUserCartSize(userId));
 		response.sendRedirect("my-cart");
 	}
 	
 	@RequestMapping(value="/removeFromCart")
-	public void removeFromCart(Model model, @RequestParam(name="userCartId") Long userCartId, HttpServletResponse response) throws IOException {
+	public void removeFromCart(Model model, @RequestParam(name="userCartId") Long userCartId, HttpServletResponse response,HttpSession session) throws IOException {
+		Long userId=(Long) session.getAttribute("userId");
 		userCartService.delete(userCartId);
+		session.setAttribute("userCartSize",timeTableService.getUserCartSize(userId));
 		response.sendRedirect("my-cart");
+	}
+	
+	@RequestMapping(value="/logout")
+	public void addToCart(Model model,HttpSession session, HttpServletResponse response) throws IOException {
+		session.invalidate();
+		response.sendRedirect("/");
 	}
 }
