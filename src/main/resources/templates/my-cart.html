@@ -69,6 +69,13 @@
                         </div>
                         <div class="col-lg-2"></div>
                     </div>
+                   <div class="row" th:if="${userCartClasses.isEmpty()}">
+	                    <div id="main">
+	                    	<div class="alert alert-error">
+								<h2>No Class is available in your cart.</h2>
+							</div>
+	                	</div>
+                	</div>
                 </div>
             </div>
         </section>
