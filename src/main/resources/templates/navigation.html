@@ -34,7 +34,7 @@
                         		<a id="signup-link" href="#travelo-signup"  onclick="clearErrorSpan()" class="soap-popupbox">SIGNUP</a>
                             </li>
                             <li class="menu-item-has-children"  th:if="${session.isLoggedIn==true}">
-                        		<h2  style="margin-top: 23px;" th:text="${session.userName}"></h2>
+                            	<a href="#" th:text="${session.userName}"></a>
                             </li>
                              <li class="menu-item-has-children"  th:if="${session.isLoggedIn==true}">
                         		<a href="logout">SIGN OUT</a>
@@ -64,7 +64,7 @@
                         		<a id="signup-link" href="#travelo-signup"  onclick="clearErrorSpan()" class="soap-popupbox">SIGNUP</a>
                             </li>
                             <li class="menu-item-has-children"  th:if="${session.isLoggedIn==true}">
-                        		<h2  style="margin-top: 23px;" th:text="${session.userName}"></h2>
+                            	<a href="#" th:text="${session.userName}"></a>
                             </li>
                              <li class="menu-item-has-children"  th:if="${session.isLoggedIn==true}">
                         		<a href="logout">SIGN OUT</a>
