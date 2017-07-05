@@ -213,7 +213,26 @@
          </section>
         
         <div lang="en" th:include="footer :: footer"></div>
-
+        <script th:include="footer :: loginScript" th:inline="javascript"></script> 
+<script type="text/javascript">
+        tjq(document).ready(function() {
+            tjq('.revolution-slider').revolution(
+            {
+                dottedOverlay:"none",
+                delay:8000,
+                startwidth:1170,
+                startheight:646,
+                onHoverStop:"on",
+                hideThumbs:10,
+                fullWidth:"on",
+                forceFullWidth:"on",
+                navigationType:"none",
+                shadow:0,
+                spinner:"spinner4",
+                hideTimerBar:"on",
+            });
+        });
+    </script>
 </body>
 </html>
 <style>

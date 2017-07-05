@@ -25,7 +25,7 @@
                                 <a href="centers">Centers</a>
                             </li>
                             <li class="menu-item-has-children" th:if="${session.isEmpty()==false and session.isLoggedIn==true}">
-                            	<a class="soap-icon-shopping" href="my-cart">My Cart<span class="badge" th:text="${session.userCartSize}"></span> </a>
+                            	<a href="my-cart" style="margin-top: 23px;"><img src="images/icon/cart-of-ecommerce.png" alt=""/><span class="badge" th:text="${session.userCartSize}"></span> </a>
                             </li>
                             <li class="menu-item-has-children" th:if="${session.isEmpty()}">
                             	<a id="login-link" href="#travelo-login" onclick="clearErrorSpan()" class="soap-popupbox">LOGIN</a>
@@ -55,7 +55,7 @@
                                 <a href="centers">Centers</a>
                             </li>
                             <li class="menu-item-has-children" th:if="${session.isEmpty()==false and session.isLoggedIn==true}">
-                            	<a class="soap-icon-shopping" href="my-cart">My Cart<span class="badge" th:text="${session.userCartSize}"></span> </a>
+                            	<a href="my-cart" style="margin-top: 23px;"><img src="images/icon/cart-of-ecommerce.png" alt=""/><span class="badge" th:text="${session.userCartSize}"></span> </a>
                             </li>
                             <li class="menu-item-has-children" th:if="${session.isEmpty()}">
                             	<a id="login-link" href="#travelo-login" onclick="clearErrorSpan()" class="soap-popupbox">LOGIN</a>
@@ -74,8 +74,15 @@
             </div>
 
             <div id="travelo-signup" class="travelo-signup-box travelo-box">
-                <div class="seperator"><label>SIGN UP</label></div>
                     <form action="openRegister" method="POST">
+                    <div class="form-group">
+					<a href="#" class="pull-right" onclick="closeSignUp()"><img src="images/icon/cancel.png" alt="" style="margin-top: -26px; margin-right: -14px;"/></a>
+				</div>
+				<div class="form-group">
+					<div class="seperator">
+						<label>SIGN UP</label>
+					</div>
+				</div>
                         <div class="form-group">
                             <input id="signup-name" type="text" name="name" class="input-text full-width" placeholder="NAME" required="true"/>
                         </div>
@@ -111,49 +118,44 @@
                 </div>
             </div>
 
-            <div id="travelo-login" class="travelo-login-box travelo-box">
-                <div class="seperator"><label>LOG IN</label></div>
-                <form action="openLogin" method="POST">
-                    <div class="form-group">
-                    	<input id="login-redirectUrl" type="hidden" name="redirectUrl" value="/"/>
-                        <input id="login-email" type="email" name="email" class="input-text full-width" placeholder="EMAIL ADDRESS" required="true"/>
-                    </div>
-                    <div class="form-group">
-                        <input id="login-password" type="password" name="password" class="input-text full-width" placeholder="PASSWORD" required="true"/>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="full-width btn-medium">LOGIN IN NOW</button>
-                    </div>
-                    <div class="form-group">
-                        <a href="#" class="forgot-password pull-right">Reset password?</a>
-                    </div>
-                </form>
-                <div class="seperator"></div>
-               <a href="#travelo-signup" class="goto-signup soap-popupbox">Sign Up</a>
-               <div class="seperator"></div>
-                <div style="color: red;">
-                	<span id="login-error-span"></span>
-                </div>
-                
-            </div>
+		<div id="travelo-login" class="travelo-login-box travelo-box">
+			<form action="openLogin" method="POST">
+				<div class="form-group">
+					<a href="#" class="pull-right" onclick="closeLogin()"><img src="images/icon/cancel.png" alt="" style="margin-top: -26px; margin-right: -14px;"/></a>
+				</div>
+				<div class="form-group">
+					<div class="seperator">
+						<label>LOG IN</label>
+					</div>
+				</div>
 
-        </header>
+				<div class="form-group">
+					<input id="login-redirectUrl" type="hidden" name="redirectUrl"
+						value="/" /> <input id="login-email" type="email" name="email"
+						class="input-text full-width" placeholder="EMAIL ADDRESS"
+						required="true" />
+				</div>
+				<div class="form-group">
+					<input id="login-password" type="password" name="password"
+						class="input-text full-width" placeholder="PASSWORD"
+						required="true" />
+				</div>
+				<div class="form-group">
+					<button type="submit" class="full-width btn-medium">LOGIN IN NOW</button>
+				</div>
+				<div class="form-group">
+					 <a href="#" class="forgot-password pull-right">Reset password?</a>
+				</div>
+				<div class="form-group">
+					<a href="#travelo-signup" class="goto-signup soap-popupbox">Sign up</a>
+				</div>
+			</form>
+			<div class="seperator"></div>
+			<div style="color: red;">
+				<span id="login-error-span"></span>
+			</div>
+
+		</div>
+
+	</header>
     </div>
-     <script th:inline="javascript">
-	    function isLoggedIn()
-	    {
-			if(getCookie("token")==null){
-				return false;
-			}else{
-				return true;
-			}
-	    }
-	    
-	    function getCookie(name)
-	    {
-	      var re = new RegExp(name + "=([^;]+)");
-	      var value = re.exec(document.cookie);
-	      return (value != null) ? unescape(value[1]) : null;
-	    }
-	</script> 
-   
