@@ -19,17 +19,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.go2.classes.business.service.AdminService;
 import com.go2.classes.business.service.TeacherService;
+import com.go2.classes.common.BaseController;
+import com.go2.classes.common.Utilities;
 import com.go2.classes.data.repository.jpa.FilesJpaRepository;
 import com.go2.classes.models.Admin;
 import com.go2.classes.models.Teacher;
 import com.go2.classes.models.jpa.FilesEntity;
-import com.go2.classes.rest.common.Utilities;
-
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 
 @Controller
-public class CommonRestController {
+public class CommonRestController extends BaseController {
 
 	@Value("${uploadedimages}")
 	private String uploadedImagesPath = "";
@@ -105,8 +103,4 @@ public class CommonRestController {
 		return  new FileSystemResource(Utilities.getImage(filesEntity.getPath()));
 	}
 	
-	public String getToken(String email, Long id){
-		String token = Jwts.builder().setSubject(email).setId(id+"").signWith(SignatureAlgorithm.HS512, "GO2CLASSES.COM").compact();
-		return token;
-	};
 }

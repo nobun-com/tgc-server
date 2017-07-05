@@ -2,8 +2,6 @@ package com.go2.classes.models;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.*;
-
 import java.util.Date;
 
 public class Article implements Serializable {

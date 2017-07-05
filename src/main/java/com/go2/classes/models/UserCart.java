@@ -21,6 +21,9 @@ public class UserCart implements Serializable {
     @NotNull
     private Long timeTableId;
 
+    @NotNull
+    private String status;
+
     public UserCart() {
 		super();
 	}
@@ -29,7 +32,16 @@ public class UserCart implements Serializable {
 		super();
 		this.userId = userId;
 		this.timeTableId = timeTableId;
+		this.status = "InCart";
 		this.date = new Date();
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public Long getId() {

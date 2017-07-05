@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.go2.classes.business.service.TimeTableService;
 import com.go2.classes.models.Classes;
 import com.go2.classes.models.TimeTable;
-import com.go2.classes.rest.common.Utilities;
+import com.go2.classes.common.Utilities;
 
 @Component
 @Transactional

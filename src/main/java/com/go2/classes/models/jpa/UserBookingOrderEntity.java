@@ -7,8 +7,8 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Entity
-@Table(name="user_cart")
-public class UserCartEntity implements Serializable {
+@Table(name="user_booking_order")
+public class UserBookingOrderEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,41 +18,17 @@ public class UserCartEntity implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="timetable_id", referencedColumnName="id")
-    private TimeTableEntity timeTable;
-
-    @ManyToOne
-    @JoinColumn(name="student_id", referencedColumnName="id")
+    @JoinColumn(name="student_id", referencedColumnName="id", nullable=false)
     private StudentEntity student;
-    
-    @ManyToOne
-    @JoinColumn(name="order_id", referencedColumnName="id")
-    private UserBookingOrderEntity userBookingOrderEntity;
-    
-    @Column(name="status", nullable=false, length=10)
-    private String status;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="date", nullable=false)
     private Date date;
 
-    public UserBookingOrderEntity getUserBookingOrderEntity() {
-		return userBookingOrderEntity;
-	}
+    @Column(name="classes_count")
+    private Integer classesCount;
 
-	public void setUserBookingOrderEntity(UserBookingOrderEntity userBookingOrderEntity) {
-		this.userBookingOrderEntity = userBookingOrderEntity;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public UserCartEntity() {
+    public UserBookingOrderEntity() {
 		super();
     }
     
@@ -63,12 +39,12 @@ public class UserCartEntity implements Serializable {
         return this.id;
     }
 
-    public TimeTableEntity getTimeTable() {
-		return timeTable;
+	public Integer getClassesCount() {
+		return classesCount;
 	}
 
-	public void setTimeTable(TimeTableEntity timeTable) {
-		this.timeTable = timeTable;
+	public void setClassesCount(Integer classesCount) {
+		this.classesCount = classesCount;
 	}
 
 	public StudentEntity getStudent() {
@@ -92,7 +68,6 @@ public class UserCartEntity implements Serializable {
         sb.append("["); 
         sb.append(id);
         sb.append("]:"); 
-        sb.append(timeTable);
         sb.append("|");
         sb.append(student);
         sb.append("|");

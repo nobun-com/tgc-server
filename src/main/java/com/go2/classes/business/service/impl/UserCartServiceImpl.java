@@ -1,18 +1,23 @@
 package com.go2.classes.business.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 import javax.annotation.Resource;
 
-import com.go2.classes.models.UserCart;
-import com.go2.classes.models.jpa.UserCartEntity;
-import com.go2.classes.business.service.UserCartService;
-import com.go2.classes.business.service.mapping.UserCartServiceMapper;
-import com.go2.classes.data.repository.jpa.UserCartJpaRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.go2.classes.business.service.UserCartService;
+import com.go2.classes.business.service.mapping.UserCartServiceMapper;
+import com.go2.classes.data.repository.jpa.StudentJpaRepository;
+import com.go2.classes.data.repository.jpa.UserBookingOrderJpaRepository;
+import com.go2.classes.data.repository.jpa.UserCartJpaRepository;
+import com.go2.classes.models.UserCart;
+import com.go2.classes.models.jpa.UserBookingOrderEntity;
+import com.go2.classes.models.jpa.UserCartEntity;
 
 @Component
 @Transactional
@@ -20,6 +25,12 @@ public class UserCartServiceImpl implements UserCartService {
 
 	@Resource
 	private UserCartJpaRepository userCartJpaRepository;
+
+	@Resource
+	private StudentJpaRepository studentJpaRepository;
+
+	@Resource
+	UserBookingOrderJpaRepository userBookingOrderJpaRepository;
 
 	@Resource
 	private UserCartServiceMapper userCartServiceMapper;
@@ -111,8 +122,23 @@ public class UserCartServiceImpl implements UserCartService {
 		return userCartJpaRepository.findFees(userId);
 	}
 
-	
-
-	
-
+	@Override
+	public Integer bookAllCarts(Long userId) {
+		UserBookingOrderEntity userBookingOrderEntity = new UserBookingOrderEntity();
+		userBookingOrderEntity.setStudent(studentJpaRepository.findOne(userId));
+		userBookingOrderEntity.setDate(new Date());
+		userBookingOrderEntity = userBookingOrderJpaRepository.save(userBookingOrderEntity);
+		
+		Iterable<UserCartEntity> inCart = userCartJpaRepository.findAllUserCartsByStudentId(userId);
+		Integer classesCount = 0;
+		for(UserCartEntity userCartEntity : inCart) {
+			userCartEntity.setStatus("Booked");
+			userCartEntity.setUserBookingOrderEntity(userBookingOrderEntity);
+			userCartJpaRepository.save(userCartEntity);
+			classesCount++;
+		}
+		userBookingOrderEntity.setClassesCount(classesCount);
+		userBookingOrderJpaRepository.save(userBookingOrderEntity);
+		return classesCount;
+	}
 }

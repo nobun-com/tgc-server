@@ -135,9 +135,6 @@ public class TimeTableServiceImpl implements TimeTableService {
 
 	@Override
 	public List<Map<String, Object>> getClassesSearchResult(ClassesSearch classesSearch, Long centerId) {
-
-		System.out.println("#####################################\n" + classesSearch.getSearchClassesByCenretQuery(centerId) + "\n#####################################");
-
 		Query q = entityManager.createNativeQuery(classesSearch.getSearchClassesByCenretQuery(centerId), TimeTableEntity.class);
 		List<TimeTableEntity> entities = q.getResultList();
 		
@@ -149,7 +146,7 @@ public class TimeTableServiceImpl implements TimeTableService {
 	}
 
 	@Override
-	public Object getAllUserCartsClasses(Long userId) {
+	public Object getAllClassesInCart(Long userId) {
 		List<Map<String, Object>> beans = new ArrayList<Map<String, Object>>();
 		Iterable<UserCartEntity> userCarts = userCartJpaRepository.findAllUserCartsByStudentId(userId);
 		for(UserCartEntity userCart : userCarts) {

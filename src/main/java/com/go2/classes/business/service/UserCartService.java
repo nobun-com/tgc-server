@@ -22,4 +22,6 @@ public interface UserCartService {
 
 	Double getToatlFees(Long userId);
 
+	Integer bookAllCarts(Long userId);
+
 }

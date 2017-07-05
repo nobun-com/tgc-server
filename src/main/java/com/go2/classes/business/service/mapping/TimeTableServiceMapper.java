@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import com.go2.classes.models.TimeTable;
 import com.go2.classes.models.jpa.ClassesEntity;
 import com.go2.classes.models.jpa.TimeTableEntity;
-import com.go2.classes.rest.common.Utilities;
+import com.go2.classes.common.Utilities;
 
 @Component
 public class TimeTableServiceMapper extends AbstractServiceMapper {

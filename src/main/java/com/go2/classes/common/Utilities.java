@@ -1,4 +1,4 @@
-package com.go2.classes.rest.common;
+package com.go2.classes.common;
 
 import java.io.File;
 import java.io.FileOutputStream;

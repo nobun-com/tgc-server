@@ -3,7 +3,7 @@ package com.go2.classes.models;
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.go2.classes.rest.common.Utilities;
+import com.go2.classes.common.Utilities;
 
 public class ClassesSearch implements Serializable {
 
@@ -94,30 +94,30 @@ public class ClassesSearch implements Serializable {
 
 	public String getSearchByCenterQuery() {
 		String sql = "select CN.center_name as 'centerName', CN.logo_name as 'logo', CN.id as 'id', count(*) as 'count' from time_table TT, classes CC, center CN, address AD where TT.classes_id = CC.id and CC.center_id = CN.id and CN.address_id = AD.id";
-		sql = sql + getAgePredicate();
-		sql = sql + getStartDatePredicate();
-		sql = sql + getCenterPredicate();
-		sql = sql + getFeesPredicate();
-		sql = sql + getAreaPredicate();
-		sql = sql + getInterestPredicate();
-		sql = sql + getDayPredicate();
+		sql = sql + getPredicate();
 		sql = sql + " GROUP BY CN.id";
 		return sql;
 	}
 	
 	public String getSearchClassesByCenretQuery(Long centerId){
 		String sql = "select TT.* from time_table TT, classes CC, center CN, address AD where TT.classes_id = CC.id and CC.center_id = CN.id and CN.address_id = AD.id";
-		sql = sql + getAgePredicate();
+		sql = sql + getPredicate();
+		sql = sql + " and CN.id = " + centerId;
+		return sql;
+	}
+	
+	private String getPredicate() {
+		String sql = getAgePredicate();
 		sql = sql + getStartDatePredicate();
 		sql = sql + getCenterPredicate();
 		sql = sql + getFeesPredicate();
 		sql = sql + getAreaPredicate();
 		sql = sql + getInterestPredicate();
 		sql = sql + getDayPredicate();
-		sql = sql + " and CN.id = " + centerId;
+		sql = sql + getTimePredicate();
 		return sql;
 	}
-	
+
 	private String getAgePredicate() {
 		if(isEmpty(age)) { return ""; }
 		String sql = " and CC.max_age >= " + age + " and CC.min_age <= " + age;
@@ -158,6 +158,22 @@ public class ClassesSearch implements Serializable {
 		if(Objects.isNull(interest) || interest.length == 0) { return ""; }
 		String sql = " and CC.category_id IN (" + String.join(", ", interest) + ")";
 		return sql;  
+	}
+	
+	private String getTimePredicate() {
+		if(Objects.isNull(time) || time.length == 0) { return ""; }
+		String sql = " and (";
+		for(int index=0 ; index < time.length; index++) {
+			String tokens[] = time[index].split("-");
+			sql += "(((hour(TT.start_time)*60) + minute(TT.start_time)) >= " + tokens[0];
+			sql += " and ((hour(TT.start_time)*60) + minute(TT.start_time)) <= " + tokens[1] + ")";
+			
+			if(index < time.length-1) {
+				sql += " or ";
+			}
+		}
+		sql += ")";
+		return sql;
 	}
 	
 	private String getDayPredicate() {

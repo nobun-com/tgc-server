@@ -135,9 +135,6 @@ public class CenterServiceImpl implements CenterService {
 	
 	@Override
 	public List<Map<String, Object>> getCentersSearchResult(ClassesSearch classesSearch) {
-
-		System.out.println("#####################################\n" + classesSearch.getSearchByCenterQuery() + "\n#####################################");
-
 		Query query = entityManager.createNativeQuery(classesSearch.getSearchByCenterQuery());
 		List<Object[] > entities = query.getResultList();
 		List<Map<String, Object>> beans = new ArrayList<Map<String, Object>>();
