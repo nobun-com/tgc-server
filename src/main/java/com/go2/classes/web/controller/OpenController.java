@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -31,7 +30,7 @@ public class OpenController extends BaseController{
     private TimeTableService timeTableService; // Injected by Spring
 
 	@RequestMapping(value="/openLogin", method=RequestMethod.POST)
-	public void openLogin(Model model, HttpServletRequest request, HttpServletResponse response,HttpSession session) throws IOException {
+	public String openLogin(Model model, HttpServletRequest request, HttpServletResponse response,HttpSession session) throws IOException {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String redirectUrl = request.getParameter("redirectUrl");
@@ -44,6 +43,7 @@ public class OpenController extends BaseController{
 		        session.setAttribute("userId", student.getId());
 		        session.setAttribute("isLoggedIn", true);
 		        session.setAttribute("userCartSize",timeTableService.getUserCartSize(student.getId()));
+		        response.sendRedirect(redirectUrl);
 			} else {
 		        model.addAttribute("message", "login failed");
 			}
@@ -53,11 +53,11 @@ public class OpenController extends BaseController{
 		model.addAttribute("email", email);
 		model.addAttribute("password", password);
 		
-		response.sendRedirect(redirectUrl);
+		return "index";
 	}
 
 	@RequestMapping(value="/openRegister", method=RequestMethod.POST)
-	public String openRegister(Model model, HttpServletRequest request, HttpServletResponse response) {
+	public String openRegister(Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
 
 		String name = request.getParameter("name");
 		String gender = request.getParameter("gender");
@@ -84,7 +84,11 @@ public class OpenController extends BaseController{
 				if(Objects.isNull(student)) {
 			        model.addAttribute("message", "Unable to registred user");
 				} else {
-					model.addAttribute("message", "User registred");
+					session.setAttribute("userName", student.getName());
+			        session.setAttribute("userId", student.getId());
+			        session.setAttribute("isLoggedIn", true);
+			        session.setAttribute("userCartSize",timeTableService.getUserCartSize(student.getId()));
+			        response.sendRedirect("/");
 				}
 			} else {
 				model.addAttribute("message", "Password and confirm password doesn't match");

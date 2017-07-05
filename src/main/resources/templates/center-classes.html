@@ -65,8 +65,8 @@
 			                                               <u><h4 class="box-title" th:text="${classObj.slots}"></h4></u><br></br>
 				                                       </div>
 			                                           <div>
-			                                               <a class="button btn-small full-width text-center" th:if="${session.isEmpty()==false and session.isLoggedIn==true}" th:href="${'/addToCart?classId=' + classObj.id}">BOOK NOW</a>
-			                                               <a class="button btn-small full-width text-center" th:if="${session.isEmpty()==true}" th:onclick="'doLogin(\'' + ${classObj.id} + '\');'" >BOOK NOW</a>
+			                                               <a class="button btn-small full-width text-center" th:if="${session.isLoggedIn==true}" th:href="${'/addToCart?classId=' + classObj.id}">BOOK NOW</a>
+			                                               <a class="button btn-small full-width text-center" th:if="!${session.isLoggedIn==true}" th:onclick="'doLogin(\'' + ${classObj.id} + '\');'" >BOOK NOW</a>
 			                                           </div>
 			                                       </div>
 			                                   </div>
@@ -119,7 +119,16 @@
         
          <div lang="en" th:include="footer :: footer"></div>
     <script th:include="footer :: loginScript" th:inline="javascript"></script> 
-    <script th:inline="javascript">
+    
+   <script th:inline="javascript">
+	    function doLogin(classId)
+	    {
+				jQuery('#login-redirectUrl').val("addToCart?classId="+classId);				
+				document.getElementById('login-link').click();
+			return false;
+	    }
+	    
+	    
 	    var geocoder;
 	    var map;
 	    function codeAddress() {
@@ -148,14 +157,6 @@
 	    window.onload = function(){
 	            codeAddress();
 	       }
-	</script>
-   <script th:inline="javascript">
-	    function doLogin(classId)
-	    {
-				jQuery('#login-redirectUrl').val("addToCart?classId="+classId);				
-				document.getElementById('login-link').click();
-			return false;
-	    }
 	    
 	</script> 
 </body>
