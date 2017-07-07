@@ -25,7 +25,7 @@
                                 <a href="centers">Centers</a>
                             </li>
                             <li class="menu-item-has-children" th:if="${session.isLoggedIn==true}">
-                            	<a href="my-cart" style="margin-top: 23px;"><img src="images/icon/cart-of-ecommerce.png" alt=""/><span class="badge" th:text="${session.userCartSize}"></span> </a>
+                            	<a href="my-cart" style="margin-top: 20px;"><img src="images/icon/cart-of-ecommerce.png" alt=""/><span class="badge" th:text="${session.userCartSize}"></span> </a>
                             </li>
                             <li class="menu-item-has-children" th:if="!${session.isLoggedIn==true}">
                             	<a id="login-link" href="#travelo-login" onclick="clearErrorSpan()" class="soap-popupbox">LOGIN</a>
@@ -34,7 +34,7 @@
                         		<a id="signup-link" href="#travelo-signup"  onclick="clearErrorSpan()" class="soap-popupbox">SIGNUP</a>
                             </li>
                             <li class="menu-item-has-children"  th:if="${session.isLoggedIn==true}">
-                            	<a href="#" th:text="${session.userName}"></a>
+                            	<a href="profile" th:text="${session.userName}"></a>
                             </li>
                              <li class="menu-item-has-children"  th:if="${session.isLoggedIn==true}">
                         		<a href="logout">SIGN OUT</a>
@@ -55,7 +55,7 @@
                                 <a href="centers">Centers</a>
                             </li>
                             <li class="menu-item-has-children" th:if="${session.isLoggedIn==true}">
-                            	<a href="my-cart" style="margin-top: 23px;"><img src="images/icon/cart-of-ecommerce.png" alt=""/><span class="badge" th:text="${session.userCartSize}"></span> </a>
+                            	<a href="my-cart" style="margin-top: 20px;"><img src="images/icon/cart-of-ecommerce.png" alt=""/><span class="badge" th:text="${session.userCartSize}"></span> </a>
                             </li>
                             <li class="menu-item-has-children" th:if="!${session.isLoggedIn==true}">
                             	<a id="login-link" href="#travelo-login" onclick="clearErrorSpan()" class="soap-popupbox">LOGIN</a>
@@ -64,7 +64,7 @@
                         		<a id="signup-link" href="#travelo-signup"  onclick="clearErrorSpan()" class="soap-popupbox">SIGNUP</a>
                             </li>
                             <li class="menu-item-has-children"  th:if="${session.isLoggedIn==true}">
-                            	<a href="#" th:text="${session.userName}"></a>
+                            	<a href="profile" th:text="${session.userName}"></a>
                             </li>
                              <li class="menu-item-has-children"  th:if="${session.isLoggedIn==true}">
                         		<a href="logout">SIGN OUT</a>
@@ -144,11 +144,12 @@
 					<button type="submit" class="full-width btn-medium">LOGIN IN NOW</button>
 				</div>
 				<div class="form-group">
-					 <a href="#" class="forgot-password pull-right">Reset password?</a>
+					<p>Don't have an account? <a href="#travelo-signup" class="goto-signup soap-popupbox">Sign up</a></p>
+				 <!-- <a href="#" class="forgot-password pull-right">Reset password?</a> -->
 				</div>
-				<div class="form-group">
+				<!-- <div class="form-group">
 					<a href="#travelo-signup" class="goto-signup soap-popupbox">Sign up</a>
-				</div>
+				</div> -->
 			</form>
 			<div class="seperator"></div>
 			<div style="color: red;">

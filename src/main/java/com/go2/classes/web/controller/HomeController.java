@@ -28,5 +28,5 @@ public class HomeController {
 	public String Home(Model model, HttpSession session) {
 		return "index";
 	}
-
+	
 }

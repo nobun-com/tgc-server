@@ -1,86 +1,94 @@
 <html>
-   <head lang="en" th:include="header :: header"></head>
-  <body> 
-        <div lang="en" th:include="navigation :: navigation"> </div>
-        <div class="page-title-container">
-            <div class="container">
-                <div class="page-title pull-left">
-                    <h2 class="entry-title">My Cart</h2>
-                </div>
-                <ul class="breadcrumbs pull-right">
-                    <li><a href="/">HOME</a></li>
-                    <li class="active">My Cart</li>
-                </ul>
-            </div>
-        </div>
-         <section id="content" class="gray-area" >
-            <div class="container text-left shortcode">
-                <div class="block">
-                    <div class="row" th:if="${!userCartClasses.isEmpty()}">
-                     <div class="col-lg-2"></div>
-                        <div class="col-lg-8 listing-style3 hotel">
-                        
-                    		<article class="box" th:each="classObj : ${userCartClasses}">
-                                  <div class="details col-xs-12 col-sm-12 col-md-12">
-                                      <div>
-                                          <div>
-                                          		<h2 class="box-title" th:text="${classObj.name}"></h2>
-                                          		<div class="amenities">
-                                                	<input type="text" class="input-text full-width" placeholder="Coupon Code" />
-                                            	</div>
-                                          </div>
-                                          <div>
-                                          		<a class="button btn-small green full-width text-center" title="" href="#">Apply</a>
-                                          </div>
-                                      </div>
-                                      <div>
-                                       <div>
-                                          	  <p style="margin: 0px;" th:text="${classObj.date}"></p>
-                                              <h4 class="box-title" th:text="${classObj.day + '( ' + classObj.time + ' )'}"></h4><br></br><br></br>
-                                              <u><h4 class="box-title" th:text="${classObj.slots}"></h4></u><br></br>
-                                       </div>
-                                          <div>
-                                          	<span class="price"><small>Fees</small><div th:text="${classObj.fee}"></div></span>
-                                              <a class="button btn-small red full-width text-center" title="" th:href="${'/removeFromCart?userCartId=' + classObj.userCartId}" >Remove</a>
-                                          </div>
-                                      </div>
-                                  </div>
-                        </article>
-                          
-                             <article class="box">
-                                <div class="details col-xs-12 col-sm-12 col-md-12">
-                                    <div>
-                                        <div>
-                                        </div>
-                                        <div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                    	<div style="text-align: right; margin-top: 0px;">
-                                    		<h2><strong>Total Fees</strong></h2>
-                                        </div>
-                                        <div>
-                                            <span class="price" th:text="${total}"></span>
-                                            <a class="button btn-small blue full-width text-center" title="" href="/bookCart">Pay</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-lg-2"></div>
-                    </div>
-                   <div class="row" th:if="${userCartClasses.isEmpty()}">
-	                    <div id="main">
-	                    	<div class="alert alert-error">
-								<h2>No Class is available in your cart.</h2>
+<head lang="en" th:include="header :: header"></head>
+<body>
+	<div lang="en" th:include="navigation :: navigation"></div>
+	<div class="page-title-container">
+		<div class="container">
+			<div class="page-title pull-left">
+				<h2 class="entry-title">My Cart</h2>
+			</div>
+			<ul class="breadcrumbs pull-right">
+				<li><a href="/">HOME</a></li>
+				<li class="active">My Cart</li>
+			</ul>
+		</div>
+	</div>
+	<section id="content" class="gray-area">
+		<div class="container text-left shortcode">
+			<div class="block">
+				<div class="row" th:if="${!userCartClasses.isEmpty()}">
+					<div class="col-lg-2"></div>
+					<div class="col-lg-8 listing-style3 hotel">
+
+						<article class="box" th:each="classObj : ${userCartClasses}">
+							<div class="details col-xs-12 col-sm-12 col-md-12">
+								<div>
+									<div>
+										<h2 class="box-title" th:text="${classObj.name}"></h2>
+										<div class="amenities">
+											<input type="text" class="input-text full-width"
+												placeholder="Coupon Code" />
+										</div>
+									</div>
+									<div>
+										<a class="button btn-small green full-width text-center"
+											title="" href="#">Apply</a>
+									</div>
+								</div>
+								<div>
+									<div>
+										<p style="margin: 0px;" th:text="${classObj.date}"></p>
+										<h4 class="box-title"
+											th:text="${classObj.day + '( ' + classObj.time + ' )'}"></h4>
+										<br></br>
+										<br></br> <u><h4 class="box-title"
+												th:text="${classObj.slots}"></h4></u><br></br>
+									</div>
+									<div>
+										<span class="price"><small>Fees</small>
+										<div th:text="${classObj.fee}"></div></span> <a
+											class="button btn-small red full-width text-center" title=""
+											th:href="${'/removeFromCart?userCartId=' + classObj.userCartId}">Remove</a>
+									</div>
+								</div>
 							</div>
-	                	</div>
-                	</div>
-                </div>
-            </div>
-        </section>
-        
-       <div lang="en" th:include="footer :: footer"></div>
+						</article>
+
+						<article class="box">
+							<div class="details col-xs-12 col-sm-12 col-md-12">
+								<div>
+									<div></div>
+									<div></div>
+								</div>
+								<div>
+									<div style="text-align: right; margin-top: 0px;">
+										<h2>
+											<strong>Total Fees</strong>
+										</h2>
+									</div>
+									<div>
+										<span class="price" th:text="${total}"></span> <a
+											class="button btn-small blue full-width text-center" title=""
+											href="/bookCart">Pay</a>
+									</div>
+								</div>
+							</div>
+						</article>
+					</div>
+					<div class="col-lg-2"></div>
+				</div>
+				<div class="row" th:if="${userCartClasses.isEmpty()}">
+					<div id="main">
+						<div class="alert alert-error">
+							<h2>No Class is available in your cart.</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<div lang="en" th:include="footer :: footer"></div>
 </body>
 </html>
 
