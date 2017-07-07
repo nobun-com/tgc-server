@@ -2,7 +2,9 @@ package com.go2.classes.business.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Resource;
@@ -10,11 +12,14 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.go2.classes.business.service.ClassesService;
+import com.go2.classes.business.service.CouponService;
 import com.go2.classes.business.service.UserCartService;
 import com.go2.classes.business.service.mapping.UserCartServiceMapper;
 import com.go2.classes.data.repository.jpa.StudentJpaRepository;
 import com.go2.classes.data.repository.jpa.UserBookingOrderJpaRepository;
 import com.go2.classes.data.repository.jpa.UserCartJpaRepository;
+import com.go2.classes.models.Coupon;
 import com.go2.classes.models.UserCart;
 import com.go2.classes.models.jpa.UserBookingOrderEntity;
 import com.go2.classes.models.jpa.UserCartEntity;
@@ -23,6 +28,12 @@ import com.go2.classes.models.jpa.UserCartEntity;
 @Transactional
 public class UserCartServiceImpl implements UserCartService {
 
+	@Resource
+	private ClassesService classesService;
+
+	@Resource
+    private CouponService couponService; // Injected by Spring
+	
 	@Resource
 	private UserCartJpaRepository userCartJpaRepository;
 
@@ -69,13 +80,7 @@ public class UserCartServiceImpl implements UserCartService {
 
 	@Override
 	public UserCart update(UserCart userCart) {
-		UserCartEntity userCartEntity = null;
-		if(!Objects.isNull(userCart.getId())) {
-			userCartEntity = userCartJpaRepository.findOne(userCart.getId());
-		}
-		if(Objects.isNull(userCartEntity)) {
-			throw new IllegalStateException("UserCart.not.found");
-		}
+		UserCartEntity userCartEntity = userCartJpaRepository.findOne(userCart.getId());
 		userCartServiceMapper.mapUserCartToUserCartEntity(userCart, userCartEntity);
 		UserCartEntity userCartEntitySaved = userCartJpaRepository.save(userCartEntity);
 		return userCartServiceMapper.mapUserCartEntityToUserCart(userCartEntitySaved);
@@ -135,10 +140,49 @@ public class UserCartServiceImpl implements UserCartService {
 			userCartEntity.setStatus("Booked");
 			userCartEntity.setUserBookingOrderEntity(userBookingOrderEntity);
 			userCartJpaRepository.save(userCartEntity);
+			classesService.bookClass(userCartEntity.getTimeTable().getClasses());
 			classesCount++;
+			
 		}
 		userBookingOrderEntity.setClassesCount(classesCount);
 		userBookingOrderJpaRepository.save(userBookingOrderEntity);
 		return classesCount;
 	}
+
+	@Override
+	public Map<String, Object> applyCoupon(Long userCartId, String couponCode) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		Coupon coupon = couponService.findById(couponCode);
+		if(Objects.isNull(coupon)) {
+			result.put("message", "invalid coupon");
+		}
+		else if(!coupon.getStatus().equals("Active")) { 
+			result.put("message", "coupon is " + coupon.getStatus());
+		} 
+		else {
+			UserCart userCart = findById(userCartId);
+			userCart.setCoupon(coupon.getCode());
+			userCart.setFinalCost(getDiscount(userCart.getFees(), coupon));
+			update(userCart);
+			result.put("success", true);
+			result.put("message", "coupon applied fees will be $" + userCart.getFinalCost().toString());
+			result.put("cost", userCart.getFinalCost());
+			result.put("totalCost", getToatlFees(userCart.getUserId()));
+		}
+		return result;
+	}
+
+	private Double getDiscount(Double cost, Coupon coupon) {
+		String rate = coupon.getValue();
+		Double value;
+		if(rate.contains("%")) {
+			rate = rate.replaceAll("%", "");
+			value = Double.parseDouble(rate);
+			value = (value*cost)/100;
+		} else {
+			value = Double.parseDouble(rate);
+		}
+		return cost - value;
+	}
+
 }

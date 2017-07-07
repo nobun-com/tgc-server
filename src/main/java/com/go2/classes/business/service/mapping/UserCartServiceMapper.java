@@ -5,6 +5,7 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Component;
 
 import com.go2.classes.models.UserCart;
+import com.go2.classes.models.jpa.CouponEntity;
 import com.go2.classes.models.jpa.StudentEntity;
 import com.go2.classes.models.jpa.TimeTableEntity;
 import com.go2.classes.models.jpa.UserCartEntity;
@@ -49,6 +50,14 @@ public class UserCartServiceMapper extends AbstractServiceMapper {
 			userCartEntity.setStudent(null);
 		}
 
+		if(hasLinkToCoupon(userCart)) {
+			CouponEntity coupon = new CouponEntity();
+			coupon.setCode(userCart.getCoupon());
+			userCartEntity.setCouponEntity(coupon);
+		} else {
+			userCartEntity.setCouponEntity(null);
+		}
+
 		if(hasLinkToTimeTable(userCart)) {
 			TimeTableEntity timeTable = new TimeTableEntity();
 			timeTable.setId(userCart.getTimeTableId());
@@ -60,6 +69,13 @@ public class UserCartServiceMapper extends AbstractServiceMapper {
 		map(userCart, userCartEntity);
 	}
 	
+	private boolean hasLinkToCoupon(UserCart userCart) {
+		if(userCart.getCoupon() != null) {
+			return true;
+		}
+		return false;
+	}
+
 	private boolean hasLinkToTimeTable(UserCart userCart) {
 		if(userCart.getTimeTableId() != null) {
 			return true;

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.go2.classes.models.Classes;
 import com.go2.classes.models.jpa.ClassesCategoryEntity;
+import com.go2.classes.models.jpa.ClassesEntity;
 
 public interface ClassesService { 
 
@@ -24,4 +25,6 @@ public interface ClassesService {
 	List<Classes> getAllClassesByTeacher(Long teacherId);
 
 	Iterable<ClassesCategoryEntity> findAllClassesCategory();
+
+	void bookClass(ClassesEntity classes);
 }

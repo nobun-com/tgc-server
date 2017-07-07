@@ -74,6 +74,9 @@ public class ClassesEntity implements Serializable {
     @Column(name="max_slots", nullable=false)
     private Integer maxSlots;
     
+    @Column(name="slots_available", nullable=false)
+    private Integer slotsAvailable;
+    
     @Column(name="category_id", nullable=false)
     private Integer categoryId;
     
@@ -222,7 +225,15 @@ public class ClassesEntity implements Serializable {
 		this.maxSlots = maxSlots;
 	}
 
-    public String toString() { 
+    public Integer getSlotsAvailable() {
+		return slotsAvailable;
+	}
+
+	public void setSlotsAvailable(Integer slotsAvailable) {
+		this.slotsAvailable = slotsAvailable;
+	}
+
+	public String toString() { 
         StringBuffer sb = new StringBuffer(); 
         sb.append("["); 
         sb.append(id);

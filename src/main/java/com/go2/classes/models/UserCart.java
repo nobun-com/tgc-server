@@ -24,16 +24,40 @@ public class UserCart implements Serializable {
     @NotNull
     private String status;
 
+    private Double finalCost;
+
+    private Double fees;
+
+    private String coupon;
+
     public UserCart() {
 		super();
 	}
 
-	public UserCart(Long userId, Long timeTableId) {
+	public UserCart(Long userId, Long timeTableId, Double classFees) {
 		super();
 		this.userId = userId;
 		this.timeTableId = timeTableId;
+		this.finalCost = classFees;
+		this.fees = classFees;
 		this.status = "InCart";
 		this.date = new Date();
+	}
+
+	public Double getFinalCost() {
+		return finalCost;
+	}
+
+	public void setFinalCost(Double finalCost) {
+		this.finalCost = finalCost;
+	}
+
+	public String getCoupon() {
+		return coupon;
+	}
+
+	public void setCoupon(String coupon) {
+		this.coupon = coupon;
 	}
 
 	public String getStatus() {
@@ -74,6 +98,14 @@ public class UserCart implements Serializable {
 
 	public void setTimeTableId(Long timeTableId) {
 		this.timeTableId = timeTableId;
+	}
+
+	public Double getFees() {
+		return fees;
+	}
+
+	public void setFees(Double fees) {
+		this.fees = fees;
 	}
 
 	public String toString() { 

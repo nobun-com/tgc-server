@@ -1,6 +1,7 @@
 package com.go2.classes.business.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.go2.classes.models.UserCart;
 
@@ -23,5 +24,7 @@ public interface UserCartService {
 	Double getToatlFees(Long userId);
 
 	Integer bookAllCarts(Long userId);
+
+	Map<String, Object> applyCoupon(Long userCartId, String couponCode);
 
 }

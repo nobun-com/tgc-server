@@ -18,11 +18,11 @@ public class UserCartEntity implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="timetable_id", referencedColumnName="id")
+    @JoinColumn(name="timetable_id", nullable=false, referencedColumnName="id")
     private TimeTableEntity timeTable;
 
     @ManyToOne
-    @JoinColumn(name="student_id", referencedColumnName="id")
+    @JoinColumn(name="student_id", nullable=false, referencedColumnName="id")
     private StudentEntity student;
     
     @ManyToOne
@@ -31,6 +31,16 @@ public class UserCartEntity implements Serializable {
     
     @Column(name="status", nullable=false, length=10)
     private String status;
+
+    @ManyToOne
+    @JoinColumn(name="coupon_code", referencedColumnName="code")
+    private CouponEntity couponEntity;
+    
+    @Column(name="final_cost", nullable=false)
+    private Double finalCost;
+
+    @Column(name="fees", nullable=false)
+    private Double fees;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="date", nullable=false)
@@ -69,6 +79,30 @@ public class UserCartEntity implements Serializable {
 
 	public void setTimeTable(TimeTableEntity timeTable) {
 		this.timeTable = timeTable;
+	}
+
+	public CouponEntity getCouponEntity() {
+		return couponEntity;
+	}
+
+	public void setCouponEntity(CouponEntity couponEntity) {
+		this.couponEntity = couponEntity;
+	}
+
+	public Double getFinalCost() {
+		return finalCost;
+	}
+
+	public Double getFees() {
+		return fees;
+	}
+
+	public void setFees(Double fees) {
+		this.fees = fees;
+	}
+
+	public void setFinalCost(Double finalCost) {
+		this.finalCost = finalCost;
 	}
 
 	public StudentEntity getStudent() {

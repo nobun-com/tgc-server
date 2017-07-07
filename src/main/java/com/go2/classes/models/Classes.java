@@ -57,6 +57,8 @@ public class Classes implements Serializable {
 
     private Integer maxSlots;
 
+    private Integer slotsAvailable;
+
     private Integer categoryId;
 
     public void setId( Long id ) {
@@ -201,6 +203,14 @@ public class Classes implements Serializable {
 
 	public void setMaxSlots(Integer maxSlots) {
 		this.maxSlots = maxSlots;
+	}
+
+	public Integer getSlotsAvailable() {
+		return slotsAvailable;
+	}
+
+	public void setSlotsAvailable(Integer slotsAvailable) {
+		this.slotsAvailable = slotsAvailable;
 	}
 
 	public String toString() { 

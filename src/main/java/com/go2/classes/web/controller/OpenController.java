@@ -30,7 +30,7 @@ public class OpenController extends BaseController{
     private TimeTableService timeTableService; // Injected by Spring
 
 	@RequestMapping(value="/openLogin", method=RequestMethod.POST)
-	public String openLogin(Model model, HttpServletRequest request, HttpServletResponse response,HttpSession session) throws IOException {
+	public String openLogin(Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String redirectUrl = request.getParameter("redirectUrl");
@@ -103,6 +103,7 @@ public class OpenController extends BaseController{
 		model.addAttribute("refrralCode", refrralCode);
         return "index";
 	}
+
 	@RequestMapping(value="/logout")
 	public void addToCart(Model model,HttpSession session, HttpServletResponse response) throws IOException {
 		session.invalidate();

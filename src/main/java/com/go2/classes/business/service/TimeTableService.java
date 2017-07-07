@@ -31,4 +31,6 @@ public interface TimeTableService {
 
 	Object getAllClassesInCart(Long userId);
 	Integer getUserCartSize(Long userId);
+
+	Double findFeesFromClases(Long timeTableId);
 }

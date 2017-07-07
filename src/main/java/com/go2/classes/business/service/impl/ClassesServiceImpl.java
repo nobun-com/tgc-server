@@ -88,6 +88,7 @@ public class ClassesServiceImpl implements ClassesService {
 		}
 		classesEntity = new ClassesEntity();
 		classesServiceMapper.mapClassesToClassesEntity(classes, classesEntity);
+		classesEntity.setSlotsAvailable(classesEntity.getMaxSlots());
 		ClassesEntity classesEntitySaved = classesJpaRepository.save(classesEntity);
 		Classes classesSaved = classesServiceMapper.mapClassesEntityToClasses(classesEntitySaved);
 		classMetadataHelper.parseClassesMetaData(classesSaved);
@@ -104,6 +105,7 @@ public class ClassesServiceImpl implements ClassesService {
 			throw new IllegalStateException("class.not.found");
 		}
 		classesServiceMapper.mapClassesToClassesEntity(classes, classesEntity);
+		classesEntity.setSlotsAvailable(classesEntity.getMaxSlots());
 		ClassesEntity classesEntitySaved = classesJpaRepository.save(classesEntity);
 		return classesServiceMapper.mapClassesEntityToClasses(classesEntitySaved);
 	}
@@ -139,6 +141,12 @@ public class ClassesServiceImpl implements ClassesService {
 	@Override
 	public Iterable<ClassesCategoryEntity> findAllClassesCategory() {
 		return classesCategoryJpaRepository.findAll();
+	}
+
+	@Override
+	public void bookClass(ClassesEntity classes) {
+		classes.setSlotsAvailable(classes.getSlotsAvailable() - 1);
+		classesJpaRepository.save(classes);
 	}
 
 }

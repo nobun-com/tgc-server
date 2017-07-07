@@ -10,17 +10,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import com.go2.classes.models.ClassesSearch;
-import com.go2.classes.models.TimeTable;
-import com.go2.classes.models.jpa.TimeTableEntity;
-import com.go2.classes.models.jpa.UserCartEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.go2.classes.business.service.TimeTableService;
 import com.go2.classes.business.service.mapping.TimeTableServiceMapper;
 import com.go2.classes.data.repository.jpa.TimeTableJpaRepository;
 import com.go2.classes.data.repository.jpa.UserCartJpaRepository;
-
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import com.go2.classes.models.ClassesSearch;
+import com.go2.classes.models.TimeTable;
+import com.go2.classes.models.jpa.TimeTableEntity;
+import com.go2.classes.models.jpa.UserCartEntity;
 
 @Component
 @Transactional
@@ -152,6 +152,9 @@ public class TimeTableServiceImpl implements TimeTableService {
 		for(UserCartEntity userCart : userCarts) {
 			Map<String, Object> bean = timeTableServiceMapper.mapTimeTableEntityToJSONMap(userCart.getTimeTable());
 			bean.put("userCartId", userCart.getId());
+			bean.put("cost", "$" + userCart.getFinalCost());
+			bean.put("fee", "$" + userCart.getFees());
+			bean.put("coupon", userCart.getCouponEntity() == null ? null : userCart.getCouponEntity().getCode());
 			beans.add(bean);
 		}
 		return beans;
@@ -160,6 +163,12 @@ public class TimeTableServiceImpl implements TimeTableService {
 	@Override
 	public Integer getUserCartSize(Long userId) {
 		return userCartJpaRepository.getUserCartSize(userId);
+	}
+
+	@Override
+	public Double findFeesFromClases(Long timeTableId) {
+		TimeTableEntity timeTableEntity = timeTableJpaRepository.findOne(timeTableId);
+		return timeTableEntity.getClasses().getFee();
 	}
 
 }

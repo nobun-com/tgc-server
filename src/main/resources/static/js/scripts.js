@@ -20,3 +20,29 @@ jQuery(function() {
 	jQuery(this).on('keyup', '.search', onsearch)
 	jQuery('body').trigger('reload');
 });
+
+
+
+function applyCoupon(id) {
+	var couponCode = jQuery(".couponCode"+id).val();
+	jQuery.ajax({
+		  type: "POST",
+		  url: "/applyCoupon",
+		  data: {
+		  		couponCode : couponCode,
+		  		userCartId : id
+		  },
+		  cache: false,
+		  success: function(data){
+				console.log(data);
+				jQuery(".message"+id).text(data.message);
+				if(data.success) {
+					jQuery(".cost"+id).text('$' + data.cost);
+					jQuery(".total-cost").text('$' + data.totalCost);
+				}
+		  },
+		  error: function(data){
+			  	jQuery(".message"+id).text("Unable to apply coupon");
+		  }
+		});
+}
