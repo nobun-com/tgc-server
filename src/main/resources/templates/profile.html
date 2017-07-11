@@ -13,6 +13,13 @@
 			</ul>
 		</div>
 	</div>
+	<ul id="messages" th:with="notifyMessages=${session[T(com.go2.classes.business.service.impl.NotificationServiceImpl).NOTIFY_MSG_SESSION_KEY]}">
+			<li th:each="msg:${notifyMessages}" th:text="${msg.text}" th:class="${#strings.toLowerCase(msg.type)}"/>
+			<span th:if="${notifyMessages}" th:remove="all"	th:text="${session.remove(T(com.go2.classes.business.service.impl.NotificationServiceImpl).NOTIFY_MSG_SESSION_KEY)}"></span>
+	</ul>
+	<!-- <div class="alert alert-error">
+		Error: Name, Email and Message fields are required<br>Error: Invalid email address							<span class="close"></span>
+	</div>	 -->
 	<section id="content" class="gray-area">
 		<div class="container">
 			<div class="row">
@@ -24,7 +31,7 @@
 								<article th:each="child : ${childs}"
 									class="col-sms-6 col-sm-6 col-md-4 gray-area"
 									style="padding: 5px;">
-									<a title="" class="hover-effect">
+									<a title="" class="hover-effect" th:href="${'/editChild?childId=' + child.id}">
 										<ul>
 											<li>Name:<label th:text="${child.name}"></label></li>
 											<li>Gender:<label th:text="${child.gender}"></label></li>
@@ -35,27 +42,6 @@
 										class="btn-medium icon-check uppercase full-width">FIND
 										CLASS NOW</button>
 								</article>
-								<!-- <div th:if="${childs != null}" class="col-sm-8 col-md-9">
-									<div class="row image-box listing-style2">
-										<div class="col-sms-6 col-sm-6 col-md-4"
-											th:each="child : ${childs}">
-											<article class="box">
-													<a
-														th:href="${'/center-classes-search?centerId=' + center.centerId}"
-														title="" class="hover-effect"> <img
-														th:src="${'getImage/' + center.logoName}" alt=""
-														style="height: 100px; width: auto;" />
-													</a>
-												<div class="details">
-													<h4 class="box-title" th:text="${child.name}"></h4>
-													<label class="price-wrapper"> <span
-														class="price-per-unit" th:text="${child.location}"></span>
-													</label>
-												</div>
-											</article>
-										</div>
-									</div>
-								</div> -->
 							</div>
 						</div>
 						<hr />
@@ -79,10 +65,9 @@
 										<label>Gender</label>
 										<div class="selector">
 											<select name="gender" class="full-width" required="true">
-												<option value="Male">Male</option>
-												<option value="Female">Female</option>
-											</select><span class="custom-select full-width"
-												th:text="${user.gender}"></span>
+												<option value="Male" th:selected="${user.gender == 'Male'}">Male</option>
+												<option value="Female" th:selected="${user.gender == 'Female'}">Female</option>
+											</select>
 										</div>
 									</div>
 								</div>

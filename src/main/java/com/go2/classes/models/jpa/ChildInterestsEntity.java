@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="childInterestsEntity")
+@Table(name="child_interests")
 public class ChildInterestsEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -22,8 +22,9 @@ public class ChildInterestsEntity implements Serializable {
     @Column(name="id", nullable=false)
     private Long id;
 
-    @Column(name="interest", nullable=false, length=50)
-    private String interest;
+    @ManyToOne
+    @JoinColumn(name="classesCategory_id", referencedColumnName="id")
+    private ClassesCategoryEntity classesCategory;
     
     @ManyToOne
     @JoinColumn(name="child_id", referencedColumnName="id")
@@ -40,13 +41,13 @@ public class ChildInterestsEntity implements Serializable {
 	}
 
 
-	public String getInterest() {
-		return interest;
+	public ClassesCategoryEntity getClassesCategory() {
+		return classesCategory;
 	}
 
 
-	public void setInterest(String interest) {
-		this.interest = interest;
+	public void setClassesCategory(ClassesCategoryEntity classesCategory) {
+		this.classesCategory = classesCategory;
 	}
 
 
@@ -64,7 +65,7 @@ public class ChildInterestsEntity implements Serializable {
         StringBuffer sb = new StringBuffer(); 
         sb.append(id);
         sb.append("|[");
-        sb.append(interest);
+        sb.append(classesCategory);
         sb.append("]|");
         sb.append(child);
         return sb.toString(); 

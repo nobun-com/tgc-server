@@ -1,7 +1,6 @@
 package com.go2.classes.models.jpa;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +29,7 @@ public class ChildEntity implements Serializable {
     private String gender;
     
     @Column(name="date_of_birth", nullable=false)
-    private Date dateOfBirth;
+    private String dateOfBirth;
 
     @Column(name="location", nullable=false, length=50)
     private String location;
@@ -76,12 +75,12 @@ public class ChildEntity implements Serializable {
 	}
 
 
-	public Date getDateOfBirth() {
+	public String getDateOfBirth() {
 		return dateOfBirth;
 	}
 
 
-	public void setDateOfBirth(Date dateOfBirth) {
+	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
