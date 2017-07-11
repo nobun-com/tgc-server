@@ -9832,3 +9832,22 @@ button.ui-button::-moz-focus-inner {
 /* revolution slider fix */
 .tp-simpleresponsive .slotholder, .tp-simpleresponsive .slotholder img {
   /*-webkit-backface-visibility: visible !important;-webkit-transform:none !important;*/ }
+  
+ ul#messages li {
+	display: block;
+	width: 60%;
+	margin: 5px auto;
+	text-align: center;
+	padding: 5px;
+	border-radius: 5px;
+	color: white;
+	font-weight: bold;
+	}
+	ul#messages li.info {
+	background: #7fb231;
+	}
+	ul#messages li.error {
+	background: #f6bcc3;
+	color: white;
+} 
+  

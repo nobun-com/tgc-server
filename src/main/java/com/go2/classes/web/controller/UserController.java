@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.go2.classes.business.service.ChildInterestsService;
 import com.go2.classes.business.service.ChildService;
 import com.go2.classes.business.service.StudentService;
 import com.go2.classes.business.service.TimeTableService;
@@ -33,6 +34,9 @@ public class UserController extends BaseController{
 	
 	@Resource
     private ChildService childService; // Injected by Spring
+	
+	@Resource
+    private ChildInterestsService childInterestsService; // Injected by Spring
 	
 	@Resource
     private TimeTableService timeTableService; // Injected by Spring

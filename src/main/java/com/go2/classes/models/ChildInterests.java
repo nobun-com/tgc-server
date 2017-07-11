@@ -12,7 +12,7 @@ public class ChildInterests implements Serializable {
     private Long id;
 
     @NotNull
-    private String interest;
+    private ClassesCategory classesCategory;
     
     @NotNull
     private Child child;
@@ -28,13 +28,13 @@ public class ChildInterests implements Serializable {
 	}
 
 
-	public String getInterest() {
-		return interest;
+	public ClassesCategory getClassesCategory() {
+		return classesCategory;
 	}
 
 
-	public void setInterest(String interest) {
-		this.interest = interest;
+	public void setClassesCategory(ClassesCategory classesCategory) {
+		this.classesCategory = classesCategory;
 	}
 
 
@@ -52,7 +52,7 @@ public class ChildInterests implements Serializable {
         StringBuffer sb = new StringBuffer(); 
         sb.append(id);
         sb.append("|[");
-        sb.append(interest);
+        sb.append(classesCategory);
         sb.append("]|");
         sb.append(child);
         return sb.toString(); 

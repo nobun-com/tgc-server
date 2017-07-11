@@ -1,0 +1,111 @@
+<html>
+<head lang="en" th:include="header :: header"></head>
+<body>
+	<div lang="en" th:include="navigation :: navigation"></div>
+	<div class="page-title-container">
+		<div class="container">
+			<div class="page-title pull-left">
+				<h2 class="entry-title">Profile</h2>
+			</div>
+			<ul class="breadcrumbs pull-right">
+				<li><a href="/">HOME</a></li>
+				<li class="active">Add Child</li>
+			</ul>
+		</div>
+	</div>
+	<section id="content" class="gray-area">
+		<div class="container">
+			<div class="row">
+				<div id="main" class="col-sms-6 col-sm-8 col-md-9">
+					<div class="booking-section travelo-box">
+					<div class="person-information" th:if="${child != null}">
+						<form action="updateChild" method="POST">
+								<h2>Update Child</h2>
+								<div class="form-group row">
+									<div class="col-sm-6 col-md-5">
+									<input type="hidden" name="id" th:value="${child.id}" />
+										<label>Name</label> <input type="text" name="name" th:value="${child.name}"
+											class="input-text full-width"  placeholder=""  required="true"/>
+									</div>
+									<div class="col-sm-6 col-md-5">
+										<label>Gender</label>
+										<div class="selector">
+											<select name="gender" class="full-width" required="true" th:value="${child.gender}">
+												<option value="Male" th:selected="${child.gender == 'Male'}">Male</option>
+												<option value="Female" th:selected="${child.gender == 'Female'}">Female</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-sm-6 col-md-5">
+										<label>Select a location</label>
+							                        <div class="selector">
+							                            <select class="full-width" name="location" required="true">
+							                                <option value="ALL" th:selected="${child.location == 'ALL'}">ALL</option>
+							                                <option value="HONG KONG" th:selected="${child.location == 'HONG KONG'}">HONG KONG</option>
+							                                <option value="KOWLOON" th:selected="${child.location == 'KOWLOON'}">KOWLOON</option>
+							                                <option value="NEW TERRITORIES" th:selected="${child.location == 'NEW TERRITORIES'}">NEW TERRITORIES</option>
+							                            </select>
+							                        </div>
+									</div>
+									<div class="col-sm-6 col-md-5">
+                                         <label>Date of Birth</label>
+                                          <div class="datepicker-wrap">
+                                       	   <input type="text" class="input-text full-width" name="dateOfBirth" th:value="${child.dateOfBirth}" placeholder="mm/dd/yy" data-min-date="01/01/1900" data-change-year="1" required="true"/>
+                                          </div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-sm-6 col-md-5">
+									<label>Interests</label>
+										<div class="checkbox">
+							                 <input name="interest" type="checkbox" value="1">Music &amp; Dance</input>
+							            </div> 
+							           <div class="checkbox"> 
+							              	<input name="interest" type="checkbox" value="2">Brain Training</input>
+							           </div> 
+							            <div class="checkbox">    
+							                <input name="interest" type="checkbox" value="3">Science, Technology, Engineering, Math</input>
+							            </div> 
+							             <div class="checkbox">  
+							                  <input name="interest" type="checkbox" value="4">English Literacy</input>
+							            </div> 
+							             <div class="checkbox"> 
+							                  <input name="interest" type="checkbox" value="5">Chinese Literacy</input>
+							            </div> 
+							             <div class="checkbox">  
+							                 <input name="interest" type="checkbox" value="6">Life Skills</input>
+							             </div> 
+							             <div class="checkbox"> 
+							                 <input name="interest" type="checkbox" value="7">Sports</input>
+								       </div>
+									</div>
+									<div class="col-sm-6 col-md-5">
+										
+									</div>
+								</div>
+								
+								
+								<div class="form-group row">
+									<div class="col-sm-6 col-md-5">
+										<button type="submit" class="button btn-small full-width text-center">UPDATE</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="sidebar col-sms-6 col-sm-4 col-md-3">
+					
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<div lang="en" th:include="footer :: footer"></div>
+	<script th:include="footer :: loginScript" th:inline="javascript"></script>
+</body>
+</html>
+
+

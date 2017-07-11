@@ -1,7 +1,6 @@
 package com.go2.classes.models;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -20,7 +19,7 @@ public class Child implements Serializable {
     private String gender;
     
     @NotNull
-    private Date dateOfBirth;
+    private String dateOfBirth;
 
     @NotNull
     private String location;
@@ -65,12 +64,12 @@ public class Child implements Serializable {
 	}
 
 
-	public Date getDateOfBirth() {
+	public String getDateOfBirth() {
 		return dateOfBirth;
 	}
 
 
-	public void setDateOfBirth(Date dateOfBirth) {
+	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
