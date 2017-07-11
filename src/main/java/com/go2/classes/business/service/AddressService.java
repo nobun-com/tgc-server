@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.go2.classes.models.Address;
 
-public interface AddressService { 
+public interface AddressService {
 
-	Address findById( Long id  ) ;
+	Address findById(Long id);
 
 	List<Address> findAll();
 
@@ -16,7 +16,6 @@ public interface AddressService {
 
 	Address create(Address entity);
 
-	void delete( Long id );
-
+	void delete(Long id);
 
 }

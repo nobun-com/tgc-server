@@ -10,6 +10,7 @@ import com.go2.classes.models.Classes;
 import com.go2.classes.models.jpa.ClassesCategoryEntity;
 import com.go2.classes.models.jpa.ClassesEntity;
 import com.go2.classes.business.service.ClassesService;
+import com.go2.classes.business.service.TimeTableService;
 import com.go2.classes.business.service.impl.helper.ClassMetadataHelper;
 import com.go2.classes.business.service.mapping.ClassesServiceMapper;
 import com.go2.classes.data.repository.jpa.ClassesCategoryJpaRepository;
@@ -31,12 +32,15 @@ public class ClassesServiceImpl implements ClassesService {
 	private ClassMetadataHelper classMetadataHelper;
 
 	@Resource
+	private TimeTableService timeTableService;
+
+	@Resource
 	private ClassesServiceMapper classesServiceMapper;
-	
+
 	@Override
 	public Classes findById(Long id) {
 		ClassesEntity classesEntity = classesJpaRepository.findOne(id);
-		if(Objects.isNull(classesEntity)) {
+		if (Objects.isNull(classesEntity)) {
 			throw new IllegalStateException("class.not.found");
 		}
 		return classesServiceMapper.mapClassesEntityToClasses(classesEntity);
@@ -46,7 +50,7 @@ public class ClassesServiceImpl implements ClassesService {
 	public List<Classes> findAll() {
 		Iterable<ClassesEntity> entities = classesJpaRepository.findAll();
 		List<Classes> beans = new ArrayList<Classes>();
-		for(ClassesEntity classesEntity : entities) {
+		for (ClassesEntity classesEntity : entities) {
 			beans.add(classesServiceMapper.mapClassesEntityToClasses(classesEntity));
 		}
 		return beans;
@@ -56,7 +60,7 @@ public class ClassesServiceImpl implements ClassesService {
 	public List<Classes> getAllClassesByCenter(Long centerId) {
 		Iterable<ClassesEntity> entities = classesJpaRepository.findAllClassesByCenterId(centerId);
 		List<Classes> beans = new ArrayList<Classes>();
-		for(ClassesEntity classesEntity : entities) {
+		for (ClassesEntity classesEntity : entities) {
 			beans.add(classesServiceMapper.mapClassesEntityToClasses(classesEntity));
 		}
 		return beans;
@@ -66,7 +70,7 @@ public class ClassesServiceImpl implements ClassesService {
 	public List<Classes> getAllClassesByTeacher(Long teacherId) {
 		Iterable<ClassesEntity> entities = classesJpaRepository.findAllClassesByTeacherId(teacherId);
 		List<Classes> beans = new ArrayList<Classes>();
-		for(ClassesEntity classesEntity : entities) {
+		for (ClassesEntity classesEntity : entities) {
 			beans.add(classesServiceMapper.mapClassesEntityToClasses(classesEntity));
 		}
 		return beans;
@@ -74,16 +78,16 @@ public class ClassesServiceImpl implements ClassesService {
 
 	@Override
 	public Classes save(Classes classes) {
-		return update(classes) ;
+		return update(classes);
 	}
 
 	@Override
 	public Classes create(Classes classes) {
 		ClassesEntity classesEntity = null;
-		if(!Objects.isNull(classes.getId())) {
+		if (!Objects.isNull(classes.getId())) {
 			classesEntity = classesJpaRepository.findOne(classes.getId());
 		}
-		if(!Objects.isNull(classesEntity)) {
+		if (!Objects.isNull(classesEntity)) {
 			throw new IllegalStateException("class.already.exists");
 		}
 		classesEntity = new ClassesEntity();
@@ -98,28 +102,30 @@ public class ClassesServiceImpl implements ClassesService {
 	@Override
 	public Classes update(Classes classes) {
 		ClassesEntity classesEntity = null;
-		if(!Objects.isNull(classes.getId())) {
+		if (!Objects.isNull(classes.getId())) {
 			classesEntity = classesJpaRepository.findOne(classes.getId());
 		}
-		if(Objects.isNull(classesEntity)) {
+		if (Objects.isNull(classesEntity)) {
 			throw new IllegalStateException("class.not.found");
 		}
+		timeTableService.invalidByClass(classes.getId());
 		classesServiceMapper.mapClassesToClassesEntity(classes, classesEntity);
-		classesEntity.setSlotsAvailable(classesEntity.getMaxSlots());
 		ClassesEntity classesEntitySaved = classesJpaRepository.save(classesEntity);
+		classMetadataHelper.parseClassesMetaData(classes);
 		return classesServiceMapper.mapClassesEntityToClasses(classesEntitySaved);
 	}
 
 	@Override
 	public void delete(Long id) {
 		ClassesEntity classesEntity = null;
-		if(!Objects.isNull(id)) {
+		if (!Objects.isNull(id)) {
 			classesEntity = classesJpaRepository.findOne(id);
 		}
-		if(Objects.isNull(classesEntity)) {
+		if (Objects.isNull(classesEntity)) {
 			throw new IllegalStateException("class.not.found");
 		}
-		classesJpaRepository.delete(id);
+		timeTableService.invalidByClass(id);
+		classesJpaRepository.invalid(id);
 	}
 
 	public ClassesJpaRepository getClassesJpaRepository() {

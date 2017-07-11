@@ -171,4 +171,14 @@ public class TimeTableServiceImpl implements TimeTableService {
 		return timeTableEntity.getClasses().getFee();
 	}
 
+	@Override
+	public void invalidByClass(Long classId) {
+		Iterable<TimeTableEntity> entities = timeTableJpaRepository.findAllByclassesId(classId);
+		for(TimeTableEntity timeTableEntity : entities) {
+			userCartJpaRepository.invalidByTimeTableId(timeTableEntity.getId());
+			timeTableEntity.setStatus("invalid");
+			timeTableJpaRepository.save(timeTableEntity);
+		}
+	}
+
 }

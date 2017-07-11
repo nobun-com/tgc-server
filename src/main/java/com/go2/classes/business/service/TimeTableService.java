@@ -33,4 +33,6 @@ public interface TimeTableService {
 	Integer getUserCartSize(Long userId);
 
 	Double findFeesFromClases(Long timeTableId);
+
+	void invalidByClass(Long id);
 }

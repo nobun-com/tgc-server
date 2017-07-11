@@ -13,86 +13,75 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import com.go2.classes.business.service.ClassesService;
+import com.go2.classes.business.service.TimeTableService;
 import com.go2.classes.models.Classes;
 import com.go2.classes.models.jpa.ClassesCategoryEntity;
-import com.go2.classes.business.service.ClassesService;
 
 @Controller
 public class ClassesRestController {
 
 	@Resource
 	private ClassesService classesService;
-	
-	@RequestMapping( value="/getAllClassesCategories",
-			method = RequestMethod.GET,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
+
+	@Resource
+	private TimeTableService timeTableService;
+
+	@RequestMapping(value = "/getAllClassesCategories", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public Iterable<ClassesCategoryEntity> findAllClassesCategory() {
 		return classesService.findAllClassesCategory();
 	}
 
-	@RequestMapping( value="/getAllClasses",
-			method = RequestMethod.GET,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/getAllClasses", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public List<Classes> findAll() {
 		return classesService.findAll();
 	}
 
-	@RequestMapping( value="/getAllClassesByCenter/{centerId}",
-			method = RequestMethod.GET,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/getAllClassesByCenter/{centerId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public List<Classes> getAllClassesByCenter(@PathVariable("centerId") Long centerId) {
 		return classesService.getAllClassesByCenter(centerId);
 	}
 
-	@RequestMapping( value="/getAllClassesByTeacher/{teacherId}",
-			method = RequestMethod.GET,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/getAllClassesByTeacher/{teacherId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public List<Classes> getAllClassesByTeacher(@PathVariable("teacherId") Long teacherId) {
 		return classesService.getAllClassesByTeacher(teacherId);
 	}
 
-	@RequestMapping( value="/getClass/{id}",
-			method = RequestMethod.GET,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/getClass/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public Classes findOne(@PathVariable("id") Long id) {
 		return classesService.findById(id);
 	}
-	
-	@RequestMapping( value="/createClass",
-			method = RequestMethod.POST,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
+
+	@RequestMapping(value = "/createClass", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public Classes create(@RequestBody Classes classes) {
 		return classesService.create(classes);
 	}
 
-	@RequestMapping( value="/updateClass",
-			method = RequestMethod.PUT,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/updateClass", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public Classes update(@RequestBody Classes classes) {
 		return classesService.update(classes);
 	}
 
-	@RequestMapping( value="/deleteClass/{id}",
-			method = RequestMethod.DELETE,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/deleteClass/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public void delete(@PathVariable("id") Long id) {
 		classesService.delete(id);
 	}
-	
+
 }

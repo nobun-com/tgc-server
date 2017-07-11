@@ -80,6 +80,9 @@ public class ClassesEntity implements Serializable {
     @Column(name="category_id", nullable=false)
     private Integer categoryId;
     
+    @Column(name="status", nullable=false, length=10)
+    private String status = "valid";
+
     public ClassesEntity() {
 		super();
     }
@@ -231,6 +234,14 @@ public class ClassesEntity implements Serializable {
 
 	public void setSlotsAvailable(Integer slotsAvailable) {
 		this.slotsAvailable = slotsAvailable;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public String toString() { 

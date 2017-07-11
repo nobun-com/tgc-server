@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.go2.classes.models.Admin;
 
-public interface AdminService { 
+public interface AdminService {
 
-	Admin findById( Long id  ) ;
+	Admin findById(Long id);
 
 	List<Admin> findAll();
 
@@ -16,7 +16,7 @@ public interface AdminService {
 
 	Admin create(Admin entity);
 
-	void delete( Long id );
+	void delete(Long id);
 
 	Admin findByEmail(String email);
 }

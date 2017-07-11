@@ -18,7 +18,7 @@ public interface ClassesService {
 
 	Classes create(Classes entity);
 
-	void delete( Long id );
+	void delete(Long id);
 
 	List<Classes> getAllClassesByCenter(Long centerId);
 

@@ -33,8 +33,8 @@ public class TimeTableEntity implements Serializable {
     @Column(name="start_time", nullable=false)
     private Date       startTime    ;
 
-    @Column(name="status", length=255)
-    private String     status       ;
+    @Column(name="status", nullable=false, length=10)
+    private String status = "valid";
 
     public TimeTableEntity() {
 		super();
