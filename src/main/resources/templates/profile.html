@@ -30,12 +30,12 @@
 							<div class="form-group listing-style1" th:if="${childs != null}">
 								<article th:each="child : ${childs}"
 									class="col-sms-6 col-sm-6 col-md-4 gray-area"
-									style="padding: 5px;">
+									style="padding:20px;margin-right:20px;">
 									<a title="" class="hover-effect" th:href="${'/editChild?childId=' + child.id}">
 										<ul>
-											<li>Name:<label th:text="${child.name}"></label></li>
-											<li>Gender:<label th:text="${child.gender}"></label></li>
-											<li>Location:<label th:text="${child.location}"></label></li>
+											<li>Name : <label th:text="${child.name}"></label></li>
+											<li>Gender : <label th:text="${child.gender}"></label></li>
+											<li>Location : <label th:text="${child.location}"></label></li>
 										</ul>
 									</a>
 									<button type="submit"

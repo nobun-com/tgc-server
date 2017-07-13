@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.go2.classes.business.service.AddressService;
 import com.go2.classes.business.service.CenterService;
+import com.go2.classes.business.service.NotificationService;
 import com.go2.classes.business.service.TimeTableService;
 import com.go2.classes.common.BaseController;
 import com.go2.classes.models.ClassesSearch;
@@ -22,6 +23,9 @@ import com.go2.classes.models.ClassesSearch;
 @Controller
 @RequestMapping("/")
 public class ClassesController extends BaseController{
+
+	@Resource
+	private NotificationService notifyService;
 
 	@Resource
     private AddressService addressService; // Injected by Spring

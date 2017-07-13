@@ -43,8 +43,8 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Start Date</label>
-                                                    <div class="datepicker-wrap">
-                                                        <input type="text" name="startDate" class="input-text full-width" placeholder="mm/dd/yy" />
+                                                    <div>
+                                                        <input type="text" name="startDate" class="date-input input-text full-width" data-date-format="yyyy-mm-dd" placeholder="mm/dd/yy" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -215,7 +215,10 @@
         <div lang="en" th:include="footer :: footer"></div>
         <script th:include="footer :: loginScript" th:inline="javascript"></script> 
 <script type="text/javascript">
-        tjq(document).ready(function() {
+		jQuery('.date-input').datepicker({
+		});
+
+		tjq(document).ready(function() {
             tjq('.revolution-slider').revolution(
             {
                 dottedOverlay:"none",

@@ -21,6 +21,7 @@
 					<div class="person-information">
 						<form action="createChild" method="POST">
 								<h2>Add Child</h2>
+								<input type="hidden" name="studentId" th:value="${user.id}" />
 								<div class="form-group row">
 									<div class="col-sm-6 col-md-5">
 										<label>Name</label> <input type="text" name="name"
@@ -50,8 +51,8 @@
 									</div>
 									<div class="col-sm-6 col-md-5">
                                          <label>Date of Birth</label>
-                                          <div class="datepicker-wrap">
-                                       	   <input type="text" class="input-text full-width" name="dateOfBirth" placeholder="mm/dd/yy" data-min-date="01/01/1900" data-change-year="1" required="true"/>
+                                          <div>
+                                       	   <input type="text" class="date-input input-text full-width" data-date-format="yyyy-mm-dd" name="dateOfBirth" required="true"/>
                                           </div>
 									</div>
 								</div>
@@ -104,6 +105,11 @@
 
 	<div lang="en" th:include="footer :: footer"></div>
 	<script th:include="footer :: loginScript" th:inline="javascript"></script>
+	<script type="text/javascript">
+		jQuery('.date-input').datepicker({
+		});
+	</script>
+	
 </body>
 </html>
 

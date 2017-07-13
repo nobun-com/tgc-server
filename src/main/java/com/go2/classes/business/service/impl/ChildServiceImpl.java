@@ -2,7 +2,6 @@ package com.go2.classes.business.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.annotation.Resource;
 
@@ -11,9 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.go2.classes.business.service.ChildService;
 import com.go2.classes.business.service.mapping.ChildServiceMapper;
+import com.go2.classes.data.repository.jpa.ChildInterestsJpaRepository;
 import com.go2.classes.data.repository.jpa.ChildJpaRepository;
+import com.go2.classes.data.repository.jpa.ClassesCategoryJpaRepository;
 import com.go2.classes.models.Child;
 import com.go2.classes.models.jpa.ChildEntity;
+import com.go2.classes.models.jpa.ChildInterestsEntity;
+import com.go2.classes.models.jpa.ClassesCategoryEntity;
 
 @Component
 @Transactional
@@ -23,8 +26,14 @@ public class ChildServiceImpl implements ChildService {
 	private ChildJpaRepository childJpaRepository;
 
 	@Resource
+	ChildInterestsJpaRepository childInterestsJpaRepository;
+
+	@Resource
+	ClassesCategoryJpaRepository classesCategoryJpaRepository;
+
+	@Resource
 	private ChildServiceMapper childServiceMapper;
-	
+
 	@Override
 	public Child findById(Long id) {
 		ChildEntity childEntity = childJpaRepository.findOne(id);
@@ -35,7 +44,7 @@ public class ChildServiceImpl implements ChildService {
 	public List<Child> findAll() {
 		Iterable<ChildEntity> entities = childJpaRepository.findAll();
 		List<Child> beans = new ArrayList<Child>();
-		for(ChildEntity childEntity : entities) {
+		for (ChildEntity childEntity : entities) {
 			beans.add(childServiceMapper.mapChildEntityToChild(childEntity));
 		}
 		return beans;
@@ -43,20 +52,18 @@ public class ChildServiceImpl implements ChildService {
 
 	@Override
 	public Child save(Child child) {
-		return update(child) ;
+		return update(child);
 	}
 
 	@Override
 	public Child create(Child child) {
-		ChildEntity childEntity = null;
-		if ( !Objects.isNull(child.getId()) ) {
-			childEntity = childJpaRepository.findOne(child.getId());		}
-		if ( !Objects.isNull(childEntity) ) {
-			throw new IllegalStateException("already.exists");
-		}
-		childEntity = new ChildEntity();
+		ChildEntity childEntity = new ChildEntity();
 		childServiceMapper.mapChildToChildEntity(child, childEntity);
 		ChildEntity childEntitySaved = childJpaRepository.save(childEntity);
+		for (Integer interestId : child.getInterest()) {
+			ClassesCategoryEntity classesCategoryEntity = classesCategoryJpaRepository.findOne(interestId.longValue());
+			childInterestsJpaRepository.save(new ChildInterestsEntity(classesCategoryEntity, childEntitySaved));
+		}
 		return childServiceMapper.mapChildEntityToChild(childEntitySaved);
 	}
 
@@ -65,6 +72,11 @@ public class ChildServiceImpl implements ChildService {
 		ChildEntity childEntity = childJpaRepository.findOne(child.getId());
 		childServiceMapper.mapChildToChildEntity(child, childEntity);
 		ChildEntity childEntitySaved = childJpaRepository.save(childEntity);
+		childInterestsJpaRepository.deleteAllByChildId(childEntitySaved.getId());
+		for (Integer interestId : child.getInterest()) {
+			ClassesCategoryEntity classesCategoryEntity = classesCategoryJpaRepository.findOne(interestId.longValue());
+			childInterestsJpaRepository.save(new ChildInterestsEntity(classesCategoryEntity, childEntitySaved));
+		}
 		return childServiceMapper.mapChildEntityToChild(childEntitySaved);
 	}
 
@@ -89,12 +101,11 @@ public class ChildServiceImpl implements ChildService {
 		this.childServiceMapper = childServiceMapper;
 	}
 
-	
 	@Override
 	public List<Child> getAllChildsByStudent(Long studentId) {
 		Iterable<ChildEntity> entities = childJpaRepository.findAllChildsByStudentId(studentId);
 		List<Child> beans = new ArrayList<Child>();
-		for(ChildEntity childEntity : entities) {
+		for (ChildEntity childEntity : entities) {
 			beans.add(childServiceMapper.mapChildEntityToChild(childEntity));
 		}
 		return beans;

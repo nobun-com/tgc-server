@@ -16,7 +16,6 @@ import com.go2.classes.business.service.ChildService;
 import com.go2.classes.business.service.mapping.ChildInterestsServiceMapper;
 import com.go2.classes.data.repository.jpa.ChildInterestsJpaRepository;
 import com.go2.classes.data.repository.jpa.ChildJpaRepository;
-import com.go2.classes.models.Child;
 import com.go2.classes.models.ChildInterests;
 import com.go2.classes.models.jpa.ChildEntity;
 import com.go2.classes.models.jpa.ChildInterestsEntity;
@@ -27,17 +26,16 @@ public class ChildInterestsServiceImpl implements ChildInterestsService {
 
 	@Resource
 	private ChildInterestsJpaRepository childInterestsJpaRepository;
-	
+
 	@Resource
 	private ChildJpaRepository childJpaRepository;
 
 	@Resource
 	private ChildInterestsServiceMapper childInterestsServiceMapper;
-	
+
 	@Resource
-    private ChildService childService; // Injected by Spring
-	
-	
+	private ChildService childService; // Injected by Spring
+
 	@Override
 	public ChildInterests findById(Long id) {
 		ChildInterestsEntity childInterestsEntity = childInterestsJpaRepository.findOne(id);
@@ -48,7 +46,7 @@ public class ChildInterestsServiceImpl implements ChildInterestsService {
 	public List<ChildInterests> findAll() {
 		Iterable<ChildInterestsEntity> entities = childInterestsJpaRepository.findAll();
 		List<ChildInterests> beans = new ArrayList<ChildInterests>();
-		for(ChildInterestsEntity childInterestsEntity : entities) {
+		for (ChildInterestsEntity childInterestsEntity : entities) {
 			beans.add(childInterestsServiceMapper.mapChildInterestsEntityToChildInterests(childInterestsEntity));
 		}
 		return beans;
@@ -56,15 +54,16 @@ public class ChildInterestsServiceImpl implements ChildInterestsService {
 
 	@Override
 	public ChildInterests save(ChildInterests childInterests) {
-		return update(childInterests) ;
+		return update(childInterests);
 	}
 
 	@Override
 	public ChildInterests create(ChildInterests childInterests) {
 		ChildInterestsEntity childInterestsEntity = null;
-		if ( !Objects.isNull(childInterests.getId()) ) {
-			childInterestsEntity = childInterestsJpaRepository.findOne(childInterests.getId());		}
-		if ( !Objects.isNull(childInterestsEntity) ) {
+		if (!Objects.isNull(childInterests.getId())) {
+			childInterestsEntity = childInterestsJpaRepository.findOne(childInterests.getId());
+		}
+		if (!Objects.isNull(childInterestsEntity)) {
 			throw new IllegalStateException("already.exists");
 		}
 		childInterestsEntity = new ChildInterestsEntity();
@@ -102,26 +101,25 @@ public class ChildInterestsServiceImpl implements ChildInterestsService {
 		this.childInterestsServiceMapper = childInterestsServiceMapper;
 	}
 
-	
 	@Override
 	public List<ChildInterests> getAllChildInterestsByChild(Long childId) {
 		Iterable<ChildInterestsEntity> entities = childInterestsJpaRepository.findAllChildInterestsByChildId(childId);
 		List<ChildInterests> beans = new ArrayList<ChildInterests>();
-		for(ChildInterestsEntity childInterestsEntity : entities) {
+		for (ChildInterestsEntity childInterestsEntity : entities) {
 			beans.add(childInterestsServiceMapper.mapChildInterestsEntityToChildInterests(childInterestsEntity));
 		}
 		return beans;
 	}
-	
+
 	@Override
 	public Map<String, List<String>> getAllChildInterestsByChild() {
 		Iterable<ChildEntity> entities = childJpaRepository.findAll();
 		Map<String, List<String>> result = new LinkedHashMap<String, List<String>>();
-		
-		for(ChildEntity childEntity : entities) {
-			result.put(childEntity.getId()+"", childInterestsJpaRepository.findAllChildInterestsByChild(childEntity.getId()));
+
+		for (ChildEntity childEntity : entities) {
+			result.put(childEntity.getId() + "",
+					childInterestsJpaRepository.findAllChildInterestsByChild(childEntity.getId()));
 		}
 		return result;
 	}
-
 }

@@ -10,17 +10,18 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import com.go2.classes.models.Center;
-import com.go2.classes.models.ClassesSearch;
-import com.go2.classes.models.jpa.AddressEntity;
-import com.go2.classes.models.jpa.CenterEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.go2.classes.business.service.CenterService;
 import com.go2.classes.business.service.mapping.AddressServiceMapper;
 import com.go2.classes.business.service.mapping.CenterServiceMapper;
 import com.go2.classes.data.repository.jpa.AddressJpaRepository;
 import com.go2.classes.data.repository.jpa.CenterJpaRepository;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import com.go2.classes.models.Center;
+import com.go2.classes.models.ClassesSearch;
+import com.go2.classes.models.jpa.AddressEntity;
+import com.go2.classes.models.jpa.CenterEntity;
 
 @Component
 @Transactional
@@ -31,19 +32,19 @@ public class CenterServiceImpl implements CenterService {
 
 	@Resource
 	private CenterServiceMapper centerServiceMapper;
-	
+
 	@Resource
 	private AddressJpaRepository addressJpaRepository;
 
 	@Resource
 	private AddressServiceMapper addressServiceMapper;
-	
+
 	@Resource
 	private AddressServiceImpl addressServiceImpl;
-	
+
 	@PersistenceContext
 	private EntityManager entityManager;
-	 
+
 	@Override
 	public Center findById(Long id) {
 		CenterEntity centerEntity = centerJpaRepository.findOne(id);
@@ -54,7 +55,7 @@ public class CenterServiceImpl implements CenterService {
 	public List<Center> findAll() {
 		Iterable<CenterEntity> entities = centerJpaRepository.findAll();
 		List<Center> beans = new ArrayList<Center>();
-		for(CenterEntity centerEntity : entities) {
+		for (CenterEntity centerEntity : entities) {
 			beans.add(centerServiceMapper.mapCenterEntityToCenter(centerEntity));
 		}
 		return beans;
@@ -62,21 +63,21 @@ public class CenterServiceImpl implements CenterService {
 
 	@Override
 	public Center save(Center center) {
-		return update(center) ;
+		return update(center);
 	}
 
 	@Override
 	public Center create(Center center) {
 		CenterEntity centerEntity = null;
-		if(center.getId() != null) {
+		if (center.getId() != null) {
 			centerEntity = centerJpaRepository.findOne(center.getId());
 		}
-		if( centerEntity != null ) {
+		if (centerEntity != null) {
 			throw new IllegalStateException("already.exists");
 		}
 		centerEntity = new CenterEntity();
-		
-		if(!Objects.isNull(center.getAddress())) {
+
+		if (!Objects.isNull(center.getAddress())) {
 			AddressEntity addressEntity = new AddressEntity();
 			addressServiceMapper.mapAddressToAddressEntity(center.getAddress(), addressEntity);
 			addressJpaRepository.save(addressEntity);
@@ -89,14 +90,14 @@ public class CenterServiceImpl implements CenterService {
 
 	@Override
 	public Center update(Center center) {
-		if(Objects.isNull(center.getId())) {
+		if (Objects.isNull(center.getId())) {
 			throw new IllegalStateException("id.not.found");
 		}
 		CenterEntity centerEntity = centerJpaRepository.findOne(center.getId());
-		if(Objects.isNull(centerEntity)) {
+		if (Objects.isNull(centerEntity)) {
 			throw new IllegalStateException("center.not.found.with.id." + center.getId());
 		}
-		if(!Objects.isNull(center.getAddress())) {
+		if (!Objects.isNull(center.getAddress())) {
 			center.setAddress(addressServiceImpl.update(center.getAddress()));
 		}
 		centerServiceMapper.mapCenterToCenterEntity(center, centerEntity);
@@ -107,13 +108,14 @@ public class CenterServiceImpl implements CenterService {
 	@Override
 	public void delete(Long id) {
 		CenterEntity centerEntity = centerJpaRepository.findOne(id);
-		if(Objects.isNull(centerEntity)) {
+		if (Objects.isNull(centerEntity)) {
 			throw new IllegalStateException("center.not.found.with.id." + id);
 		}
-		if(!Objects.isNull(centerEntity.getAddress())) {
-			addressJpaRepository.delete(centerEntity.getAddress().getId());;
+		if (!Objects.isNull(centerEntity.getAddress())) {
+			addressJpaRepository.delete(centerEntity.getAddress().getId());
+			;
 		}
-		
+
 		centerJpaRepository.delete(id);
 	}
 
@@ -132,13 +134,13 @@ public class CenterServiceImpl implements CenterService {
 	public void setCenterServiceMapper(CenterServiceMapper centerServiceMapper) {
 		this.centerServiceMapper = centerServiceMapper;
 	}
-	
+
 	@Override
 	public List<Map<String, Object>> getCentersSearchResult(ClassesSearch classesSearch) {
 		Query query = entityManager.createNativeQuery(classesSearch.getSearchByCenterQuery());
-		List<Object[] > entities = query.getResultList();
+		List<Object[]> entities = query.getResultList();
 		List<Map<String, Object>> beans = new ArrayList<Map<String, Object>>();
-		for(Object[] entitie : entities) {
+		for (Object[] entitie : entities) {
 			beans.add(centerServiceMapper.mapResultToJSONMap(entitie));
 		}
 		return beans;

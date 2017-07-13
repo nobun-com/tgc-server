@@ -12,62 +12,63 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="child_interests")
+@Table(name = "child_interests")
 public class ChildInterestsEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="id", nullable=false)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id", nullable = false)
+	private Long id;
 
-    @ManyToOne
-    @JoinColumn(name="classesCategory_id", referencedColumnName="id")
-    private ClassesCategoryEntity classesCategory;
-    
-    @ManyToOne
-    @JoinColumn(name="child_id", referencedColumnName="id")
-    private ChildEntity child;
+	@ManyToOne()
+	@JoinColumn(name = "classesCategory_id", nullable = false, referencedColumnName = "id")
+	private ClassesCategoryEntity classesCategory;
 
-    
-    public Long getId() {
-		return id;
+	@ManyToOne()
+	@JoinColumn(name = "child_id", nullable = false, referencedColumnName = "id")
+	private ChildEntity child;
+
+	public ChildInterestsEntity() {
 	}
 
+	public ChildInterestsEntity(ClassesCategoryEntity classesCategoryEntity, ChildEntity childEntitySaved) {
+		this.classesCategory = classesCategoryEntity;
+		this.child = childEntitySaved;
+	}
+
+	public Long getId() {
+		return id;
+	}
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-
 	public ClassesCategoryEntity getClassesCategory() {
 		return classesCategory;
 	}
-
 
 	public void setClassesCategory(ClassesCategoryEntity classesCategory) {
 		this.classesCategory = classesCategory;
 	}
 
-
 	public ChildEntity getChild() {
 		return child;
 	}
-
 
 	public void setChild(ChildEntity child) {
 		this.child = child;
 	}
 
-
-	public String toString() { 
-        StringBuffer sb = new StringBuffer(); 
-        sb.append(id);
-        sb.append("|[");
-        sb.append(classesCategory);
-        sb.append("]|");
-        sb.append(child);
-        return sb.toString(); 
-    } 
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(id);
+		sb.append("|[");
+		sb.append(classesCategory);
+		sb.append("]|");
+		sb.append(child);
+		return sb.toString();
+	}
 }

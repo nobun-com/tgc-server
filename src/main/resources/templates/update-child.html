@@ -24,6 +24,7 @@
 								<div class="form-group row">
 									<div class="col-sm-6 col-md-5">
 									<input type="hidden" name="id" th:value="${child.id}" />
+									<input type="hidden" name="studentId" th:value="${child.studentId}" />
 										<label>Name</label> <input type="text" name="name" th:value="${child.name}"
 											class="input-text full-width"  placeholder=""  required="true"/>
 									</div>
@@ -51,8 +52,8 @@
 									</div>
 									<div class="col-sm-6 col-md-5">
                                          <label>Date of Birth</label>
-                                          <div class="datepicker-wrap">
-                                       	   <input type="text" class="input-text full-width" name="dateOfBirth" th:value="${child.dateOfBirth}" placeholder="mm/dd/yy" data-min-date="01/01/1900" data-change-year="1" required="true"/>
+                                          <div>
+                                       	  	<input type="text" class="date-input input-text full-width" data-date-format="yyyy-mm-dd" name="dateOfBirth" th:value="${child.dateOfBirth}" required="true"/>
                                           </div>
 									</div>
 								</div>
@@ -60,25 +61,25 @@
 									<div class="col-sm-6 col-md-5">
 									<label>Interests</label>
 										<div class="checkbox">
-							                 <input name="interest" type="checkbox" value="1">Music &amp; Dance</input>
+							                 <input name="interest" type="checkbox" th:checked="${#lists.contains(child.interest, 1)}" value="1">Music &amp; Dance</input>
 							            </div> 
 							           <div class="checkbox"> 
-							              	<input name="interest" type="checkbox" value="2">Brain Training</input>
+							              	<input name="interest" type="checkbox" th:checked="${#lists.contains(child.interest, 2)}" value="2">Brain Training</input>
 							           </div> 
 							            <div class="checkbox">    
-							                <input name="interest" type="checkbox" value="3">Science, Technology, Engineering, Math</input>
+							                <input name="interest" type="checkbox" th:checked="${#lists.contains(child.interest, 3)}" value="3">Science, Technology, Engineering, Math</input>
 							            </div> 
 							             <div class="checkbox">  
-							                  <input name="interest" type="checkbox" value="4">English Literacy</input>
+							                  <input name="interest" type="checkbox" th:checked="${#lists.contains(child.interest, 4)}" value="4">English Literacy</input>
 							            </div> 
 							             <div class="checkbox"> 
-							                  <input name="interest" type="checkbox" value="5">Chinese Literacy</input>
+							                  <input name="interest" type="checkbox" th:checked="${#lists.contains(child.interest, 5)}" value="5">Chinese Literacy</input>
 							            </div> 
 							             <div class="checkbox">  
-							                 <input name="interest" type="checkbox" value="6">Life Skills</input>
+							                 <input name="interest" type="checkbox" th:checked="${#lists.contains(child.interest, 6)}" value="6">Life Skills</input>
 							             </div> 
 							             <div class="checkbox"> 
-							                 <input name="interest" type="checkbox" value="7">Sports</input>
+							                 <input name="interest" type="checkbox" th:checked="${#lists.contains(child.interest, 7)}" value="7">Sports</input>
 								       </div>
 									</div>
 									<div class="col-sm-6 col-md-5">
@@ -105,6 +106,10 @@
 
 	<div lang="en" th:include="footer :: footer"></div>
 	<script th:include="footer :: loginScript" th:inline="javascript"></script>
+	<script type="text/javascript">
+		jQuery('.date-input').datepicker({
+		});
+	</script>
 </body>
 </html>
 
