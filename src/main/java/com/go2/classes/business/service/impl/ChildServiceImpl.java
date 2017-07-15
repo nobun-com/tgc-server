@@ -82,6 +82,7 @@ public class ChildServiceImpl implements ChildService {
 
 	@Override
 	public void delete(Long id) {
+		childInterestsJpaRepository.deleteAllByChildId(id);
 		childJpaRepository.delete(id);
 	}
 

@@ -54,21 +54,23 @@ public class ClassesController extends BaseController{
 
 	@RequestMapping(value="/center-classes-search")
 	public String openSearchClassesByCenter(Model model, @RequestParam(name="centerId") Long centerId, HttpSession session) {
-        ClassesSearch classesSearch = (ClassesSearch) session.getAttribute("classesSearchObj");
+        ClassesSearch classesSearch = (ClassesSearch) session.getAttribute("classesSearch");
         model.addAttribute("center", centerService.findById(centerId));
         model.addAttribute("classes", timeTableService.getClassesSearchResult(classesSearch, centerId));
 		return "center-classes";
 	}
 
 	@RequestMapping(value="/search-classes")
-	public String openClasses(Model model) {
+	public String openClasses(Model model, HttpSession session) {
+		ClassesSearch classesSearch = new ClassesSearch();
+        session.setAttribute("classesSearch", classesSearch);
 		return "search-classes";
 	}
 
 	@RequestMapping(value="/searchCenters", method=RequestMethod.POST)
 	public String searchClasses(Model model, @ModelAttribute ClassesSearch classesSearch, HttpSession session) {
         model.addAttribute("centers", centerService.getCentersSearchResult(classesSearch));
-        session.setAttribute("classesSearchObj", classesSearch);
+        session.setAttribute("classesSearch", classesSearch);
 		return "search-classes";
 	}
 

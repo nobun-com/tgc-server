@@ -4,27 +4,35 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-import com.go2.classes.common.Utilities;
+import org.thymeleaf.util.StringUtils;
 
 public class ClassesSearch implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	Date startDate;
+	String startDate;
 	String age;
 	String area;
 	String center;
 	String minFees;
 	String maxFees;
-	String[] day;
-	String[] time;
-	String[] interest;
+	String[] day = new String[0];
+	String[] time = new String[0];
+	Integer[] interest = new Integer[0];
 
-	public Date getStartDate() {
+	public ClassesSearch() { }
+
+	public ClassesSearch(Child child) {
+		this.interest = child.interest;
+		this.area = child.getLocation();
+		this.age = "" + (new Date().getYear() - child.getDateOfBirth().getYear());
+	}
+
+	public String getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
 
@@ -84,11 +92,11 @@ public class ClassesSearch implements Serializable {
 		this.time = time;
 	}
 
-	public String[] getInterest() {
+	public Integer[] getInterest() {
 		return interest;
 	}
 
-	public void setInterest(String[] interest) {
+	public void setInterest(Integer[] interest) {
 		this.interest = interest;
 	}
 
@@ -156,10 +164,10 @@ public class ClassesSearch implements Serializable {
 	}
 
 	private String getStartDatePredicate() {
-		if (startDate == null) {
+		if (isEmpty(startDate)) {
 			return "";
 		}
-		String sql = " and CC.start_date >= '" + Utilities.dateWithoutTime.format(startDate) + "'";
+		String sql = " and CC.start_date >= '" + startDate + "'";// Utilities.dateWithoutTime.format(startDate)
 		return sql;
 	}
 
@@ -186,7 +194,7 @@ public class ClassesSearch implements Serializable {
 		if (Objects.isNull(interest) || interest.length == 0) {
 			return "";
 		}
-		String sql = " and CC.category_id IN (" + String.join(", ", interest) + ")";
+		String sql = " and CC.category_id IN (" + StringUtils.join(interest, ", ") + ")";
 		return sql;
 	}
 

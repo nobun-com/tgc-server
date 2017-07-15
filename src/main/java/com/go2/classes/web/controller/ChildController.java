@@ -21,6 +21,7 @@ import com.go2.classes.business.service.NotificationService;
 import com.go2.classes.business.service.StudentService;
 import com.go2.classes.common.BaseController;
 import com.go2.classes.models.Child;
+import com.go2.classes.models.ClassesSearch;
 
 @Controller
 @RequestMapping("/")
@@ -48,6 +49,16 @@ public class ChildController extends BaseController {
 		return "add-child";
 	}
 
+	@RequestMapping(value = "/find-class")
+	public String findClass(Model model, HttpSession session, HttpServletRequest request) {
+		Long childId = Long.parseLong(request.getParameter("childId"));
+		Child child = childService.findById(childId);
+
+		ClassesSearch classesSearch = new ClassesSearch(child);
+        session.setAttribute("classesSearch", classesSearch);
+		return "search-classes";
+	}
+
 	@RequestMapping(value = "/createChild", method = RequestMethod.POST)
 	public void createChild(@ModelAttribute Child child, HttpServletResponse response) throws IOException, ParseException {
 		childService.create(child);
@@ -61,6 +72,14 @@ public class ChildController extends BaseController {
 		Long childId = Long.parseLong(request.getParameter("childId"));
 		model.addAttribute("child", childService.findById(childId));
 		return "update-child";
+	}
+
+	@RequestMapping(value = "/removeChild")
+	public String removeChild(Model model, HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
+		Long childId = Long.parseLong(request.getParameter("childId"));
+		childService.delete(childId);
+		return "profile";
 	}
 
 	@RequestMapping(value = "/updateChild", method = RequestMethod.POST)

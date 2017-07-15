@@ -53,7 +53,7 @@
 									<div class="col-sm-6 col-md-5">
                                          <label>Date of Birth</label>
                                           <div>
-                                       	  	<input type="text" class="date-input input-text full-width" data-date-format="yyyy-mm-dd" name="dateOfBirth" th:value="${child.dateOfBirth}" required="true"/>
+                                       	  	<input type="text" class="date-input input-text full-width" data-date-format="yyyy-mm-dd" name="dateOfBirth" th:value="${#dates.format(child.dateOfBirth, 'MM/dd/yyyy')}" required="true"/>
                                           </div>
 									</div>
 								</div>
@@ -91,6 +91,9 @@
 								<div class="form-group row">
 									<div class="col-sm-6 col-md-5">
 										<button type="submit" class="button btn-small full-width text-center">UPDATE</button>
+									</div>
+									<div class="col-sm-6 col-md-5">
+										<a class="button btn-small full-width text-center" th:href="${'/removeChild?childId=' + child.id}">DELETE</a>
 									</div>
 								</div>
 							</form>

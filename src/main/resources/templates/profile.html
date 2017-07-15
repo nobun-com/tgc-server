@@ -38,9 +38,7 @@
 											<li>Location : <label th:text="${child.location}"></label></li>
 										</ul>
 									</a>
-									<button type="submit"
-										class="btn-medium icon-check uppercase full-width">FIND
-										CLASS NOW</button>
+									<a class="btn-medium icon-check uppercase full-width" th:href="${'/find-class?childId=' + child.id}">FIND CLASS NOW</a>
 								</article>
 							</div>
 						</div>

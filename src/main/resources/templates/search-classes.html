@@ -28,28 +28,28 @@
                                         <div class="panel-content">
                                                 <div class="form-group">
                                                     <label>AGE</label>
-                                                    <input type="number" name="age" min="1" max="100" class="input-text full-width" placeholder="AGE"/>
+                                                    <input type="number" name="age" min="1" max="100" class="input-text full-width" th:value="${session.classesSearch.age}" placeholder="AGE"/>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Select a location</label>
 							                        <div class="selector">
 							                            <select class="full-width" name="area">
-							                                <option value="ALL">ALL</option>
-							                                <option value="HONG KONG">HONG KONG</option>
-							                                <option value="KOWLOON">KOWLOON</option>
-							                                <option value="NEW TERRITORIES">NEW TERRITORIES</option>
+							                                <option value="ALL" th:selected="${session.classesSearch.area == 'ALL'}">ALL</option>
+							                                <option value="HONG KONG" th:selected="${session.classesSearch.area == 'HONG KONG'}">HONG KONG</option>
+							                                <option value="KOWLOON" th:selected="${session.classesSearch.area == 'KOWLOON'}">KOWLOON</option>
+							                                <option value="NEW TERRITORIES" th:selected="${session.classesSearch.area == 'NEW TERRITORIES'}">NEW TERRITORIES</option>
 							                            </select>
 							                        </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Start Date</label>
                                                     <div>
-                                                        <input type="text" name="startDate" class="date-input input-text full-width" data-date-format="yyyy-mm-dd" placeholder="mm/dd/yy" />
+                                                        <input type="text" name="startDate" class="date-input input-text full-width" data-date-format="yyyy-mm-dd" th:value="${session.classesSearch.startDate}" placeholder="mm/dd/yy" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>CENTER</label>
-                                                    <input type="text" name="center" class="input-text full-width" placeholder="CENTER"/>
+                                                    <input type="text" name="center" class="input-text full-width" th:value="${session.classesSearch.center}" placeholder="CENTER"/>
                                                 </div>
                                         </div>
                                 </div>
@@ -62,25 +62,25 @@
                                         <div class="panel-content">
 											<div class="row checkbox-row">
 								                <div class="checkbox-inline" style="text-align:center;">
-								                  <label class="checkbox-inline"><input name="interest" type="checkbox" value="1">Music &amp; Dance</input></label>
+								                  <label class="checkbox-inline"><input name="interest" type="checkbox" value="1" th:checked="${#lists.contains(session.classesSearch.interest, 1)}">Music &amp; Dance</input></label>
 								                </div>
 								                <div class="checkbox-inline" style="text-align:center;">
-								                  <label class="checkbox-inline"><input name="interest" type="checkbox" value="2">Brain Training</input></label>
+								                  <label class="checkbox-inline"><input name="interest" type="checkbox" value="2" th:checked="${#lists.contains(session.classesSearch.interest, 2)}">Brain Training</input></label>
 								                </div>
 								                <div class="checkbox-inline" style="text-align:center;">
-								                  <label class="checkbox-inline"><input name="interest" type="checkbox" value="3">Science, Technology, Engineering, Math</input></label>
+								                  <label class="checkbox-inline"><input name="interest" type="checkbox" value="3" th:checked="${#lists.contains(session.classesSearch.interest, 3)}">Science, Technology, Engineering, Math</input></label>
 								                </div>
 								                <div class="checkbox-inline" style="text-align:center;">
-								                  <label class="checkbox-inline"><input name="interest" type="checkbox" value="4">English Literacy</input></label>
+								                  <label class="checkbox-inline"><input name="interest" type="checkbox" value="4" th:checked="${#lists.contains(session.classesSearch.interest, 4)}">English Literacy</input></label>
 								                </div>
 								                <div class="checkbox-inline" style="text-align:center;">
-								                  <label class="checkbox-inline"><input name="interest" type="checkbox" value="5">Chinese Literacy</input></label>
+								                  <label class="checkbox-inline"><input name="interest" type="checkbox" value="5" th:checked="${#lists.contains(session.classesSearch.interest, 5)}">Chinese Literacy</input></label>
 								                </div>
 								                <div class="checkbox-inline" style="text-align:center;">
-								                  <label class="checkbox-inline"><input name="interest" type="checkbox" value="6">Life Skills</input></label>
+								                  <label class="checkbox-inline"><input name="interest" type="checkbox" value="6" th:checked="${#lists.contains(session.classesSearch.interest, 6)}">Life Skills</input></label>
 								                </div>
 								                <div class="checkbox-inline" style="text-align:center;">
-								                  <label class="checkbox-inline"><input name="interest" type="checkbox" value="7">Sports</input></label>
+								                  <label class="checkbox-inline"><input name="interest" type="checkbox" value="7" th:checked="${#lists.contains(session.classesSearch.interest, 7)}">Sports</input></label>
 								                </div>
 								            </div>
                                         </div>
@@ -95,25 +95,25 @@
                                         <div class="panel-content">
 											<div class="row checkbox-row">
 								                <div class="checkbox-inline" style="text-align:center;">
-								                  <label class="checkbox-inline"><input name="day" type="checkbox" value="Sunday">Sunday</input></label>
+								                  <label class="checkbox-inline"><input name="day" type="checkbox" value="Sunday" th:checked="${#lists.contains(session.classesSearch.day, 'Sunday')}">Sunday</input></label>
 								                </div>
 								                <div class="checkbox-inline" style="text-align:center;">
-								                  <label class="checkbox-inline"><input name="day" type="checkbox" value="Monday">Monday</input></label>
+								                  <label class="checkbox-inline"><input name="day" type="checkbox" value="Monday" th:checked="${#lists.contains(session.classesSearch.day, 'Monday')}">Monday</input></label>
 								                </div>
 								                <div class="checkbox-inline" style="text-align:center;">
-								                  <label class="checkbox-inline"><input name="day" type="checkbox" value="Tuesday">Tuesday</input></label>
+								                  <label class="checkbox-inline"><input name="day" type="checkbox" value="Tuesday" th:checked="${#lists.contains(session.classesSearch.day, 'Tuesday')}">Tuesday</input></label>
 								                </div>
 								                <div class="checkbox-inline" style="text-align:center;">
-								                  <label class="checkbox-inline"><input name="day" type="checkbox" value="Wednesday">Wednesday</input></label>
+								                  <label class="checkbox-inline"><input name="day" type="checkbox" value="Wednesday" th:checked="${#lists.contains(session.classesSearch.day, 'Wednesday')}">Wednesday</input></label>
 								                </div>
 								                <div class="checkbox-inline" style="text-align:center;">
-								                  <label class="checkbox-inline"><input name="day" type="checkbox" value="Thursday">Thursday</input></label>
+								                  <label class="checkbox-inline"><input name="day" type="checkbox" value="Thursday" th:checked="${#lists.contains(session.classesSearch.day, 'Thursday')}">Thursday</input></label>
 								                </div>
 								                <div class="checkbox-inline" style="text-align:center;">
-								                  <label class="checkbox-inline"><input name="day" type="checkbox" value="Friday">Friday</input></label>
+								                  <label class="checkbox-inline"><input name="day" type="checkbox" value="Friday" th:checked="${#lists.contains(session.classesSearch.day, 'Friday')}">Friday</input></label>
 								                </div>
 								                <div class="checkbox-inline" style="text-align:center;">
-								                  <label class="checkbox-inline"><input name="day" type="checkbox" value="Saturday">Saturday</input></label>
+								                  <label class="checkbox-inline"><input name="day" type="checkbox" value="Saturday" th:checked="${#lists.contains(session.classesSearch.day, 'Saturday')}">Saturday</input></label>
 								                </div>
 								            </div>
                                         </div>
@@ -128,19 +128,19 @@
                                         <div class="panel-content">
 											<div class="row checkbox-row">
 								                <div class="checkbox-inline" style="text-align:center;">
-								                  <label class="checkbox-inline"><input name="time" type="checkbox" value="420-540">7am - 9am</input></label>
+								                  <label class="checkbox-inline"><input name="time" type="checkbox" value="420-540" th:checked="${#lists.contains(session.classesSearch.time, '420-540')}">7am - 9am</input></label>
 								                </div>
 								                <div class="checkbox-inline" style="text-align:center;">
-								                  <label class="checkbox-inline"><input name="time" type="checkbox" value="540-720">9am - 12pm</input></label>
+								                  <label class="checkbox-inline"><input name="time" type="checkbox" value="540-720" th:checked="${#lists.contains(session.classesSearch.time, '540-720')}">9am - 12pm</input></label>
 								                </div>
 								                <div class="checkbox-inline" style="text-align:center;">
-								                  <label class="checkbox-inline"><input name="time" type="checkbox" value="720-900">12pm - 3pm</input></label>
+								                  <label class="checkbox-inline"><input name="time" type="checkbox" value="720-900" th:checked="${#lists.contains(session.classesSearch.time, '720-900')}">12pm - 3pm</input></label>
 								                </div>
 								                <div class="checkbox-inline" style="text-align:center;">
-								                  <label class="checkbox-inline"><input name="time" type="checkbox" value="900-1080">3pm - 6pm</input></label>
+								                  <label class="checkbox-inline"><input name="time" type="checkbox" value="900-1080" th:checked="${#lists.contains(session.classesSearch.time, '900-1080')}">3pm - 6pm</input></label>
 								                </div>
 								                <div class="checkbox-inline" style="text-align:center;">
-								                  <label class="checkbox-inline"><input name="time" type="checkbox" value="1080-1260">6pm - 9pm</input></label>
+								                  <label class="checkbox-inline"><input name="time" type="checkbox" value="1080-1260" th:checked="${#lists.contains(session.classesSearch.time, '1080-1260')}">6pm - 9pm</input></label>
 								                </div>
 								            </div>
                                         </div>
@@ -155,8 +155,8 @@
                                         <div class="panel-content">
                                             <div id="price-range"></div>
                                             <br />
-                                            <input name="minFees" style="border:none;width:50%;" class="min-price-label pull-left"></input>
-                                            <input name="maxFees" style="border:none;text-align:end;width:50%;" class="max-price-label pull-right"></input>
+                                            <input name="minFees" style="border:none;width:50%;" class="min-price-label pull-left" th:value="${session.classesSearch.minFees}"></input>
+                                            <input name="maxFees" style="border:none;text-align:end;width:50%;" class="max-price-label pull-right" th:value="${session.classesSearch.maxFees}"></input>
                                             <div class="clearer"></div>
                                         </div><!-- end content -->
                                     </div>
@@ -214,28 +214,28 @@
         
         <div lang="en" th:include="footer :: footer"></div>
         <script th:include="footer :: loginScript" th:inline="javascript"></script> 
-<script type="text/javascript">
-		jQuery('.date-input').datepicker({
-		});
-
-		tjq(document).ready(function() {
-            tjq('.revolution-slider').revolution(
-            {
-                dottedOverlay:"none",
-                delay:8000,
-                startwidth:1170,
-                startheight:646,
-                onHoverStop:"on",
-                hideThumbs:10,
-                fullWidth:"on",
-                forceFullWidth:"on",
-                navigationType:"none",
-                shadow:0,
-                spinner:"spinner4",
-                hideTimerBar:"on",
-            });
-        });
-    </script>
+		<script type="text/javascript">
+			jQuery('.date-input').datepicker({
+			});
+	
+			tjq(document).ready(function() {
+	            tjq('.revolution-slider').revolution(
+	            {
+	                dottedOverlay:"none",
+	                delay:8000,
+	                startwidth:1170,
+	                startheight:646,
+	                onHoverStop:"on",
+	                hideThumbs:10,
+	                fullWidth:"on",
+	                forceFullWidth:"on",
+	                navigationType:"none",
+	                shadow:0,
+	                spinner:"spinner4",
+	                hideTimerBar:"on",
+	            });
+	        });
+	    </script>
 </body>
 </html>
 <style>
