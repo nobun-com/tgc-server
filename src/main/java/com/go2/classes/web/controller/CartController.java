@@ -20,52 +20,51 @@ import com.go2.classes.business.service.UserCartService;
 import com.go2.classes.common.BaseController;
 import com.go2.classes.models.UserCart;
 
-
 @Controller
 @RequestMapping("/")
-public class CartController extends BaseController{
+public class CartController extends BaseController {
 
-	@Resource
+    @Resource
     private TimeTableService timeTableService; // Injected by Spring
-	
-	@Resource
+
+    @Resource
     private UserCartService userCartService; // Injected by Spring
 
-	@RequestMapping(value="/my-cart")
-	public String openMyCart(Model model, HttpSession session) {
-		Long userId=(Long) session.getAttribute("userId");
-		model.addAttribute("userCartClasses", timeTableService.getAllClassesInCart(userId));
-		model.addAttribute("total", "$" + userCartService.getToatlFees(userId));
-        session.setAttribute("userCartSize",timeTableService.getUserCartSize(userId));
-		return "my-cart";
-	}
-	
-	@RequestMapping(value="/addToCart")
-	public void addToCart(Model model, @RequestParam(name="classId") Long classId, HttpServletResponse response, HttpSession session) throws IOException {
-		Long userId=(Long) session.getAttribute("userId");
-		Double classFees = timeTableService.findFeesFromClases(classId);
-		userCartService.create(new UserCart(userId, classId, classFees));
-		response.sendRedirect("my-cart");
-	}
-	
-	@RequestMapping(value="/bookCart")
-	public void bookCart(Model model, HttpServletResponse response, HttpSession session) throws IOException {
-		Long userId=(Long) session.getAttribute("userId");
-		/*Integer count = */userCartService.bookAllCarts(userId);
-		response.sendRedirect("my-cart");
-	}
-	
-	@RequestMapping(value="/removeFromCart")
-	public void removeFromCart(Model model, @RequestParam(name="userCartId") Long userCartId, HttpServletResponse response) throws IOException {
-		userCartService.delete(userCartId);
-		response.sendRedirect("my-cart");
-	}
-	
-	@RequestMapping(value="/applyCoupon", method=RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> applyCoupon(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String couponCode = request.getParameter("couponCode");
-		Long userCartId = Long.parseLong(request.getParameter("userCartId"));
-		return userCartService.applyCoupon(userCartId, couponCode);
-	}
+    @RequestMapping(value = "/my-cart")
+    public String openMyCart(Model model, HttpSession session) {
+	Long userId = (Long) session.getAttribute("userId");
+	model.addAttribute("userCartClasses", timeTableService.getAllClassesInCart(userId));
+	model.addAttribute("total", "$" + userCartService.getToatlFees(userId));
+	session.setAttribute("userCartSize", timeTableService.getUserCartSize(userId));
+	return "my-cart";
+    }
+
+    @RequestMapping(value = "/addToCart")
+    public void addToCart(Model model, @RequestParam(name = "classId") Long classId, HttpServletResponse response, HttpSession session) throws IOException {
+	Long userId = (Long) session.getAttribute("userId");
+	Double classFees = timeTableService.findFeesFromClases(classId);
+	userCartService.create(new UserCart(userId, classId, classFees));
+	response.sendRedirect("my-cart");
+    }
+
+    @RequestMapping(value = "/bookCart")
+    public void bookCart(Model model, HttpServletResponse response, HttpSession session) throws IOException {
+	Long userId = (Long) session.getAttribute("userId");
+	/* Integer count = */userCartService.bookAllCarts(userId);
+	response.sendRedirect("my-cart");
+    }
+
+    @RequestMapping(value = "/removeFromCart")
+    public void removeFromCart(Model model, @RequestParam(name = "userCartId") Long userCartId, HttpServletResponse response) throws IOException {
+	userCartService.delete(userCartId);
+	response.sendRedirect("my-cart");
+    }
+
+    @RequestMapping(value = "/applyCoupon", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> applyCoupon(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	String couponCode = request.getParameter("couponCode");
+	Long userCartId = Long.parseLong(request.getParameter("userCartId"));
+	return userCartService.applyCoupon(userCartId, couponCode);
+    }
 }

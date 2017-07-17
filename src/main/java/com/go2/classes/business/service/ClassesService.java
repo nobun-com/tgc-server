@@ -1,30 +1,30 @@
 package com.go2.classes.business.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.go2.classes.models.Classes;
-import com.go2.classes.models.jpa.ClassesCategoryEntity;
 import com.go2.classes.models.jpa.ClassesEntity;
 
-public interface ClassesService { 
+public interface ClassesService {
 
-	Classes findById( Long id  ) ;
+    Classes findById(Long id);
 
-	List<Classes> findAll();
+    List<Classes> findAll();
 
-	Classes save(Classes entity);
+    Classes save(Classes entity);
 
-	Classes update(Classes entity);
+    Classes update(Classes entity);
 
-	Classes create(Classes entity);
+    Classes create(Classes entity);
 
-	void delete(Long id);
+    void delete(Long id);
 
-	List<Classes> getAllClassesByCenter(Long centerId);
+    List<Classes> getAllClassesByCenter(Long centerId);
 
-	List<Classes> getAllClassesByTeacher(Long teacherId);
+    List<Classes> getAllClassesByTeacher(Long teacherId);
 
-	Iterable<ClassesCategoryEntity> findAllClassesCategory();
+    List<Map<String, Object>> findAllClassesCategory();
 
-	void bookClass(ClassesEntity classes);
+    void bookClass(ClassesEntity classes);
 }
