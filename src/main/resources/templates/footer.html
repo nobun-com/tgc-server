@@ -1,23 +1,60 @@
 <div th:fragment="footer">
-<footer id="footer" >
-            <div class="bottom gray-area">
-                <div class="container">
-                    <div class="pull-left">
-                        <a href="/" title="Travelo - home">
-                            <img src="images/tgclogo.png" alt="Travelo HTML5 Template" />
-                        </a>
-                    </div>
-                    <div class="pull-right">
-                        <a id="back-to-top" href="#" class="animated" data-animation-type="bounce"><i class="soap-icon-longarrow-up circle"></i></a>
-                    </div>
-                    <div class="copyright pull-right">
-                        <p>&copy; 2017 TGC</p>
-                    </div>
-                </div>
-            </div>
-        </footer>
+	<footer id="footer">
+
+		<div style="padding: 25px 0;">
+
+			<div class="container-fluid">
+				<div class="col-sm-6 hidden-xs">
+					<ul class="navBottom">
+						<li><a href="about">About</a></li>
+						<li><a href="partner">I'm an educator</a></li>
+					</ul>
+					<ul class="navBottom">
+						<li><a href="faq">FAQ</a></li>
+						<li><a href="tnc">Terms of use</a></li>
+					</ul>
+					<ul class="navBottom">
+						<li><a class="text-uppercase" href="getstarted">How it
+								works</a></li>
+						<li><a class="text-uppercase" href="whatsnew">What's New</a></li>
+					</ul>
+				</div>
+
+				<div class="col-sm-6 text-right">
+					<h3 class="colorBlue">Connect With Us</h3>
+					<div class="socialIcons">
+						<a href="http://www.facebook.com"
+							target="_blank"><img src="images/icon/fbBottom.svg" /></a>
+						<a href="https://www.instagram.com"
+							target="_blank"><img src="images/icon/instagramBottom.svg" /></a>
+						<a href="mailto:test@gmail.com" target="_blank"><img
+								src="images/icon/mailBottom.svg" /></a>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+
+		<div class="bottom gray-area">
+			<div class="container">
+				<div class="pull-left">
+					<a href="/"> <img src="images/tgclogo.png" />
+					</a>
+				</div>
+				<div class="pull-right">
+					<a id="back-to-top" href="#" class="animated"
+						data-animation-type="bounce"><i
+						class="soap-icon-longarrow-up circle"></i></a>
+				</div>
+				<div class="copyright pull-right">
+					<p>&copy; 2017 TGC</p>
+				</div>
+			</div>
+		</div>
+	</footer>
 </div>
-    <script  th:fragment="loginScript">
+<script th:fragment="loginScript">
 	    var popup = [[${popup}]];
 	    var message = [[${message}]];
 	    var email = [[${email}]];

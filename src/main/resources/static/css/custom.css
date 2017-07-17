@@ -1,4 +1,37 @@
-/*
- * Title:   Custom Style File
- * Author:  http://themeforest.net/user/soaptheme 
- */
+.text-uppercase {
+	text-transform: uppercase;
+}
+
+.navBottom {
+	margin-right: 30px;
+	list-style: none;
+	max-width: 220px;
+	display: inline-block;
+}
+
+.socialIcons {
+	text-align: right;
+}
+
+.colorBlue {
+	color: #08365D;
+	    margin-bottom: 5px;
+}
+
+.container-fluid {
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+footer ul.navBottom li a {
+    font-size: 16px;
+    text-transform: uppercase;
+    line-height: 1.8;
+}
+
+footer .socialIcons img {
+    width: 32px;
+    margin-right: 10px;
+}
