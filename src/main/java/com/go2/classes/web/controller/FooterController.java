@@ -19,7 +19,7 @@ public class FooterController extends BaseController {
 
     @RequestMapping(value = "/partner")
     public String openPartner(Model model, HttpSession session) {
-	return "about";
+	return "partner";
     }
 
     @RequestMapping(value = "/faq")

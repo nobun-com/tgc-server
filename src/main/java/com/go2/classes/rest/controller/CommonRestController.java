@@ -100,6 +100,9 @@ public class CommonRestController extends BaseController {
 	@ResponseBody
 	public FileSystemResource  getImage(@PathVariable("uuid") String uuid){
 		FilesEntity filesEntity = filesJpaRepository.findOne(uuid);
+		if(Objects.isNull(filesEntity)) {
+		    return null;
+		}
 		return  new FileSystemResource(Utilities.getImage(filesEntity.getPath()));
 	}
 	

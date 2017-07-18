@@ -15,7 +15,7 @@
 
 .colorBlue {
 	color: #08365D;
-	    margin-bottom: 5px;
+	margin-bottom: 5px;
 }
 
 .container-fluid {
@@ -26,12 +26,136 @@
 }
 
 footer ul.navBottom li a {
-    font-size: 16px;
-    text-transform: uppercase;
-    line-height: 1.8;
+	font-size: 16px;
+	text-transform: uppercase;
+	line-height: 1.8;
 }
 
 footer .socialIcons img {
-    width: 32px;
-    margin-right: 10px;
+	width: 32px;
+	margin-right: 10px;
+}
+
+.mainTagline {
+	text-align: center;
+	text-transform: uppercase;
+	color: #4D4E4E;
+	margin-bottom: 0;
+	margin-top: 0;
+	font-size: 35px;
+}
+
+.mainSubline {
+	text-align: center;
+	color: #959091;
+	font-size: 15px;
+	font-weight: normal;
+	margin-top: 10px;
+}
+
+.fullWidthDivider {
+	width: 100%;
+	margin: 30px auto;
+	border-bottom: 2px solid #CCCCCC;
+}
+
+.aboutPGBody {
+	padding: 20px;
+}
+
+.width-100 {
+	width: 100%;
+}
+
+.aboutPGBody h5 {
+	font-size: 20px;
+	text-transform: uppercase;
+	color: #08365D;
+	text-align: center;
+	max-width: 722px;
+	margin: 0 auto;
+	margin-top: 32px;
+	margin-bottom: 15px;
+}
+
+.partnerPGBody h3 {
+	font-size: 28px;
+	text-transform: uppercase;
+	margin-bottom: 18px;
+	color: #08365D;
+}
+
+.partnerBlocksEnc {
+	padding: 40px;
+}
+
+.partnerBlocksEnc .partnerBlock {
+	width: 44%;
+	display: inline-block;
+	padding-bottom: 60px;
+}
+
+.partnerBlocksEnc .partnerBlock img {
+	height: 150px;
+	margin: 0 auto;
+	margin-bottom: 15px;
+}
+
+.partnerPGBody {
+	padding: 20px;
+}
+
+.getStartedBlocksEnc {
+	padding-top: 50px;
+	padding-bottom: 50px;
+	text-align: center;
+}
+
+.getStartedBlock {
+	width: 28%;
+	display: inline-block;
+}
+
+.getStartedBlock img {
+	height: 100px;
+	margin: 0 auto;
+	margin-bottom: 15px;
+}
+
+.getStartedDivider {
+	display: inline-block !important;
+	margin: 20px;
+	margin-bottom: 135px;
+}
+
+#bookGetStartedTagline {
+	margin: 0 auto;
+	text-align: center;
+	max-width: 150px;
+	text-transform: uppercase;
+	color: #08365D;
+	border-bottom: 2px solid #08365D;
+	margin-bottom: 20px;
+}
+
+.choice1BTN {
+	display: block;
+	margin: 0 auto;
+	padding: 6px;
+	color: white;
+	background: #0A375C;
+	text-align: center;
+	font-size: 18px;
+	text-transform: uppercase;
+	max-width: 220px;
+	font-weight: 100;
+	margin-bottom: 50px;
+}
+
+.promo-card {max-width =25%;
+	
+}
+
+.promo-card img {
+	width: 110%;
 }

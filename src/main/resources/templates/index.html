@@ -20,6 +20,22 @@
                 </div>
             </div>
         </div>
+        
+        <div class="row">
+	       <div class="col-sms-3 col-sm-3 col-md-3 promo-card">
+		       <a  th:href="${'/center-classes?centerId=' + promos.centerOneId}"><img th:src="${'getImage/' + promos.promoImageOne}"  alt="images/promo1.png"/></a>
+	       </div>
+	       <div class="col-sms-3 col-sm-3 col-md-3 promo-card">
+		       <a  th:href="${'/center-classes?centerId=' + promos.centerTwoId}"><img th:src="${'getImage/' + promos.promoImageTwo}"  alt="images/promo2.png"/></a>
+	       </div>
+	       <div class="col-sms-3 col-sm-3 col-md-3 promo-card">
+		       <a  th:href="${'/center-classes?centerId=' + promos.centerThreeId}"><img th:src="${'getImage/' + promos.promoImageThree}"  alt="images/promo3.png"/></a>
+	       </div>
+	       <div class="col-sms-3 col-sm-3 col-md-3 promo-card">
+		       <a  th:href="${'/center-classes?centerId=' + promos.centerFourId}"><img th:src="${'getImage/' + promos.promoImageFour}"  alt="images/promo4.png"/></a>
+	       </div>
+        </div>
+        
     </div>
       <div lang="en" th:include="footer :: footer"></div>
       <script th:include="footer :: loginScript" th:inline="javascript"></script> 
