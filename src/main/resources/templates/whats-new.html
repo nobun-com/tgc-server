@@ -19,9 +19,7 @@
 			<div class="cruise-list listing-style3 cruise col-sm-10 col-md-8">
 				<article class="box" th:each="article : ${articles}">
 					<figure class="col-sm-4">
-						<a title="" href="ajax/cruise-slideshow-popup.html"
-							class="hover-effect popup-gallery"><img width="270"
-							height="160" alt="" th:src="${'getImage/' + article.imageUrl}" /></a>
+						<img width="270" height="160" alt="" th:src="${'getImage/' + article.imageUrl}" />
 					</figure>
 					<div class="details col-sm-8">
 						<div class="clearfix">
@@ -45,7 +43,7 @@
 							</div>
 						</div>
 						<div class="clearfix">
-							<div class="review pull-left">
+							<div >
 								<p th:text="${article.preview}"></p>
 							</div>
 						</div>
