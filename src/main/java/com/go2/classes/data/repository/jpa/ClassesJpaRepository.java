@@ -19,7 +19,7 @@ public interface ClassesJpaRepository extends PagingAndSortingRepository<Classes
 	Iterable<ClassesEntity> findAll();
 
 	@Modifying
-	@Query(value="update classes CC set CC.status = 'valid' where CC.id = :id", nativeQuery = true)
+	@Query(value="update classes CC set CC.status = 'invalid' where CC.id = :id", nativeQuery = true)
 	void invalid(@Param("id") Long id);
 
 }

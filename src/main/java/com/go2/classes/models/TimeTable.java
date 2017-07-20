@@ -22,7 +22,7 @@ public class TimeTable implements Serializable {
     @NotNull
     private Date startTime;
 
-    @Size( max = 255 )
+    @Size( max = 10 )
     private String status;
 
     public TimeTable() {
@@ -31,6 +31,7 @@ public class TimeTable implements Serializable {
     	this.classes = classes;
     	this.startTime = start;
     	this.endTime = end;
+    	this.status = "valid";
 	}
 
     public void setId( Long id ) {
