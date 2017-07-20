@@ -3,23 +3,43 @@
 <body>
      <div lang="en" th:include="navigation :: navigation"> </div>
     <div id="page-wrapper">
-        <div id="slideshow">
-            <div class="fullwidthbanner-container">
-                <div class="revolution-slider" style="height: 0; overflow: hidden;">
-                    <ul>
-                        <li data-transition="zoomin" data-slotamount="7" data-masterspeed="1500">
-                            <img src="images/classes/classes-home-1.jpg" alt=""/>
-                        </li>
-                        <li data-transition="zoomout" data-slotamount="7" data-masterspeed="1500">
-                            <img src="images/classes/classes-home-2.jpg" alt=""/>
-                        </li>
-                        <li data-transition="slidedown" data-slotamount="7" data-masterspeed="1500">
-                            <img src="images/classes/classes-home-3.jpg" alt=""/>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    
+    
+    <div id="carousel_main" class="carousel slide" data-ride="carousel">
+
+		  <!-- Wrapper for slides -->
+		  <div class="carousel-inner" role="listbox" style="height: 632px; max-height: 70vw">
+		    <div class="item text-center active">
+		      <div class="home-text col-sm-6 col-md-6" style="max-width: 388px;">
+		      <div class="text1 text-uppercase">For Parents, By Parents</div>
+		      <div class="text2">As parents ourselves, we understand the tedious process of booking enrichment classes. That&prime;s why we&prime;ve created a free-to-use service that lets you book the best classes for your kid.</div>
+		      <div class="text-uppercase"><a class="text3 soap-popupbox" href="#travelo-signup" onclick="clearErrorSpan()">Sign up now</a></div>
+		      </div><div class="col-sm-6 col-md-6"><img src="images/classes/Asset 1.png"/></div>
+		    </div>
+		    <div class="item text-center">
+		      <div class="home-text col-sm-6 col-md-6" style="max-width: 495px;">
+		      <div class="text1 text-uppercase" style="font-size: 45px;">THOUSANDS of classes to suit<br></br>your child's needs</div>
+		      <div class="text2">Pick from a wide variety of courses that are<br></br>grouped into 10 simple categories.</div>
+		      <div class="text-uppercase"><a class="text3" href="http://www.todaygotclass.com/category">Browse categories</a></div>
+		      </div><div class="col-sm-6 col-md-6"><img src="images/classes/Asset 2.png"/></div>	
+		    </div>
+		    <div class="item text-center">
+		      <div class="home-text col-sm-6 col-md-6" style="max-width: 485px;">
+		      <div class="text1 text-uppercase">Only pay<br></br>when you book</div>
+		      <div class="text2">Explore and discover classes for free.<br></br>Plus, get rewarded when you sign up.</div>
+		      <div class="text-uppercase"><a class="text3" href="http://www.todaygotclass.com/getstarted">How it works</a></div>
+		      </div><div class="col-sm-6 col-md-6"><img src="images/classes/Asset 3.png"/></div>
+		    </div>
+		    <div class="item text-center">
+		      <div class="home-text col-sm-6 col-md-6" style="max-width: 443px;">
+		      <div class="text1 text-uppercase">Only the best</div>
+		      <div class="text2">These trusted educators have been carefully hand-picked by us, so that parents can enjoy peace of mind.</div>
+		      <div class="text-uppercase"><a class="text3" href="http://www.todaygotclass.com/#signup">Click to find out more</a></div>
+		      </div><div class="col-sm-6 col-md-6"><img src="images/classes/Asset 4.png"/></div>
+		    </div>
+		  </div>
+		<ol class="carousel-indicators"><li data-target="#carousel_main" data-slide-to="0" class="active"></li><li data-target="#carousel_main" data-slide-to="1" class=""></li><li data-target="#carousel_main" data-slide-to="2" class=""></li><li data-target="#carousel_main" data-slide-to="3" class=""></li></ol><a href="http://www.todaygotclass.com/#carousel_main" role="button" class="left carousel-control" style="background-image: none;" data-slide="prev"><span class="fa fa-angle-left" aria-hidden="true"></span></a><a href="http://www.todaygotclass.com/#carousel_main" role="button" class="right carousel-control" style="background-image: none;" data-slide="next"><span class="fa fa-angle-right" aria-hidden="true"></span></a></div>
+    
         
         <div class="row">
 	       <div class="col-sms-3 col-sm-3 col-md-3 promo-card">

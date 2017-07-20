@@ -19,7 +19,7 @@ public class ArticleEntity implements Serializable {
     @Column(name="title", nullable=false, length=255)
     private String title;
 
-    @Column(name="preview", nullable=false, length=100)
+    @Column(name="preview", nullable=false, length=500)
     private String preview;
 
     @Column(name="category", nullable=false, length=50)

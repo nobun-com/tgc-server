@@ -5,22 +5,88 @@
 	<div class="page-title-container">
 		<div class="container">
 			<div class="page-title pull-left">
-				<h2 class="entry-title">Profile</h2>
+				<h2 class="entry-title">Articles</h2>
 			</div>
 			<ul class="breadcrumbs pull-right">
 				<li><a href="/">HOME</a></li>
-				<li class="active">Add Child</li>
+				<li class="active">Articles</li>
 			</ul>
 		</div>
 	</div>
 	<section id="content" class="gray-area">
 		<div class="container">
+
+			<div class="cruise-list listing-style3 cruise col-sm-10 col-md-8">
+				<article class="box" th:each="article : ${articles}">
+					<figure class="col-sm-4">
+						<a title="" href="ajax/cruise-slideshow-popup.html"
+							class="hover-effect popup-gallery"><img width="270"
+							height="160" alt="" th:src="${'getImage/' + article.imageUrl}" /></a>
+					</figure>
+					<div class="details col-sm-8">
+						<div class="clearfix">
+							<h4 class="box-title pull-left" th:text="${article.title}">
+							</h4>
+						</div>
+						<div class="character clearfix">
+							<div class="col-xs-4 date">
+								<i class="soap-icon-clock yellow-color"></i>
+								<div>
+									<span class="skin-color">Post Date</span><br></br> <span
+										th:text="${#dates.format(article.postDate, 'MM/dd/yyyy')}"></span>
+								</div>
+							</div>
+							<div class="col-xs-5 departure">
+								<i class="soap-icon-hotel-1 yellow-color"></i>
+								<div>
+									<span class="skin-color">Category</span><br></br> <span
+										th:text="${article.category}"></span>
+								</div>
+							</div>
+						</div>
+						<div class="clearfix">
+							<div class="review pull-left">
+								<p th:text="${article.preview}"></p>
+							</div>
+						</div>
+					</div>
+				</article>
+			</div>
+
+			<div class="col-sm-2 col-md-4" style="padding: 40px;background: #fff;">
+					<h4>
+						<span>About <strong>Us</strong></span>
+					</h4>
+					<div>
+						<p>
+							<img style="width: 300px" src="images/aboutus.png" />
+						</p>
+
+						<p>Hello, we're the mums behind Today Got Class.</p>
+						<p>Founded in Singapore by 2 Singaporean mums, Today Got Class
+							aims to simplify parenthood by making it easy for fellow parents
+							in finding and booking quality enrichment classes for your child
+							- at the best prices. After all, we are parents too.</p>
+						<p>From TGC latest updates and best deals, to real-life
+							parenting and enrichment related articles, to stories of our
+							Little Learners and more - this is your space to find out what's
+							going on in the real parenting world. From trusted sources of
+							course.</p>
+						<p>
+							Regards,<br></br> Lydia &amp; Jaclyn + our 3 boys
+						</p>
+						<p>
+							For Parents, By Parents<br></br> www.todaygotclass.com
+						</p>
+					</div>
+
+			</div>
 		</div>
 	</section>
 
 	<div lang="en" th:include="footer :: footer"></div>
 	<script th:include="footer :: loginScript" th:inline="javascript"></script>
-	
+
 </body>
 </html>
 
