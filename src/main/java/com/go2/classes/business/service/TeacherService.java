@@ -19,4 +19,6 @@ public interface TeacherService {
 	void delete( Long id );
 
 	Teacher findByEmail(String email);
+	
+	Integer getTeachersCount();
 }

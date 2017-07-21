@@ -30,6 +30,7 @@ public interface TimeTableService {
 	List<Map<String, Object>> getClassesSearchResult(ClassesSearch classesSearch, Long centerId);
 
 	Object getAllClassesInCart(Long userId);
+	
 	Integer getUserCartSize(Long userId);
 
 	Double findFeesFromClases(Long timeTableId);

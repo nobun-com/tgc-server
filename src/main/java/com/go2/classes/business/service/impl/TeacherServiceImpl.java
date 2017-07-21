@@ -111,4 +111,9 @@ public class TeacherServiceImpl implements TeacherService {
 		this.teacherServiceMapper = teacherServiceMapper;
 	}
 
+	@Override
+	public Integer getTeachersCount() {
+		return teacherJpaRepository.getTeachersCount();
+	}
+
 }

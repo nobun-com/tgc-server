@@ -146,4 +146,9 @@ public class CenterServiceImpl implements CenterService {
 		return beans;
 	}
 
+	@Override
+	public Integer getCentersCount() {
+		return centerJpaRepository.getCentersCount();
+	}
+
 }

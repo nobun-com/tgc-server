@@ -21,4 +21,6 @@ public interface CenterService {
 	void delete( Long id );
 
 	List<Map<String, Object>> getCentersSearchResult(ClassesSearch classesSearch);
+	
+	Integer getCentersCount();
 }

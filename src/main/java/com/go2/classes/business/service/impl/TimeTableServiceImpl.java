@@ -133,6 +133,7 @@ public class TimeTableServiceImpl implements TimeTableService {
 		return beans;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Map<String, Object>> getClassesSearchResult(ClassesSearch classesSearch, Long centerId) {
 		Query q = entityManager.createNativeQuery(classesSearch.getSearchClassesByCenretQuery(centerId), TimeTableEntity.class);

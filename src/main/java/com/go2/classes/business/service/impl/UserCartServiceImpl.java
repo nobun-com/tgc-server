@@ -32,8 +32,8 @@ public class UserCartServiceImpl implements UserCartService {
 	private ClassesService classesService;
 
 	@Resource
-    private CouponService couponService; // Injected by Spring
-	
+	private CouponService couponService; // Injected by Spring
+
 	@Resource
 	private UserCartJpaRepository userCartJpaRepository;
 
@@ -45,11 +45,11 @@ public class UserCartServiceImpl implements UserCartService {
 
 	@Resource
 	private UserCartServiceMapper userCartServiceMapper;
-	
+
 	@Override
 	public UserCart findById(Long id) {
 		UserCartEntity userCartEntity = userCartJpaRepository.findOne(id);
-		if(Objects.isNull(userCartEntity)) {
+		if (Objects.isNull(userCartEntity)) {
 			throw new IllegalStateException("UserCart.not.found");
 		}
 		return userCartServiceMapper.mapUserCartEntityToUserCart(userCartEntity);
@@ -59,7 +59,7 @@ public class UserCartServiceImpl implements UserCartService {
 	public List<UserCart> findAll() {
 		Iterable<UserCartEntity> entities = userCartJpaRepository.findAll();
 		List<UserCart> beans = new ArrayList<UserCart>();
-		for(UserCartEntity UserCartEntity : entities) {
+		for (UserCartEntity UserCartEntity : entities) {
 			beans.add(userCartServiceMapper.mapUserCartEntityToUserCart(UserCartEntity));
 		}
 		return beans;
@@ -67,12 +67,12 @@ public class UserCartServiceImpl implements UserCartService {
 
 	@Override
 	public UserCart save(UserCart UserCart) {
-		return update(UserCart) ;
+		return update(UserCart);
 	}
 
 	@Override
 	public UserCart create(UserCart userCart) {
-		UserCartEntity userCartEntity  = new UserCartEntity();
+		UserCartEntity userCartEntity = new UserCartEntity();
 		userCartServiceMapper.mapUserCartToUserCartEntity(userCart, userCartEntity);
 		UserCartEntity userCartEntitySaved = userCartJpaRepository.save(userCartEntity);
 		return userCartServiceMapper.mapUserCartEntityToUserCart(userCartEntitySaved);
@@ -86,26 +86,24 @@ public class UserCartServiceImpl implements UserCartService {
 		return userCartServiceMapper.mapUserCartEntityToUserCart(userCartEntitySaved);
 	}
 
-	
 	@Override
 	public List<UserCart> findAllClassInstancesByStudent(Long userId) {
 		Iterable<UserCartEntity> entities = userCartJpaRepository.findAllUserCartsByStudentId(userId);
 		List<UserCart> beans = new ArrayList<UserCart>();
-		for(UserCartEntity UserCartEntity : entities) {
+		for (UserCartEntity UserCartEntity : entities) {
 			beans.add(userCartServiceMapper.mapUserCartEntityToUserCart(UserCartEntity));
 		}
 		return beans;
 	}
-	
-	
+
 	@Override
 	public void delete(Long id) {
-		if(Objects.isNull(id)) {
+		if (Objects.isNull(id)) {
 			throw new IllegalStateException("UserCart.not.found");
 		}
 		userCartJpaRepository.delete(id);
 	}
-	
+
 	public UserCartJpaRepository getUserCartJpaRepository() {
 		return userCartJpaRepository;
 	}
@@ -133,16 +131,16 @@ public class UserCartServiceImpl implements UserCartService {
 		userBookingOrderEntity.setStudent(studentJpaRepository.findOne(userId));
 		userBookingOrderEntity.setDate(new Date());
 		userBookingOrderEntity = userBookingOrderJpaRepository.save(userBookingOrderEntity);
-		
+
 		Iterable<UserCartEntity> inCart = userCartJpaRepository.findAllUserCartsByStudentId(userId);
 		Integer classesCount = 0;
-		for(UserCartEntity userCartEntity : inCart) {
+		for (UserCartEntity userCartEntity : inCart) {
 			userCartEntity.setStatus("Booked");
 			userCartEntity.setUserBookingOrderEntity(userBookingOrderEntity);
 			userCartJpaRepository.save(userCartEntity);
 			classesService.bookClass(userCartEntity.getTimeTable().getClasses());
 			classesCount++;
-			
+
 		}
 		userBookingOrderEntity.setClassesCount(classesCount);
 		userBookingOrderJpaRepository.save(userBookingOrderEntity);
@@ -153,13 +151,11 @@ public class UserCartServiceImpl implements UserCartService {
 	public Map<String, Object> applyCoupon(Long userCartId, String couponCode) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		Coupon coupon = couponService.findById(couponCode);
-		if(Objects.isNull(coupon)) {
+		if (Objects.isNull(coupon)) {
 			result.put("message", "invalid coupon");
-		}
-		else if(!coupon.getStatus().equals("Active")) { 
+		} else if (!coupon.getStatus().equals("Active")) {
 			result.put("message", "coupon is " + coupon.getStatus());
-		} 
-		else {
+		} else {
 			UserCart userCart = findById(userCartId);
 			userCart.setCoupon(coupon.getCode());
 			userCart.setFinalCost(getDiscount(userCart.getFees(), coupon));
@@ -175,14 +171,29 @@ public class UserCartServiceImpl implements UserCartService {
 	private Double getDiscount(Double cost, Coupon coupon) {
 		String rate = coupon.getValue();
 		Double value;
-		if(rate.contains("%")) {
+		if (rate.contains("%")) {
 			rate = rate.replaceAll("%", "");
 			value = Double.parseDouble(rate);
-			value = (value*cost)/100;
+			value = (value * cost) / 100;
 		} else {
 			value = Double.parseDouble(rate);
 		}
 		return cost - value;
+	}
+
+	@Override
+	public Integer getBookingsCount() {
+		return userBookingOrderJpaRepository.getBookingsCount();
+	}
+
+	@Override
+	public List<Object> getLastMonthBookings() {
+		return userBookingOrderJpaRepository.getLastMonthBookings();
+	}
+
+	@Override
+	public List<Object> getAllBookingsByMonth(String fromDate, String toDate) {
+		return userBookingOrderJpaRepository.getAllBookingsByMonth(fromDate, toDate);
 	}
 
 }

@@ -27,4 +27,6 @@ public interface ClassesService {
     List<Map<String, Object>> findAllClassesCategory();
 
     void bookClass(ClassesEntity classes);
+    
+    Integer getActiveClassesCount();
 }

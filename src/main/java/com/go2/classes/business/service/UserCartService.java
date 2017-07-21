@@ -24,7 +24,13 @@ public interface UserCartService {
 	Double getToatlFees(Long userId);
 
 	Integer bookAllCarts(Long userId);
+	
+	Integer getBookingsCount();
 
 	Map<String, Object> applyCoupon(Long userCartId, String couponCode);
+	
+	List<Object> getAllBookingsByMonth(String fromDate,String toDate);
+	
+	List<Object> getLastMonthBookings();
 
 }

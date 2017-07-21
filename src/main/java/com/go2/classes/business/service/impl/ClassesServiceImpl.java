@@ -164,5 +164,9 @@ public class ClassesServiceImpl implements ClassesService {
 	classes.setSlotsAvailable(classes.getSlotsAvailable() - 1);
 	classesJpaRepository.save(classes);
     }
+	@Override
+		public Integer getActiveClassesCount() {
+			return classesJpaRepository.getActiveClassesCount();
+		}
 
 }
