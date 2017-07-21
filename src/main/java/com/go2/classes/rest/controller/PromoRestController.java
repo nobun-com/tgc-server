@@ -54,10 +54,10 @@ public class PromoRestController {
 		return promoService.create(promo);
 	}
 
-	@RequestMapping(value = "/promo/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/promo", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Promo update(@PathVariable("id") Long id, @RequestBody Promo promo) {
+	public Promo update(@RequestBody Promo promo) {
 		return promoService.update(promo);
 	}
 
