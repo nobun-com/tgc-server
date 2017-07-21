@@ -10,8 +10,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.go2.classes.business.service.PromoService;
 import com.go2.classes.business.service.StudentService;
@@ -32,81 +34,37 @@ public class OpenController extends BaseController {
     @Resource
     private PromoService promoService; // Injected by Spring
 
+    @ResponseBody
     @RequestMapping(value = "/openLogin", method = RequestMethod.POST)
     public String openLogin(Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
 	String email = request.getParameter("email");
 	String password = request.getParameter("password");
-	String redirectUrl = request.getParameter("redirectUrl");
 	Student student = studentService.findByEmail(email);
 	if (Objects.isNull(student)) {
-	    model.addAttribute("message", "user not found");
+	    throw new IllegalStateException("User not exists");
 	} else {
 	    if (password.equals(student.getPassword())) {
 		session.setAttribute("userName", student.getName());
 		session.setAttribute("userId", student.getId());
 		session.setAttribute("isLoggedIn", true);
 		session.setAttribute("userCartSize", timeTableService.getUserCartSize(student.getId()));
-		response.sendRedirect(redirectUrl);
+		return "Login success";
 	    } else {
-		model.addAttribute("message", "login failed");
+		throw new IllegalStateException("Bad credentials");
 	    }
 	}
-
-	model.addAttribute("popup", "LOGIN");
-	model.addAttribute("email", email);
-	model.addAttribute("password", password);
-	model.addAttribute("promos", promoService.findById(1l));
-
-	return "index";
     }
 
+    @ResponseBody
     @RequestMapping(value = "/openRegister", method = RequestMethod.POST)
-    public String openRegister(Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+    public String openRegister(HttpSession session, @ModelAttribute Student student) throws IOException {
 
-	String name = request.getParameter("name");
-	String gender = request.getParameter("gender");
-	String email = request.getParameter("email");
-	String password = request.getParameter("password");
-	String confirmPassword = request.getParameter("confirmPassword");
-	String mobile = request.getParameter("mobile");
-	String refrralCode = request.getParameter("refrralCode");
-
-	Student student = studentService.findByEmail(email);
-
-	if (!Objects.isNull(student)) {
-	    model.addAttribute("message", "user alredy registerd with email " + email);
-	} else {
-	    if (password.equals(confirmPassword)) {
-		student = new Student();
-		student.setEmail(email);
-		student.setName(name);
-		student.setPassword(password);
-		student.setGender(gender);
-		student.setPhone(mobile);
-		student.setRefrralCode(refrralCode);
-		student = studentService.create(student);
-		if (Objects.isNull(student)) {
-		    model.addAttribute("message", "Unable to registred user");
-		} else {
-		    session.setAttribute("userName", student.getName());
-		    session.setAttribute("userId", student.getId());
-		    session.setAttribute("isLoggedIn", true);
-		    session.setAttribute("userCartSize", timeTableService.getUserCartSize(student.getId()));
-		    response.sendRedirect("/");
-		}
-	    } else {
-		model.addAttribute("message", "Password and confirm password doesn't match");
-	    }
-	}
-	model.addAttribute("popup", "SIGNUP");
-	model.addAttribute("name", name);
-	model.addAttribute("email", email);
-	model.addAttribute("password", password);
-	model.addAttribute("confirmPassword", confirmPassword);
-	model.addAttribute("mobile", mobile);
-	model.addAttribute("refrralCode", refrralCode);
-	model.addAttribute("promos", promoService.findById(1l));
-	return "index";
+	student = studentService.create(student);
+	session.setAttribute("userName", student.getName());
+	session.setAttribute("userId", student.getId());
+	session.setAttribute("isLoggedIn", true);
+	session.setAttribute("userCartSize", 0);
+	return "User created";
     }
 
     @RequestMapping(value = "/logout")

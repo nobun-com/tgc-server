@@ -74,21 +74,21 @@
             </div>
 
             <div id="travelo-signup" class="travelo-signup-box travelo-box">
-                    <form action="openRegister" method="POST">
-                    <div class="form-group">
-					<a href="#" class="pull-right" onclick="closeSignUp()"><img src="images/icon/cancel.png" alt="" style="margin-top: -26px; margin-right: -14px;"/></a>
-				</div>
-				<div class="form-group">
-					<div class="seperator">
-						<label>SIGN UP</label>
-					</div>
-				</div>
+                    <form action="JavaScript:signup()">
+	                    <div class="form-group">
+							<a href="#" class="pull-right" onclick="closeSignUp()"><img src="images/icon/cancel.png" alt="" style="margin-top: -26px; margin-right: -14px;"/></a>
+						</div>
+						<div class="form-group">
+							<div class="seperator">
+								<label>SIGN UP</label>
+							</div>
+						</div>
                         <div class="form-group">
                             <input id="signup-name" type="text" name="name" class="input-text full-width" placeholder="NAME" required="true"/>
                         </div>
                         <div class="form-group">
                             <div class="selector">
-                                <select class="full-width" name="gender" placeholder="GENDER" required="true">
+                                <select class="full-width" id="signup-gender" name="gender" placeholder="GENDER" required="true">
                                     <option value="Male">MALE</option>
                                     <option value="Female">FEMALE</option>
                                 </select>
@@ -106,9 +106,9 @@
                         <div class="form-group">
                             <input id="signup-mobile" type="text" name="mobile" class="input-text full-width" placeholder="MOBILE" required="true"/>
                         </div>
-                        <div class="form-group">
+<!--                         <div class="form-group">
                             <input id="signup-refrralCode" type="text" name="refrralCode" class="input-text full-width" placeholder="REFRRAL CODE" required="true"/>
-                        </div>
+                        </div> -->
                         <button type="submit" class="full-width btn-medium">SIGN UP NOW</button>
                     </form>
                 <div class="seperator"></div>
@@ -119,7 +119,7 @@
             </div>
 
 		<div id="travelo-login" class="travelo-login-box travelo-box">
-			<form action="openLogin" method="POST">
+			<form action="JavaScript:login()">
 				<div class="form-group">
 					<a href="#" class="pull-right" onclick="closeLogin()"><img src="images/icon/cancel.png" alt="" style="margin-top: -26px; margin-right: -14px;"/></a>
 				</div>
@@ -130,8 +130,8 @@
 				</div>
 
 				<div class="form-group">
-					<input id="login-redirectUrl" type="hidden" name="redirectUrl"
-						value="/" /> <input id="login-email" type="email" name="email"
+					<input id="login-redirect-url" type="hidden" name="redirectUrl"
+						value="" /> <input id="login-email" type="email" name="email"
 						class="input-text full-width" placeholder="EMAIL ADDRESS"
 						required="true" />
 				</div>
@@ -141,7 +141,7 @@
 						required="true" />
 				</div>
 				<div class="form-group">
-					<button type="submit" class="full-width btn-medium">LOGIN IN NOW</button>
+					<button type="submit" class="full-width btn-medium">LOG IN NOW</button>
 				</div>
 				<div class="form-group">
 					<p>Don't have an account? <a href="#travelo-signup" class="goto-signup soap-popupbox">Sign up</a></p>
