@@ -7,10 +7,10 @@
                     Mobile Menu Toggle
                 </a>
 
-                <div class="container">
+                <div class="container navbar-cont">
                     <h1 class="navbar-brand">
-                        <a href="" title="Travelo - home">
-                            <img src="images/tgclogo.png" alt="Travelo HTML5 Template" />
+                        <a href="/">
+                            <img src="images/tgclogo.png" class="logo1" />
                         </a>
                     </h1>
                     <nav id="main-menu" role="navigation">
@@ -25,50 +25,57 @@
                                 <a href="centers">Centers</a>
                             </li>
                             <li class="menu-item-has-children" th:if="${session.isLoggedIn==true}">
-                            	<a href="my-cart" style="margin-top: 20px;"><img src="images/icon/cart-of-ecommerce.png" alt=""/><span class="badge" th:text="${session.userCartSize}"></span> </a>
+                            	<a href="my-cart" style="margin-top: 8px;"><img src="images/icon/cart-of-ecommerce.png" alt=""/><span class="badge" th:text="${session.userCartSize}"></span> </a>
                             </li>
                             <li class="menu-item-has-children" th:if="!${session.isLoggedIn==true}">
-                            	<a id="login-link" href="#travelo-login" onclick="clearErrorSpan()" class="soap-popupbox">LOGIN</a>
+                            	<a id="login-link" href="#travelo-login" onclick="clearErrorSpan()" class="soap-popupbox login-button btn-login">LOGIN</a>
                             </li>
                             <li class="menu-item-has-children"  th:if="!${session.isLoggedIn==true}">
-                        		<a id="signup-link" href="#travelo-signup"  onclick="clearErrorSpan()" class="soap-popupbox">SIGNUP</a>
+                        		<a id="signup-link" href="#travelo-signup"  onclick="clearErrorSpan()" class="soap-popupbox login-button btn-login">SIGNUP</a>
                             </li>
                             <li class="menu-item-has-children"  th:if="${session.isLoggedIn==true}">
-                            	<a href="profile" th:text="${session.userName}"></a>
+                            	<a href="profile" class="btn-login" style="text-transform:lowercase !important;" th:text="${session.userName}"></a>
                             </li>
                              <li class="menu-item-has-children"  th:if="${session.isLoggedIn==true}">
-                        		<a href="logout">SIGN OUT</a>
+                        		<a class="btn-login" href="logout">SIGN OUT</a>
                             </li>
                         </ul>
                     </nav>
                 </div>
-                <nav id="mobile-menu-01" class="mobile-menu collapse">
+                <nav id="mobile-menu-01" class="mobile-menu collapse" style="margin:10%;text-align:center;">
                 
                     <ul id="mobile-primary-menu" class="menu">
-                            <li class="menu-item-has-children">
+                            <li>
                                 <a href="/">Home</a>
                             </li>
-                            <li class="menu-item-has-children">
+                            <li>
                                 <a href="search-classes">Classes</a>
                             </li>
-                            <li class="menu-item-has-children">
+                            <li>
                                 <a href="centers">Centers</a>
                             </li>
-                            <li class="menu-item-has-children" th:if="${session.isLoggedIn==true}">
+                            <li th:if="${session.isLoggedIn==true}">
                             	<a href="my-cart" style="margin-top: 20px;"><img src="images/icon/cart-of-ecommerce.png" alt=""/><span class="badge" th:text="${session.userCartSize}"></span> </a>
                             </li>
-                            <li class="menu-item-has-children" th:if="!${session.isLoggedIn==true}">
-                            	<a id="login-link" href="#travelo-login" onclick="clearErrorSpan()" class="soap-popupbox">LOGIN</a>
+                            <li th:if="!${session.isLoggedIn==true}">
+                            	<a id="login-link" href="#travelo-login" onclick="clearErrorSpan()" class="soap-popupbox clickable next">LOGIN</a>
                             </li>
-                            <li class="menu-item-has-children"  th:if="!${session.isLoggedIn==true}">
+                            <li th:if="!${session.isLoggedIn==true}">
                         		<a id="signup-link" href="#travelo-signup"  onclick="clearErrorSpan()" class="soap-popupbox">SIGNUP</a>
                             </li>
-                            <li class="menu-item-has-children"  th:if="${session.isLoggedIn==true}">
+                            <li th:if="${session.isLoggedIn==true}">
                             	<a href="profile" th:text="${session.userName}"></a>
                             </li>
-                             <li class="menu-item-has-children"  th:if="${session.isLoggedIn==true}">
+                             <li th:if="${session.isLoggedIn==true}">
                         		<a href="logout">SIGN OUT</a>
                             </li>
+							<li><a href="about">About</a></li>
+							<li><a href="partner">I'm an educator</a></li>
+							<li><a href="faq">FAQ</a></li>
+							<li><a href="tnc">Terms of use</a></li>
+							<li><a class="text-uppercase" href="getstarted">How it works</a></li>
+							<li><a class="text-uppercase" href="whatsnew">Articles</a></li>
+						
                         </ul>
                 </nav>
             </div>
@@ -76,7 +83,7 @@
             <div id="travelo-signup" class="travelo-signup-box travelo-box">
                     <form action="JavaScript:signup()">
 	                    <div class="form-group">
-							<a href="#" class="pull-right" onclick="closeSignUp()"><img src="images/icon/cancel.png" alt="" style="margin-top: -26px; margin-right: -14px;"/></a>
+							<a href="#" class="pull-right" onclick="closeSignUp()" style="margin-top:-20px;"><span class="glyphicon glyphicon-remove"></span></a>
 						</div>
 						<div class="form-group">
 							<div class="seperator">
@@ -121,7 +128,7 @@
 		<div id="travelo-login" class="travelo-login-box travelo-box">
 			<form action="JavaScript:login()">
 				<div class="form-group">
-					<a href="#" class="pull-right" onclick="closeLogin()"><img src="images/icon/cancel.png" alt="" style="margin-top: -26px; margin-right: -14px;"/></a>
+					<a href="#" class="pull-right" onclick="closeLogin()" style="margin-top:-20px;"><span class="glyphicon glyphicon-remove"></span></a>
 				</div>
 				<div class="form-group">
 					<div class="seperator">

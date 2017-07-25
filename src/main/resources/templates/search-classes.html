@@ -192,7 +192,7 @@
                                 <div class="col-sms-6 col-sm-6 col-md-4" th:each="center : ${centers}">
                                     <article class="box">
                                         <figure style="text-align:center">
-                                        	<a th:href="${'/center-classes-search?centerId=' + center.centerId}" title="" class="hover-effect">
+                                        	<a th:href="${'/center-classes-search?centerId=' + center.centerId}" title="">
                                             <img th:src="${'getImage/' + center.logoName}" alt="" style="height:100px;width:auto;" />
                                             </a>
                                         </figure>

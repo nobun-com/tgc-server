@@ -141,7 +141,7 @@ html {
 body {
   font: 75%/150% "Lato", Arial, Helvetica, sans-serif;
   background-color: #fff;
-  color: #838383;
+  color: #333;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -ms-overflow-style: scrollbar;
@@ -5427,7 +5427,7 @@ ul.check-circle li:before {
             animation: toBottomFromTop 0.3s forwards; }
 
 #header .logo a, #footer .logo a, .chaser .logo a {
-  background: url("../images/logo/skin1-logo.png") no-repeat 0 0;
+  background: url("../images/tgclogo.png") no-repeat 0 0;
   display: block; }
 #header .logo img, #footer .logo img, .chaser .logo img {
   filter: alpha(opacity=0);
@@ -5490,9 +5490,9 @@ ul.check-circle li:before {
     #main-menu ul.menu > li > a, .chaser ul.menu > li > a {
       font-weight: normal;
       display: block;
-      padding: 0;
-      height: 68px;
-      line-height: 68px;
+      padding: 0px 10px;
+      height: 40px;
+      line-height: 40px;
       text-transform: uppercase;
       letter-spacing: 0.04em; }
     #main-menu ul.menu > li.active > a, .chaser ul.menu > li.active > a {
@@ -5995,8 +5995,8 @@ ul.menu.mini {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
   -webkit-backface-visibility: hidden; }
   .chaser ul.menu > li > a {
-    line-height: 48px;
-    height: 48px; }
+/*     line-height: 48px;
+    height: 48px; */ }
   .chaser ul.menu > li:hover > ul, .chaser ul.menu > li:hover > .megamenu-wrapper {
     top: 46px !important; }
   .chaser .logo {
@@ -6021,8 +6021,8 @@ ul.menu.mini {
 .no-backgroundsize .chaser .logo a {
   background-size: auto 20px;
   background-image: none;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/logo/skin1-logo.png', sizingMethod='scale');
-  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/logo/skin1-logo.png', sizingMethod='scale')"; }
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/tgclogo.png', sizingMethod='scale');
+  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/tgclogo.png', sizingMethod='scale')"; }
 
 /* 3.2.0. Sign up & Login box */
 .travelo-signup-box, .travelo-login-box {
@@ -8434,7 +8434,7 @@ button.ui-button::-moz-focus-inner {
   #footer.style1 .bottom {
     background: #fff; }
   #footer.style1 .logo a {
-    background-image: url("../images/logo/skin2-logo.png"); }
+    background-image: url("../images/tgclogo.png"); }
   #footer.style1 .copyright p {
     color: #9e9e9e; }
   #footer.style1 #back-to-top i {
@@ -8487,7 +8487,7 @@ button.ui-button::-moz-focus-inner {
   #footer.style2 .bottom {
     background: #fff; }
   #footer.style2 .logo a {
-    background-image: url("../images/logo/skin3-logo.png"); }
+    background-image: url("../images/tgclogo.png"); }
   #footer.style2 .copyright p {
     color: #9e9e9e; }
   #footer.style2 #back-to-top i {
@@ -8540,7 +8540,7 @@ button.ui-button::-moz-focus-inner {
   #footer.style3 .bottom {
     background: #fff; }
   #footer.style3 .logo a {
-    background-image: url("../images/logo/skin3-logo.png"); }
+    background-image: url("../images/tgclogo.png"); }
   #footer.style3 .copyright p {
     color: #9e9e9e; }
   #footer.style3 #back-to-top i {
