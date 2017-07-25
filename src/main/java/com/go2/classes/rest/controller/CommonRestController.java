@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -142,7 +143,7 @@ public class CommonRestController extends BaseController {
 		 * ", Value = " + entry.getValue()); }
 		 */ 
 		
-		Map<String, Integer> finalResult = new HashMap<String, Integer>();
+		LinkedHashMap<String, Integer> finalResult = new LinkedHashMap<String, Integer>();
 		for (Date date = start.getTime(); start.before(end); start.add(Calendar.DATE, 1), date = start.getTime()) {
 			if (map1.containsKey(formatter.format(date))) {
 				finalResult.put(formatter.format(date), map1.get(formatter.format(date)));
