@@ -144,3 +144,16 @@ function login() {
 		  }
 		});
 }
+
+
+function filterClass(date, displayDate) {
+
+	jQuery(".selected-date").text(displayDate);
+    jQuery('.match_class').show().filter(function() {
+    	if(date=='All') {
+    		return false;
+    	}
+    	var value = jQuery('.filter-date',this).text();
+        return date!=value;
+    }).hide();
+}

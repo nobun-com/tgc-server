@@ -25,68 +25,68 @@ import com.go2.classes.models.jpa.PromoEntity;
 @Transactional
 public class PromoServiceImpl implements PromoService {
 
-	@Resource
-	private PromoJpaRepository promoJpaRepository;
+    @Resource
+    private PromoJpaRepository promoJpaRepository;
 
-	@Resource
-	private PromoServiceMapper promoServiceMapper;
+    @Resource
+    private PromoServiceMapper promoServiceMapper;
 
-	@Override
-	public Promo findById(Long id) {
-		PromoEntity promoEntity = promoJpaRepository.findOne(id);
-		return promoServiceMapper.mapPromoEntityToPromo(promoEntity);
+    @Override
+    public Promo findById(Long id) {
+	PromoEntity promoEntity = promoJpaRepository.findOne(id);
+	return promoServiceMapper.mapPromoEntityToPromo(promoEntity);
+    }
+
+    @Override
+    public List<Promo> findAll() {
+	Iterable<PromoEntity> entities = promoJpaRepository.findAll();
+	List<Promo> beans = new ArrayList<Promo>();
+	for (PromoEntity promoEntity : entities) {
+	    beans.add(promoServiceMapper.mapPromoEntityToPromo(promoEntity));
 	}
+	return beans;
+    }
 
-	@Override
-	public List<Promo> findAll() {
-		Iterable<PromoEntity> entities = promoJpaRepository.findAll();
-		List<Promo> beans = new ArrayList<Promo>();
-		for (PromoEntity promoEntity : entities) {
-			beans.add(promoServiceMapper.mapPromoEntityToPromo(promoEntity));
-		}
-		return beans;
-	}
+    @Override
+    public Promo save(Promo promo) {
+	return update(promo);
+    }
 
-	@Override
-	public Promo save(Promo promo) {
-		return update(promo);
-	}
+    @Override
+    public Promo create(Promo promo) {
+	PromoEntity promoEntity = new PromoEntity();
+	promoServiceMapper.mapPromoToPromoEntity(promo, promoEntity);
+	PromoEntity promoEntitySaved = promoJpaRepository.save(promoEntity);
+	return promoServiceMapper.mapPromoEntityToPromo(promoEntitySaved);
+    }
 
-	@Override
-	public Promo create(Promo promo) {
-		PromoEntity promoEntity =  new PromoEntity();
-		promoServiceMapper.mapPromoToPromoEntity(promo, promoEntity);
-		PromoEntity promoEntitySaved = promoJpaRepository.save(promoEntity);
-		return promoServiceMapper.mapPromoEntityToPromo(promoEntitySaved);
-	}
+    @Override
+    public Promo update(Promo promo) {
+	PromoEntity promoEntity = promoJpaRepository.findOne(promo.getId());
+	promoServiceMapper.mapPromoToPromoEntity(promo, promoEntity);
+	PromoEntity promoEntitySaved = promoJpaRepository.save(promoEntity);
+	return promoServiceMapper.mapPromoEntityToPromo(promoEntitySaved);
+    }
 
-	@Override
-	public Promo update(Promo promo) {
-		PromoEntity promoEntity = promoJpaRepository.findOne(promo.getId());
-		promoServiceMapper.mapPromoToPromoEntity(promo, promoEntity);
-		PromoEntity promoEntitySaved = promoJpaRepository.save(promoEntity);
-		return promoServiceMapper.mapPromoEntityToPromo(promoEntitySaved);
-	}
+    @Override
+    public void delete(Long id) {
+	promoJpaRepository.delete(id);
+    }
 
-	@Override
-	public void delete(Long id) {
-		promoJpaRepository.delete(id);
-	}
+    public PromoJpaRepository getPromoJpaRepository() {
+	return promoJpaRepository;
+    }
 
-	public PromoJpaRepository getPromoJpaRepository() {
-		return promoJpaRepository;
-	}
+    public void setPromoJpaRepository(PromoJpaRepository promoJpaRepository) {
+	this.promoJpaRepository = promoJpaRepository;
+    }
 
-	public void setPromoJpaRepository(PromoJpaRepository promoJpaRepository) {
-		this.promoJpaRepository = promoJpaRepository;
-	}
+    public PromoServiceMapper getPromoServiceMapper() {
+	return promoServiceMapper;
+    }
 
-	public PromoServiceMapper getPromoServiceMapper() {
-		return promoServiceMapper;
-	}
-
-	public void setPromoServiceMapper(PromoServiceMapper promoServiceMapper) {
-		this.promoServiceMapper = promoServiceMapper;
-	}
+    public void setPromoServiceMapper(PromoServiceMapper promoServiceMapper) {
+	this.promoServiceMapper = promoServiceMapper;
+    }
 
 }

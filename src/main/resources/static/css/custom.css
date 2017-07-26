@@ -170,3 +170,25 @@ footer .socialIcons img {
 .navbar-brand {
     padding: 0px 15px !important;
 }
+
+#categoryScheduleNav {
+  list-style: none;
+  text-align: center;
+	background: white;
+	margin: 15px 0px;
+}
+
+#categoryScheduleNav li {
+  display: inline-block;
+  margin: 15px;
+}
+
+#categoryScheduleNav li a{
+  font-size: 20px;
+}
+
+#categoryScheduleNav hr {
+    margin: 4px auto !important;
+    width: 100%;
+    border-bottom: 2px solid #686969;
+}

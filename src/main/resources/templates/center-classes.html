@@ -46,12 +46,22 @@
 			                   <div class="search-tab-content">
 			                       <div class="tab-pane fade active in" id="hotels-tab">
 			                       
+			                       
+			                       
+				                       <div class="date-filter-ul">
+				                       		<ul id="categoryScheduleNav">
+				                       			<li><a href="javascript:filterClass('All', '')"><span>All Days</span></a></li>
+												<li th:each="date : ${data.dates}"><a th:href="${'javascript:filterClass('''+#dates.format(date, 'yyyy-MM-dd')+''',''' +#dates.format(date, 'EEEE, MMMM dd, yyyy')+ ''')'}"><span  th:text="${#dates.format(date, 'EEE MM/dd')}"></span></a></li>
+											</ul>
+				                       </div>
+				                       
+				                       <div class="selected-date"></div>
+			                       
 			                            <div class="hotel-list listing-style3 hotel">
 			
-			                               <article class="box" th:each="classObj : ${classes}">
+			                               <article class="box match_class" th:each="classObj : ${data.classes}">
 			                                   <div class="details col-sm-9 col-md-10">
-			                                      
-			                                        <div>
+			                                       <div>
 			                                           <div>
 			                                           <h2><a title="" th:text="${classObj.name}" th:href="${'/class-details?timeTableId=' + classObj.id}"></a>
 			                                           </h2>
@@ -61,10 +71,10 @@
 			                                           <div>
 			                                           		<h1 th:text="${classObj.fee}"></h1>
 			                                           </div>
-			                                         </div> 
+			                                       </div>
 			                                       <div>
 				                                       <div>
-			                                           		<p style="margin: 0px;" th:text="${classObj.date}"></p>
+			                                           		<p style="margin: 0px;" class="filter-date" th:text="${classObj.date}"></p>
 			                                               <h4 class="box-title" th:text="${classObj.day + '( ' + classObj.time + ' )'}"></h4><br></br><br></br>
 			                                               <u><h4 class="box-title" th:text="${classObj.slots}"></h4></u><br></br>
 				                                       </div>

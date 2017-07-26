@@ -1,5 +1,6 @@
 package com.go2.classes.business.service;
 
+import java.text.ParseException;
 import java.util.List;
 
 import java.util.Map;
@@ -25,9 +26,7 @@ public interface TimeTableService {
 
 	List<Map<String, Object>> findAllClassInstancesByClass(Long classId);
 
-	List<Map<String, Object>> findAllClassInstancesByCenter(Long centerId);
-
-	List<Map<String, Object>> getClassesSearchResult(ClassesSearch classesSearch, Long centerId);
+	Map<String, Object> getClassesSearchResult(ClassesSearch classesSearch, Long centerId) throws ParseException;
 
 	Object getAllClassesInCart(Long userId);
 	

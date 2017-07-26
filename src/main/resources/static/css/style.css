@@ -1392,7 +1392,7 @@ select option {
   content: "\e892"; }
 
 .checkbox-inline, .radio-inline {
-  margin-left: 10px; }
+  display: flex; }
 
 /* 2.1.4. Form */
 form label {
