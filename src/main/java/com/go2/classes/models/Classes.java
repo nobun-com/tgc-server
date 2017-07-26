@@ -8,66 +8,68 @@ import java.util.Date;
 
 public class Classes implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @NotNull
-    private Long id;
+	@NotNull
+	private Long id;
 
-    @NotNull
-    @Size( min = 1, max = 50 )
-    private String className;
+	@NotNull
+	@Size(min = 1, max = 50)
+	private String className;
 
-    @Size( max = 500 )
-    private String about;
+	@Size(max = 500)
+	private String about;
 
-    @NotNull
-    private Long teacherId;
+	@NotNull
+	private Long teacherId;
 
-    @NotNull
-    private Long centerId;
+	@NotNull
+	private Long centerId;
 
-    private Date createdTime;
+	private Date createdTime;
 
-    @NotNull
-    private Date startDate;
+	@NotNull
+	private Date startDate;
 
-    @NotNull
-    private Date endDate;
+	@NotNull
+	private Date endDate;
 
-    @NotNull
-    private Double fee;
+	@NotNull
+	private Double fee;
 
-    private Integer occurrence;
+	private Integer occurrence;
 
-    @Size(max = 10)
-    private String frequency;
+	@Size(max = 10)
+	private String frequency;
 
-    @Size(max = 800)
-    private String frequencyMetadata;
+	@Size(max = 800)
+	private String frequencyMetadata;
 
-    @Size(max = 100)
-    private String logoUrl;
+	@Size(max = 100)
+	private String logoUrl;
 
-    @Size( max = 255 )
-    private String rrule;
+	@Size(max = 255)
+	private String rrule;
 
-    private Integer minAge;
+	private Integer minAge;
 
-    private Integer maxAge;
+	private Integer maxAge;
 
-    private Integer maxSlots;
+	private Integer maxSlots;
 
-    private Integer slotsAvailable;
+	private Integer slotsAvailable;
 
-    private Integer categoryId;
+	private Integer categoryId;
 
-    public void setId( Long id ) {
-        this.id = id ;
-    }
+	private String importantNotes;
 
-    public Long getId() {
-        return this.id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getId() {
+		return this.id;
+	}
 
 	public Integer getCategoryId() {
 		return categoryId;
@@ -171,7 +173,7 @@ public class Classes implements Serializable {
 
 	public void setRrule(String rrule) {
 		this.rrule = rrule;
-	} 
+	}
 
 	public Long getCenterId() {
 		return centerId;
@@ -213,25 +215,35 @@ public class Classes implements Serializable {
 		this.slotsAvailable = slotsAvailable;
 	}
 
-	public String toString() { 
-        StringBuffer sb = new StringBuffer(); 
-        sb.append(id);
-        sb.append("|");
-        sb.append(about);
-        sb.append("|");
-        sb.append(className);
-        sb.append("|");
-        sb.append(createdTime);
-        sb.append("|");
-        sb.append(endDate);
-        sb.append("|");
-        sb.append(fee);
-        sb.append("|");
-        sb.append(logoUrl);
-        sb.append("|");
-        sb.append(rrule);
-        sb.append("|");
-        sb.append(startDate);
-        return sb.toString(); 
-    }
+	public String getImportantNotes() {
+		return importantNotes;
+	}
+
+	public void setImportantNotes(String importantNotes) {
+		this.importantNotes = importantNotes;
+	}
+
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(id);
+		sb.append("|");
+		sb.append(about);
+		sb.append("|");
+		sb.append(className);
+		sb.append("|");
+		sb.append(createdTime);
+		sb.append("|");
+		sb.append(endDate);
+		sb.append("|");
+		sb.append(fee);
+		sb.append("|");
+		sb.append(logoUrl);
+		sb.append("|");
+		sb.append(rrule);
+		sb.append("|");
+		sb.append(startDate);
+		sb.append("|");
+		sb.append(importantNotes);
+		return sb.toString();
+	}
 }

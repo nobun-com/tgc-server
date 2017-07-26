@@ -5,96 +5,97 @@ import java.util.Date;
 
 import javax.persistence.*;
 
-
 @Entity
-@Table(name="classes")
+@Table(name = "classes")
 // Define named queries here
-@NamedQueries ( {
-  @NamedQuery ( name="ClassesEntity.countAll", query="SELECT COUNT(x) FROM ClassesEntity x" )
-} )
+@NamedQueries({ @NamedQuery(name = "ClassesEntity.countAll", query = "SELECT COUNT(x) FROM ClassesEntity x") })
 public class ClassesEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="id", nullable=false)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id", nullable = false)
+	private Long id;
 
-    @Column(name="class_name", nullable=false, length=50)
-    private String className;
+	@Column(name = "class_name", nullable = false, length = 50)
+	private String className;
 
-    @Column(name="about", length=500)
-    private String about;
-    
-    @ManyToOne
-    @JoinColumn(name="teacher_id", referencedColumnName="id")
-    private TeacherEntity teacher;
+	@Column(name = "about", length = 500)
+	private String about;
 
-    @ManyToOne
-    @JoinColumn(name="center_id", referencedColumnName="id")
-    private CenterEntity center;
+	@ManyToOne
+	@JoinColumn(name = "teacher_id", referencedColumnName = "id")
+	private TeacherEntity teacher;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="created_time")
-    private Date createdTime;
+	@ManyToOne
+	@JoinColumn(name = "center_id", referencedColumnName = "id")
+	private CenterEntity center;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name="start_date", nullable=false)
-    private Date startDate;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_time")
+	private Date createdTime;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name="end_date")
-    private Date endDate;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "start_date", nullable = false)
+	private Date startDate;
 
-    @Column(name="fee", nullable=false)
-    private Double fee;
-    
-    @Column(name="occurrence")
-    private Integer occurrence;
-    
-    @Column(name="frequency", nullable=false)
-    private String frequency;
-    
-    @Column(name="frequency_metadata", length=800)
-    private String frequencyMetadata;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "end_date")
+	private Date endDate;
 
-    @Column(name="logo_url", length=100)
-    private String logoUrl;
+	@Column(name = "fee", nullable = false)
+	private Double fee;
 
-    @Column(name="rrule", length=255)
-    private String rrule;
+	@Column(name = "occurrence")
+	private Integer occurrence;
 
-    @Column(name="min_age", nullable=false)
-    private Integer minAge;
-    
-    @Column(name="max_age", nullable=false)
-    private Integer maxAge;
-    
-    @Column(name="max_slots", nullable=false)
-    private Integer maxSlots;
-    
-    @Column(name="slots_available", nullable=false)
-    private Integer slotsAvailable;
-    
-    @Column(name="category_id", nullable=false)
-    private Integer categoryId;
-    
-    @Column(name="status", nullable=false, length=10)
-    private String status = "valid";
+	@Column(name = "frequency", nullable = false)
+	private String frequency;
 
-    public ClassesEntity() {
+	@Column(name = "frequency_metadata", length = 800)
+	private String frequencyMetadata;
+
+	@Column(name = "logo_url", length = 100)
+	private String logoUrl;
+
+	@Column(name = "rrule", length = 255)
+	private String rrule;
+
+	@Column(name = "min_age", nullable = false)
+	private Integer minAge;
+
+	@Column(name = "max_age", nullable = false)
+	private Integer maxAge;
+
+	@Column(name = "max_slots", nullable = false)
+	private Integer maxSlots;
+
+	@Column(name = "slots_available", nullable = false)
+	private Integer slotsAvailable;
+
+	@Column(name = "category_id", nullable = false)
+	private Integer categoryId;
+
+	@Column(name = "status", nullable = false, length = 10)
+	private String status = "valid";
+
+	@Column(name = "important_notes", columnDefinition = "TEXT")
+	private String importantNotes;
+
+	public ClassesEntity() {
 		super();
-    }
-    
-    public void setId( Long id ) {
-        this.id = id ;
-    }
-    public Long getId() {
-        return this.id;
-    }
+	}
 
-    public Integer getCategoryId() {
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getId() {
+		return this.id;
+	}
+
+	public Integer getCategoryId() {
 		return categoryId;
 	}
 
@@ -102,69 +103,77 @@ public class ClassesEntity implements Serializable {
 		this.categoryId = categoryId;
 	}
 
-	public void setAbout( String about ) {
-        this.about = about;
-    }
-    public String getAbout() {
-        return this.about;
-    }
+	public void setAbout(String about) {
+		this.about = about;
+	}
 
-    public void setClassName( String className ) {
-        this.className = className;
-    }
-    public String getClassName() {
-        return this.className;
-    }
+	public String getAbout() {
+		return this.about;
+	}
 
-    //--- DATABASE MAPPING : created_time ( DATETIME ) 
-    public void setCreatedTime( Date createdTime ) {
-        this.createdTime = createdTime;
-    }
-    public Date getCreatedTime() {
-        return this.createdTime;
-    }
+	public void setClassName(String className) {
+		this.className = className;
+	}
 
-    //--- DATABASE MAPPING : end_date ( DATETIME ) 
-    public void setEndDate( Date endDate ) {
-        this.endDate = endDate;
-    }
-    public Date getEndDate() {
-        return this.endDate;
-    }
+	public String getClassName() {
+		return this.className;
+	}
 
-    //--- DATABASE MAPPING : fee ( DOUBLE ) 
-    public void setFee( Double fee ) {
-        this.fee = fee;
-    }
-    public Double getFee() {
-        return this.fee;
-    }
+	// --- DATABASE MAPPING : created_time ( DATETIME )
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
 
-    //--- DATABASE MAPPING : logo_url ( VARCHAR ) 
-    public void setLogoUrl( String logoUrl ) {
-        this.logoUrl = logoUrl;
-    }
-    public String getLogoUrl() {
-        return this.logoUrl;
-    }
+	public Date getCreatedTime() {
+		return this.createdTime;
+	}
 
-    //--- DATABASE MAPPING : rrule ( VARCHAR ) 
-    public void setRrule( String rrule ) {
-        this.rrule = rrule;
-    }
-    public String getRrule() {
-        return this.rrule;
-    }
+	// --- DATABASE MAPPING : end_date ( DATETIME )
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
 
-    //--- DATABASE MAPPING : start_date ( DATETIME ) 
-    public void setStartDate( Date startDate ) {
-        this.startDate = startDate;
-    }
-    public Date getStartDate() {
-        return this.startDate;
-    }
+	public Date getEndDate() {
+		return this.endDate;
+	}
 
-    public TeacherEntity getTeacher() {
+	// --- DATABASE MAPPING : fee ( DOUBLE )
+	public void setFee(Double fee) {
+		this.fee = fee;
+	}
+
+	public Double getFee() {
+		return this.fee;
+	}
+
+	// --- DATABASE MAPPING : logo_url ( VARCHAR )
+	public void setLogoUrl(String logoUrl) {
+		this.logoUrl = logoUrl;
+	}
+
+	public String getLogoUrl() {
+		return this.logoUrl;
+	}
+
+	// --- DATABASE MAPPING : rrule ( VARCHAR )
+	public void setRrule(String rrule) {
+		this.rrule = rrule;
+	}
+
+	public String getRrule() {
+		return this.rrule;
+	}
+
+	// --- DATABASE MAPPING : start_date ( DATETIME )
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getStartDate() {
+		return this.startDate;
+	}
+
+	public TeacherEntity getTeacher() {
 		return teacher;
 	}
 
@@ -196,7 +205,7 @@ public class ClassesEntity implements Serializable {
 		this.frequencyMetadata = frequencyMetadata;
 	}
 
-    public CenterEntity getCenter() {
+	public CenterEntity getCenter() {
 		return center;
 	}
 
@@ -228,7 +237,7 @@ public class ClassesEntity implements Serializable {
 		this.maxSlots = maxSlots;
 	}
 
-    public Integer getSlotsAvailable() {
+	public Integer getSlotsAvailable() {
 		return slotsAvailable;
 	}
 
@@ -244,27 +253,37 @@ public class ClassesEntity implements Serializable {
 		this.status = status;
 	}
 
-	public String toString() { 
-        StringBuffer sb = new StringBuffer(); 
-        sb.append("["); 
-        sb.append(id);
-        sb.append("]:"); 
-        sb.append(about);
-        sb.append("|");
-        sb.append(className);
-        sb.append("|");
-        sb.append(createdTime);
-        sb.append("|");
-        sb.append(endDate);
-        sb.append("|");
-        sb.append(fee);
-        sb.append("|");
-        sb.append(logoUrl);
-        sb.append("|");
-        sb.append(rrule);
-        sb.append("|");
-        sb.append(startDate);
-        return sb.toString(); 
-    } 
+	public String getImportantNotes() {
+		return importantNotes;
+	}
+
+	public void setImportantNotes(String importantNotes) {
+		this.importantNotes = importantNotes;
+	}
+
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("[");
+		sb.append(id);
+		sb.append("]:");
+		sb.append(about);
+		sb.append("|");
+		sb.append(className);
+		sb.append("|");
+		sb.append(createdTime);
+		sb.append("|");
+		sb.append(endDate);
+		sb.append("|");
+		sb.append(fee);
+		sb.append("|");
+		sb.append(logoUrl);
+		sb.append("|");
+		sb.append(rrule);
+		sb.append("|");
+		sb.append(startDate);
+		sb.append("|");
+		sb.append(importantNotes);
+		return sb.toString();
+	}
 
 }

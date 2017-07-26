@@ -50,14 +50,18 @@
 			
 			                               <article class="box" th:each="classObj : ${classes}">
 			                                   <div class="details col-sm-9 col-md-10">
-			                                       <div>
+			                                      
+			                                        <div>
 			                                           <div>
-			                                           		<h2 class="box-title" th:text="${classObj.name}"></h2><br></br>
+			                                           <h2><a title="" th:text="${classObj.name}" th:href="${'/class-details?timeTableId=' + classObj.id}"></a>
+			                                           </h2>
+			                                           		<!-- <h2 class="box-title" ></h2> -->
+			                                           	<br></br>
 			                                           </div>
 			                                           <div>
 			                                           		<h1 th:text="${classObj.fee}"></h1>
 			                                           </div>
-			                                       </div>
+			                                         </div> 
 			                                       <div>
 				                                       <div>
 			                                           		<p style="margin: 0px;" th:text="${classObj.date}"></p>

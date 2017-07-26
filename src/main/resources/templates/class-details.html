@@ -1,0 +1,245 @@
+<html>
+   <head lang="en" th:include="header :: header"></head>
+<body>
+    	<div lang="en" th:include="navigation :: navigation"> </div>
+
+        <div class="page-title-container">
+            <div class="container">
+                <div class="page-title pull-left">
+                    <h2 class="entry-title">Class Details</h2>
+                </div>
+                <ul class="breadcrumbs pull-right">
+                    <li><a href="/">HOME</a></li>
+                    <li class="active">Class details</li>
+                </ul>
+            </div>
+        </div>
+            
+            
+        <section id="content">
+	        <div class="container">
+		        <div class="row">
+			       <div class="col-sms-7 col-sm-7 col-md-7">
+			               <div class="row image-box style1 add-clearfix">
+						<article style="text-align: center;">
+							<div class="clo-md-12">
+								<div class="col-md-4">
+									<figure class="animated" data-animation-type="fadeInDown"
+										data-animation-duration="1">
+										<img th:src="${'getImage/' + center.logoName}" alt=""
+											style="height: 120px; width: 120px;" />
+									</figure>
+								</div>
+								<div class="col-md-4">
+									<div class="row">
+										<h1 class="box-title" th:text="${classObj.className}"></h1>
+									</div>
+									<div class="row" style="margin-top: 15px;">
+										<h2 class="box-title" th:text="'By '+ ${center.centerName}"></h2>
+									</div>
+									<div class="row" style="margin-top: 15px;">
+										<button class="button btn-small text-center"
+											th:text="${classObj.slotsAvailable} + ' SLOTS LEFT'"
+											style="border-radius: 25px; width: 60%;"></button>
+									</div>
+									<div class="row" style="margin-top: 15px;">
+										<a class="button btn-small text-center"
+											th:if="${session.isLoggedIn==true}"
+											th:href="${'/addToCart?classId=' + classObj.id}"
+											style="border-radius: 25px; width: 60%;">BOOK NOW</a> <a
+											class="button btn-small text-center"
+											th:if="!${session.isLoggedIn==true}"
+											th:onclick="'doLogin(\'' + ${classObj.id} + '\');'"
+											style="border-radius: 25px; width: 60%;">BOOK NOW</a>
+									</div>
+								</div>
+								<div class="col-md-4"></div>
+							</div>
+							<div class="col-md-12" style="margin-top: 15px;">
+								<div class="col-md-1">
+									<img src="images/icon/target.png" style="width:30px"></img>
+								</div>
+								<div class="col-md-5">
+									<h3 class="box-title" th:text="'IDEAL FOR AGES '+ ${classObj.minAge} +' TO ' + ${classObj.minAge} + ' YEARS' "></h3>
+								</div>
+								<div class="col-md-1">
+									<img src="images/icon/studentCount.png" style="width:30px"></img>
+								</div>
+								<div class="col-md-5">
+									<h3 class="box-title" th:text="'MAX CLASS CAPACITY ' + ${classObj.maxSlots}"></h3>
+								</div>
+							</div>
+							
+
+						</article>
+					</div>
+			            <div>
+						<div class="hotel-list listing-style3 hotel">
+
+							<article class="box" style="min-height: 250px;">
+								<div class="details col-sm-9 col-md-10">
+									<div>
+										<h2 class="box-title">About the class</h2>
+										<br></br>
+									</div>
+									<br></br>
+									<p th:text="${classObj.about}"></p>
+								</div>
+							</article>
+							<article class="box" style="min-height: 250px;">
+								<div class="details col-sm-9 col-md-10">
+									<div>
+										<h2 class="box-title">About the center</h2>
+										<br></br>
+									</div>
+									<br></br>
+									<p th:text="${center.about}"></p>
+								</div>
+							</article>
+							
+							<article class="box" style="min-height: 250px;">
+								<div class="details col-sm-9 col-md-10">
+									<div>
+										<h2 class="box-title">Amenities</h2>
+										<br></br>
+									</div>
+									<br></br>
+									<p class="box-title" th:text="${center.amenities}"></p>
+								</div>
+							</article>
+							<article class="box" style="min-height: 250px;">
+								<div class="details col-sm-9 col-md-10">
+									<div>
+										<h2 class="box-title">Important Notes</h2>
+										<br></br>
+									</div>
+									<br></br>
+									<p th:utext="${classObj.importantNotes}"></p>
+								</div>
+							</article>
+						</div>
+					</div>
+			       </div>
+			       <div class="col-sms-4 col-sm-4 col-md-4">
+			       		<div class="row" style="background: white; margin: 0px; padding: 30px;">
+			       				<div class="row">
+			       					<div class="col-md-2">
+			       					</div>
+			       					<div class="col-md-10">
+			       						<h2 class="box-title" th:text="${classObj.className}"></h2>
+			       					</div>
+			       				</div>
+			       				<div class="row" style="margin-top: 10px;">
+			       					<div class="col-md-2">
+			       					</div>
+			       					<div class="col-md-10">
+			       						<h4 class="box-title" th:text="'For ages '+ ${classObj.minAge} +' to ' + ${classObj.minAge} + ' Years' "></h4>
+			       					</div>
+			       				</div>
+			       				<div class="row" style="margin-top: 10px;">
+			       					<div class="col-md-2">
+			       					</div>
+			       					<div class="col-md-10">
+			       						 <h4 class="box-title" th:text="${center.centerName}"></h4>
+			       					</div>
+			       				</div>
+			       				<div class="row" style="margin-top: 10px;">
+			       					<div class="col-md-2">
+			       						<img src="images/icon/calendar1.png" style="width:25px"></img> 
+			       					</div>
+			       					<div class="col-md-10">
+			       						<h4 class="box-title" th:text="${#dates.format(timeTable.startTime, 'dd-MM-yyyy')}" style="font-weight: bold;"></h4>	
+			       					</div>
+			       				</div>
+			       				<div class="row" style="margin-top: 10px;">
+			       					<div class="col-md-2">
+			       						<img src="images/icon/clock.png" style="width:25px"></img>
+			       					</div>
+			       					<div class="col-md-10">
+			       						<h4 class="box-title" th:text="${#dates.format(timeTable.startTime, 'HH:MM')} + ' to '+ ${#dates.format(timeTable.endTime, 'HH:MM')}" style="font-weight: bold;"></h4>
+			       					</div>
+			       				</div>
+			       				<div class="row" style="margin-top: 10px;">
+			       					<div class="col-md-2">
+			       						<img src="images/icon/dollar.png" style="width:25px"></img>
+			       					</div>
+			       					<div class="col-md-10">
+			       						<h4 class="box-title" th:text="'$' + ${#numbers.formatDecimal(classObj.fee, 0, 'COMMA', 2, 'POINT')}" style="font-weight: bold;"></h4>
+			       					</div>
+			       				</div>
+			       		</div>
+			       		<br></br>
+			       		<div class="row" style="background: white; margin: 0px; padding: 30px;">
+				       		<div class="col-sms-4 col-sm-4 col-md-4"><img src="images/icon/location.svg" style="height:45px"></img></div>
+				       		<div class="col-sms-8 col-sm-4 col-md-8">
+	                            <h4 class="box-title" th:text="${center.address.addressLine1}"></h4>
+	                            <h4 class="box-title" th:text="${center.address.addressLine2}"></h4>
+	                            <h4 class="box-title" th:text="${center.address.district}"></h4>
+	                            <h4 class="box-title" th:text="${center.address.area}"></h4><br></br><br></br>
+				       		</div>
+			       		</div>
+			       		<br></br>
+			       		<div id="map_canvas" style="height: 300px; position: relative; background-color: rgb(229, 227, 223);">
+			       		</div>
+			       		<br></br>
+			       		<article class="box" style="min-height: 250px;" >
+								<div class="details col-md-12">
+									<div>
+										<h2 class="box-title">Important Notes </h2>
+									</div>
+									<br></br>
+									<div style="border:1px solid gray; padding: 10px;">
+										<p th:utext="${classObj.importantNotes}" style="margin-left: 10px;"></p>
+									</div>
+								</div>
+							</article>
+			       </div>
+		        </div>
+	        </div>
+        </section>
+        
+         <div lang="en" th:include="footer :: footer"></div>
+    <script th:include="footer :: loginScript" th:inline="javascript"></script> 
+    
+   <script th:inline="javascript">
+	    function doLogin(classId)
+	    {
+				jQuery('#login-redirect-url').val("addToCart?classId="+classId);				
+				document.getElementById('login-link').click();
+			return false;
+	    }
+	    
+	    
+	    var geocoder;
+	    var map;
+	    function codeAddress() {
+	    geocoder = new google.maps.Geocoder();
+	    var myOptions = {
+	      zoom: 16,
+	      mapTypeId: google.maps.MapTypeId.ROADMAP
+	    }
+	    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+	    var address = [[${center.address.district}]] + ",  " + [[${center.address.area}]];
+	            geocoder.geocode( { 'address': address}, function(results, status) {
+	              if (status == google.maps.GeocoderStatus.OK) {
+	                map.setCenter(results[0].geometry.location);
+	                var marker = new google.maps.Marker({
+	                    map: map,
+	                    position: results[0].geometry.location
+	                });
+	              } else {
+	                alert("Geocode was not successful for the following reason: " + status);
+	              }
+	            });
+	          }
+	
+	
+	
+	    window.onload = function(){
+	            codeAddress();
+	       }
+	    
+	</script> 
+</body>
+</html>
+

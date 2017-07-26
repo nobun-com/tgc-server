@@ -6,48 +6,49 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Entity
-@Table(name="article")
+@Table(name = "article")
 public class ArticleEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="id", nullable=false)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id", nullable = false)
+	private Long id;
 
-    @Column(name="title", nullable=false, length=255)
-    private String title;
+	@Column(name = "title", nullable = false, length = 255)
+	private String title;
 
-    @Column(name="preview", nullable=false, length=500)
-    private String preview;
+	@Column(name = "preview", nullable = false, length = 500)
+	private String preview;
 
-    @Column(name="category", nullable=false, length=50)
-    private String category;
+	@Column(name = "category", nullable = false, length = 50)
+	private String category;
 
-    @Column(name="thumbnail_url", nullable=false, length=200)
-    private String thumbnailUrl;
+	@Column(name = "thumbnail_url", length = 200)
+	private String thumbnailUrl;
 
-    @Column(name="image_url", nullable=false, length=200)
-    private String imageUrl;
+	@Column(name = "image_url", length = 200)
+	private String imageUrl;
 
-    @Column(name="body", nullable=false)
-    private String body;
+	@Column(name = "body", columnDefinition="TEXT")
+	private String body;
 
-    @Column(name="published")
-    private Boolean published;
+	@Column(name = "published")
+	private Boolean published;
 
-    @Column(name="featured")
-    private Boolean featured;
+	@Column(name = "featured")
+	private Boolean featured;
 
-    @Column(name="post_date")
-    private Date postDate;
+	@Column(name = "post_date")
+	private Date postDate;
 
-    @Column(name="created_date")
-    private Date createdDate;
+	@Column(name = "created_date")
+	private Date createdDate;
 
-    public ArticleEntity(){}
-    
+	public ArticleEntity() {
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -136,27 +137,27 @@ public class ArticleEntity implements Serializable {
 		this.createdDate = createdDate;
 	}
 
-	public String toString() { 
-        StringBuffer sb = new StringBuffer(); 
-        sb.append(id);
-        sb.append("|");
-        sb.append(title);
-        sb.append("|");
-        sb.append(preview);
-        sb.append("|");
-        sb.append(imageUrl);
-        sb.append("|");
-        sb.append(category);
-        sb.append("|");
-        sb.append(body);
-        sb.append("|");
-        sb.append(published);
-        sb.append("|");
-        sb.append(featured);
-        sb.append("|");
-        sb.append(postDate);
-        sb.append("|");
-        sb.append(createdDate);
-        return sb.toString(); 
-    } 
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(id);
+		sb.append("|");
+		sb.append(title);
+		sb.append("|");
+		sb.append(preview);
+		sb.append("|");
+		sb.append(imageUrl);
+		sb.append("|");
+		sb.append(category);
+		sb.append("|");
+		sb.append(body);
+		sb.append("|");
+		sb.append(published);
+		sb.append("|");
+		sb.append(featured);
+		sb.append("|");
+		sb.append(postDate);
+		sb.append("|");
+		sb.append(createdDate);
+		return sb.toString();
+	}
 }
