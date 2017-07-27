@@ -5460,8 +5460,9 @@ ul.check-circle li:before {
   transition: opacity 0.2s ease-in; }
 
 #main-menu ul.menu, .chaser ul.menu {
-  margin: 0;
+  margin: 12px;
   float: right;
+  font-size: 18px;
   /* 1st level */
   /* 2nd level */
   /* 3rd level */
@@ -6000,15 +6001,15 @@ ul.menu.mini {
   .chaser ul.menu > li:hover > ul, .chaser ul.menu > li:hover > .megamenu-wrapper {
     top: 46px !important; }
   .chaser .logo {
-    margin-top: 14px;
     min-height: initial;
     padding: 0;
     height: auto;
     margin-bottom: 0; }
     .chaser .logo img {
-      height: 20px; }
+      height: 60px;
+      width: 100% }
     .chaser .logo a {
-      background-size: auto 20px; }
+      background-size: auto 60px; }
 
 .no-rgba .chaser {
   background: #fff;

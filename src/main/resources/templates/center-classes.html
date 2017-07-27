@@ -60,7 +60,7 @@
 			                            <div class="hotel-list listing-style3 hotel">
 			
 			                               <article class="box match_class" th:each="classObj : ${data.classes}">
-			                                   <div class="details col-sm-9 col-md-10">
+			                                   <div class="details col-sm-9 col-md-12">
 			                                       <div>
 			                                           <div>
 			                                           <h2><a title="" th:text="${classObj.name}" th:href="${'/class-details?timeTableId=' + classObj.id}"></a>
@@ -68,7 +68,7 @@
 			                                           		<!-- <h2 class="box-title" ></h2> -->
 			                                           	<br></br>
 			                                           </div>
-			                                           <div>
+			                                           <div class="class-cost">
 			                                           		<h1 th:text="${classObj.fee}"></h1>
 			                                           </div>
 			                                       </div>

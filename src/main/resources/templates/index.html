@@ -39,12 +39,11 @@
   </div>
 <ol class="carousel-indicators"><li data-target="#carousel_main" data-slide-to="0" class=""></li><li data-target="#carousel_main" data-slide-to="1" class=""></li><li data-target="#carousel_main" data-slide-to="2" class="active"></li><li data-target="#carousel_main" data-slide-to="3" class=""></li></ol><a href="#carousel_main" role="button" class="left carousel-control" data-slide="prev"><span class="fa fa-angle-left" aria-hidden="true"></span></a><a href="#carousel_main" role="button" class="right carousel-control" data-slide="next"><span class="fa fa-angle-right" aria-hidden="true"></span></a></div>
 
-        
-<div class="block1">
-<div><a th:href="${'/center-classes?centerId=' + promos.centerOneId}" style="display: block; "><img th:src="${'getImage/' + promos.promoImageOne}" class="width-100"/></a></div>
-<div><a th:href="${'/center-classes?centerId=' + promos.centerTwoId}" style="display: block; "><img th:src="${'getImage/' + promos.promoImageTwo}" class="width-100"/></a></div>
-<div><a th:href="${'/center-classes?centerId=' + promos.centerThreeId}" style="display: block; "><img th:src="${'getImage/' + promos.promoImageThree}" class="width-100"/></a></div>
-<div><a th:href="${'/center-classes?centerId=' + promos.centerFourId}" style="display: block; "><img th:src="${'getImage/' + promos.promoImageFour}" class="width-100"/></a></div>
+<div class="row">
+	<div class="col-md-3" style="padding: 0px;"><a th:href="${'/center-classes?centerId=' + promos.centerOneId}"><img th:src="${'getImage/' + promos.promoImageOne}" class="width-100"/></a></div>
+	<div class="col-md-3" style="padding: 0px;"><a th:href="${'/center-classes?centerId=' + promos.centerTwoId}"><img th:src="${'getImage/' + promos.promoImageTwo}" class="width-100"/></a></div>
+	<div class="col-md-3" style="padding: 0px;"><a th:href="${'/center-classes?centerId=' + promos.centerThreeId}"><img th:src="${'getImage/' + promos.promoImageThree}" class="width-100"/></a></div>
+	<div class="col-md-3" style="padding: 0px;"><a th:href="${'/center-classes?centerId=' + promos.centerFourId}"><img th:src="${'getImage/' + promos.promoImageFour}" class="width-100"/></a></div>
 </div>
         
     </div>

@@ -180,15 +180,22 @@ footer .socialIcons img {
 
 #categoryScheduleNav li {
   display: inline-block;
-  margin: 15px;
+  margin: 10px;
 }
 
 #categoryScheduleNav li a{
-  font-size: 20px;
+  font-size: 13px;
 }
 
 #categoryScheduleNav hr {
     margin: 4px auto !important;
     width: 100%;
     border-bottom: 2px solid #686969;
+}
+
+.class-cost {
+	font-size: 22px;
+    font-weight: bold;
+    font-family: 'Gotham-Condensed';
+    color: #08365D;
 }

@@ -1,11 +1,14 @@
 package com.go2.classes.web.controller;
 
+import java.text.ParseException;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.go2.classes.business.service.ArticleService;
 import com.go2.classes.common.BaseController;
@@ -42,10 +45,17 @@ public class FooterController extends BaseController {
 	return "getstarted";
     }
 
-    @RequestMapping(value = "/whatsnew")
+    @RequestMapping(value = "/articles")
     public String openWhatsNew(Model model, HttpSession session) {
 	model.addAttribute("articles", articleService.findAll());
-	return "whats-new";
+	return "articles";
     }
+
+    @RequestMapping(value = "/article")
+    public String openClassesByCenter(Model model, @RequestParam(name = "articleId") Long articleId) throws ParseException {
+	model.addAttribute("article", articleService.findById(articleId));
+	return "article";
+    }
+
 
 }

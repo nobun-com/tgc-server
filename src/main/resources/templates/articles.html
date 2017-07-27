@@ -23,8 +23,8 @@
 					</figure>
 					<div class="details col-sm-8">
 						<div class="clearfix">
-							<h4 class="box-title pull-left" th:text="${article.title}">
-							</h4>
+							<a th:href="${'article?articleId='+article.id}"><h4 class="box-title pull-left" th:text="${article.title}">
+							</h4></a>
 						</div>
 						<div class="character clearfix">
 							<div class="col-xs-4 date">
