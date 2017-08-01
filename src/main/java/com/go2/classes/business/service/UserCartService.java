@@ -5,32 +5,32 @@ import java.util.Map;
 
 import com.go2.classes.models.UserCart;
 
-public interface UserCartService { 
+public interface UserCartService {
 
-	UserCart findById( Long id  ) ;
+    UserCart findById(Long id);
 
-	List<UserCart> findAll();
+    List<UserCart> findAll();
 
-	UserCart save(UserCart entity);
+    UserCart save(UserCart entity);
 
-	UserCart update(UserCart entity);
+    UserCart update(UserCart entity);
 
-	UserCart create(UserCart entity);
+    UserCart create(UserCart entity);
 
-	void delete( Long id );
+    void delete(Long id);
 
-	List<UserCart> findAllClassInstancesByStudent(Long userId);
+    List<UserCart> findAllClassInstancesByStudent(Long userId);
 
-	Double getToatlFees(Long userId);
+    Double getToatlFees(Long userId);
 
-	Integer bookAllCarts(Long userId);
-	
-	Integer getBookingsCount();
+    Double bookAllCarts(Long userId);
 
-	Map<String, Object> applyCoupon(Long userCartId, String couponCode);
-	
-	List<Object> getAllBookingsByMonth(String fromDate,String toDate);
-	
-	List<Object> getLastMonthBookings();
+    Integer getBookingsCount();
+
+    Map<String, Object> applyCoupon(Long userCartId, String couponCode);
+
+    List<Object> getAllBookingsByMonth(String fromDate, String toDate);
+
+    List<Object> getLastMonthBookings();
 
 }

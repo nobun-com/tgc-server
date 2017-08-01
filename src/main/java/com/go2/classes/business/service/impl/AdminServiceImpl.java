@@ -47,11 +47,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public Admin create(Admin admin) {
-		AdminEntity adminEntity = adminJpaRepository.findOne(admin.getId());
-		if( adminEntity != null ) {
-			throw new IllegalStateException("already.exists");
-		}
-		adminEntity = new AdminEntity();
+		AdminEntity adminEntity = new AdminEntity();
 		adminServiceMapper.mapAdminToAdminEntity(admin, adminEntity);
 		AdminEntity adminEntitySaved = adminJpaRepository.save(adminEntity);
 		return adminServiceMapper.mapAdminEntityToAdmin(adminEntitySaved);

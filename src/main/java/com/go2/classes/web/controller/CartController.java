@@ -47,13 +47,6 @@ public class CartController extends BaseController {
 	response.sendRedirect("my-cart");
     }
 
-    @RequestMapping(value = "/bookCart")
-    public void bookCart(Model model, HttpServletResponse response, HttpSession session) throws IOException {
-	Long userId = (Long) session.getAttribute("userId");
-	/* Integer count = */userCartService.bookAllCarts(userId);
-	response.sendRedirect("my-cart");
-    }
-
     @RequestMapping(value = "/removeFromCart")
     public void removeFromCart(Model model, @RequestParam(name = "userCartId") Long userCartId, HttpServletResponse response) throws IOException {
 	userCartService.delete(userCartId);

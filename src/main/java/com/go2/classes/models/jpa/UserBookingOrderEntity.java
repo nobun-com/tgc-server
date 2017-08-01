@@ -7,72 +7,84 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Entity
-@Table(name="user_booking_order")
+@Table(name = "user_booking_order")
 public class UserBookingOrderEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="id", nullable=false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="student_id", referencedColumnName="id", nullable=false)
+    @JoinColumn(name = "student_id", referencedColumnName = "id", nullable = false)
     private StudentEntity student;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="date", nullable=false)
+    @Column(name = "date", nullable = false)
     private Date date;
 
-    @Column(name="classes_count")
+    @Column(name = "classes_count")
     private Integer classesCount;
 
+    @Column(name = "ammount")
+    private Double ammount;
+
     public UserBookingOrderEntity() {
-		super();
+	super();
     }
-    
-    public void setId( Long id ) {
-        this.id = id ;
+
+    public void setId(Long id) {
+	this.id = id;
     }
+
     public Long getId() {
-        return this.id;
+	return this.id;
     }
 
-	public Integer getClassesCount() {
-		return classesCount;
-	}
+    public Double getAmmount() {
+	return ammount;
+    }
 
-	public void setClassesCount(Integer classesCount) {
-		this.classesCount = classesCount;
-	}
+    public void setAmmount(Double ammount) {
+	this.ammount = ammount;
+    }
 
-	public StudentEntity getStudent() {
-		return student;
-	}
+    public Integer getClassesCount() {
+	return classesCount;
+    }
 
-	public void setStudent(StudentEntity student) {
-		this.student = student;
-	}
+    public void setClassesCount(Integer classesCount) {
+	this.classesCount = classesCount;
+    }
 
-	public Date getDate() {
-		return date;
-	}
+    public StudentEntity getStudent() {
+	return student;
+    }
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+    public void setStudent(StudentEntity student) {
+	this.student = student;
+    }
 
-	public String toString() { 
-        StringBuffer sb = new StringBuffer(); 
-        sb.append("["); 
-        sb.append(id);
-        sb.append("]:"); 
-        sb.append("|");
-        sb.append(student);
-        sb.append("|");
-        sb.append(date);
-        return sb.toString(); 
-    } 
+    public Date getDate() {
+	return date;
+    }
+
+    public void setDate(Date date) {
+	this.date = date;
+    }
+
+    public String toString() {
+	StringBuffer sb = new StringBuffer();
+	sb.append("[");
+	sb.append(id);
+	sb.append("]:");
+	sb.append("|");
+	sb.append(student);
+	sb.append("|");
+	sb.append(date);
+	return sb.toString();
+    }
 
 }

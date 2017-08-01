@@ -126,12 +126,12 @@ public class UserCartServiceImpl implements UserCartService {
     }
 
     @Override
-    public Integer bookAllCarts(Long userId) {
+    public Double bookAllCarts(Long userId) {
 	UserBookingOrderEntity userBookingOrderEntity = new UserBookingOrderEntity();
 	userBookingOrderEntity.setStudent(studentJpaRepository.findOne(userId));
 	userBookingOrderEntity.setDate(new Date());
 	userBookingOrderEntity = userBookingOrderJpaRepository.save(userBookingOrderEntity);
-
+	Double cost = 0d;
 	Iterable<UserCartEntity> inCart = userCartJpaRepository.findAllUserCartsByStudentId(userId);
 	Integer classesCount = 0;
 	for (UserCartEntity userCartEntity : inCart) {
@@ -140,11 +140,12 @@ public class UserCartServiceImpl implements UserCartService {
 	    userCartJpaRepository.save(userCartEntity);
 	    classesService.bookClass(userCartEntity.getTimeTable().getClasses());
 	    classesCount++;
-
+	    cost+=userCartEntity.getFinalCost();
 	}
+	userBookingOrderEntity.setAmmount(cost);
 	userBookingOrderEntity.setClassesCount(classesCount);
 	userBookingOrderJpaRepository.save(userBookingOrderEntity);
-	return classesCount;
+	return cost;
     }
 
     @Override
