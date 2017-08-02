@@ -16,15 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.go2.classes.business.service.UserCartService;
-
-//import com.mnt.entities.PostNewJob;
-//import com.mnt.vm.SessionObjectsVM;
 
 @Controller
 public class PaymentController {
@@ -34,8 +32,11 @@ public class PaymentController {
 
     private static String gv_APIEndpoint = "";
 
-    private String returnURL = "http://localhost:8080/paymentcomplete";
-    private String cancelURL = "http://localhost:8080/cancel";
+    @Value("${serverurl}")
+    private String serverUrl = "";
+
+    private String returnURL = "/paymentcomplete";
+    private String cancelURL = "/cancel";
 
     @RequestMapping(value = "/bookCart")
     public void bookCart(Model model, HttpServletResponse response, HttpSession session, HttpServletRequest request) throws IOException {
@@ -74,7 +75,7 @@ public class PaymentController {
 	String currencyCodeType = "USD";
 	String paymentType = "Order";
 
-	String nvpstr = "&PAYMENTREQUEST_0_AMT=" + ammount + "&PAYMENTREQUEST_0_PAYMENTACTION=" + paymentType + "&ReturnUrl=" + URLEncoder.encode(returnURL) + "&CANCELURL=" + URLEncoder.encode(cancelURL) + "&PAYMENTREQUEST_0_CURRENCYCODE=" + currencyCodeType;
+	String nvpstr = "&PAYMENTREQUEST_0_AMT=" + ammount + "&PAYMENTREQUEST_0_PAYMENTACTION=" + paymentType + "&ReturnUrl=" + URLEncoder.encode(serverUrl + returnURL) + "&CANCELURL=" + URLEncoder.encode(serverUrl + cancelURL) + "&PAYMENTREQUEST_0_CURRENCYCODE=" + currencyCodeType;
 
 	HashMap<String, String> nvp = httpcall("SetExpressCheckout", nvpstr, request);
 	String strAck = nvp.get("ACK").toString();
