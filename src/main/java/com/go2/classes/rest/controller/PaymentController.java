@@ -61,10 +61,12 @@ public class PaymentController {
 	HashMap<String, String> nvp = confirmPayment(request);
 	String strAck = nvp.get("ACK");
 	model.addAttribute("ack", strAck);
-	model.addAttribute("message", "Payment ammount : " + nvp.get("PAYMENTINFO_0_AMT"));
 	if (strAck.equalsIgnoreCase("Success")) {
 	    Long userId = (Long) request.getSession().getAttribute("userId");
 	    userCartService.bookAllCarts(userId);
+	    model.addAttribute("message", "Payment ammount : " + nvp.get("PAYMENTINFO_0_AMT"));
+	} else {
+	    model.addAttribute("message", nvp.get("L_SHORTMESSAGE0"));
 	}
 	return ("payment-completed");
     }
@@ -162,7 +164,7 @@ public class PaymentController {
 
     @RequestMapping(value = "/cancel", method = RequestMethod.GET)
     public String aboutus(Model model, HttpServletRequest request) {
-	model.addAttribute("message", "Canceled");
+	model.addAttribute("ack", "Canceled");
 	return ("payment-completed");
     }
 }
