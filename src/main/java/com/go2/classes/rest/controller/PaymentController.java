@@ -1,7 +1,6 @@
 package com.go2.classes.rest.controller;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,9 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.annotation.Resource;
@@ -23,7 +20,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.go2.classes.business.service.UserCartService;
 
@@ -43,8 +39,6 @@ public class PaymentController {
 
     @RequestMapping(value = "/bookCart")
     public void bookCart(Model model, HttpServletResponse response, HttpSession session, HttpServletRequest request) throws IOException {
-	Long userId = (Long) session.getAttribute("userId");
-	Double ammount = userCartService.getToatlFees(userId);
 
 	String PAYPAL_URL;
 
@@ -57,29 +51,30 @@ public class PaymentController {
 	    PAYPAL_URL = "https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=";
 	}
 
-	String token = CallShortcutExpressCheckout(ammount, request);
+	String token = callShortcutExpressCheckout(request);
 	response.sendRedirect(PAYPAL_URL + token);
     }
 
     @RequestMapping(value = "/paymentcomplete", method = RequestMethod.GET)
-    public String completePayment(HttpServletRequest request) {
-	System.out.println("---------------------- Complete Payment ------------------------- " + request.getSession(false).getAttributeNames());
-	Enumeration<String> e = request.getSession(false).getAttributeNames();
-	while (e.hasMoreElements()) {
-	    System.out.println("----------------------------- > " + e.nextElement());
+    public String completePayment(Model model, HttpServletRequest request) {
+	HashMap<String, String> nvp = confirmPayment(request);
+	model.addAttribute("ack", nvp.get("ACK").toString());
+	model.addAttribute("message", nvp.get("L_LONGMESSAGE0").toString());
+	String strAck = nvp.get("ACK").toString();
+	if (strAck.equalsIgnoreCase("Success")) {
+	    Long userId = (Long) request.getSession().getAttribute("userId");
+	    userCartService.bookAllCarts(userId);
 	}
-	HashMap nvp = ConfirmPayment(request.getParameter("token"), request.getParameter("PayerID"), "vm.getPostNewJobEntity().getAmount()", request.getLocalAddr(), request);
-	request.getSession(false).removeAttribute("sessionobjectvm");
-	return ("redirect:/myJobs");
+	return ("payment-completed");
     }
 
-    public String CallShortcutExpressCheckout(Double paymentAmount, HttpServletRequest request) {
-	System.out.println("---------------------- Shorcut Express Checkout -------------------------");
-
+    public String callShortcutExpressCheckout(HttpServletRequest request) {
+	Long userId = (Long) request.getSession().getAttribute("userId");
+	Double ammount = userCartService.getToatlFees(userId);
 	String currencyCodeType = "USD";
-	String paymentType = "Sale";
+	String paymentType = "Order";
 
-	String nvpstr = "&PAYMENTREQUEST_0_AMT=" + paymentAmount + "&PAYMENTREQUEST_0_PAYMENTACTION=" + paymentType + "&ReturnUrl=" + URLEncoder.encode(returnURL) + "&CANCELURL=" + URLEncoder.encode(cancelURL) + "&PAYMENTREQUEST_0_CURRENCYCODE=" + currencyCodeType;
+	String nvpstr = "&PAYMENTREQUEST_0_AMT=" + ammount + "&PAYMENTREQUEST_0_PAYMENTACTION=" + paymentType + "&ReturnUrl=" + URLEncoder.encode(returnURL) + "&CANCELURL=" + URLEncoder.encode(cancelURL) + "&PAYMENTREQUEST_0_CURRENCYCODE=" + currencyCodeType;
 
 	HashMap<String, String> nvp = httpcall("SetExpressCheckout", nvpstr, request);
 	String strAck = nvp.get("ACK").toString();
@@ -91,12 +86,10 @@ public class PaymentController {
 
     public HashMap<String, String> httpcall(String methodName, String nvpStr, HttpServletRequest request) {
 
-	System.out.println("---------------------- Http Call ------------------------- " + request.getHeader("User-Agent"));
-
 	String gv_APIUserName = "nobun.paypal-facilitator_api1.gmail.com";
 	String gv_APIPassword = "MD4FN9RF97BAEUXH";
 	String gv_APISignature = "An5ns1Kso7MWUdW4ErQKJJJ4qi4-ACKNhncRaNp0W7rpHUesxigkpH0H";
-	String gv_Version = "93";
+	String gv_Version = "98";
 	String gv_BNCode = "PP-ECWizard";
 
 	String agent = request.getHeader("User-Agent");
@@ -116,7 +109,6 @@ public class PaymentController {
 	    output.writeBytes(encodedData);
 	    output.flush();
 	    output.close();
-	    DataInputStream in = new DataInputStream(conn.getInputStream());
 	    int rc = conn.getResponseCode();
 	    if (rc != -1) {
 		BufferedReader is = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -134,8 +126,6 @@ public class PaymentController {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public HashMap<String, String> deformatNVP(String pPayload) {
-	System.out.println("---------------------- deFormat NVP -------------------------");
-
 	HashMap nvp = new HashMap();
 	StringTokenizer stTok = new StringTokenizer(pPayload, "&");
 	while (stTok.hasMoreTokens()) {
@@ -151,26 +141,27 @@ public class PaymentController {
 	return nvp;
     }
 
-    public HashMap ConfirmPayment(String token, String payerID, String finalPaymentAmount, String serverName, HttpServletRequest req) {
-	System.out.println("---------------------- Confirm Payment -------------------------" + serverName);
+    public HashMap<String, String> confirmPayment(HttpServletRequest request) {
+
+	String token = request.getParameter("token");
+	String payerID = request.getParameter("PayerID");
+	Long userId = (Long) request.getSession().getAttribute("userId");
+	Double ammount = userCartService.getToatlFees(userId);
+	String serverName = request.getLocalAddr();
 
 	String currencyCodeType = "USD";
 	String paymentType = "Sale";
 
-	String nvpstr = "&TOKEN=" + token + "&PAYERID=" + payerID + "&PAYMENTREQUEST_0_PAYMENTACTION=" + paymentType + "&PAYMENTREQUEST_0_AMT=" + finalPaymentAmount;
+	String nvpstr = "&TOKEN=" + token + "&PAYERID=" + payerID + "&PAYMENTREQUEST_0_PAYMENTACTION=" + paymentType + "&PAYMENTREQUEST_0_AMT=" + ammount;
 
 	nvpstr = nvpstr + "&PAYMENTREQUEST_0_CURRENCYCODE=" + currencyCodeType + "&IPADDRESS=" + serverName;
 
-	HashMap nvp = httpcall("DoExpressCheckoutPayment", nvpstr, req);
-	String strAck = nvp.get("ACK").toString();
-	if (strAck != null && !(strAck.equalsIgnoreCase("Success") || strAck.equalsIgnoreCase("SuccessWithWarning"))) {
-	    return nvp;
-	}
-	return null;
+	return httpcall("DoExpressCheckoutPayment", nvpstr, request);
     }
 
     @RequestMapping(value = "/cancel", method = RequestMethod.GET)
-    public String aboutus(HttpServletRequest request) {
-	return "index";
+    public String aboutus(Model model, HttpServletRequest request) {
+	model.addAttribute("message", "Canceled");
+	return ("payment-completed");
     }
 }
