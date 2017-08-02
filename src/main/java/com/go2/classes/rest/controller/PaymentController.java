@@ -59,9 +59,9 @@ public class PaymentController {
     @RequestMapping(value = "/paymentcomplete", method = RequestMethod.GET)
     public String completePayment(Model model, HttpServletRequest request) {
 	HashMap<String, String> nvp = confirmPayment(request);
-	model.addAttribute("ack", nvp.get("ACK").toString());
-	model.addAttribute("message", nvp.get("L_LONGMESSAGE0").toString());
-	String strAck = nvp.get("ACK").toString();
+	String strAck = nvp.get("ACK");
+	model.addAttribute("ack", strAck);
+	model.addAttribute("message", "Payment ammount : " + nvp.get("PAYMENTINFO_0_AMT"));
 	if (strAck.equalsIgnoreCase("Success")) {
 	    Long userId = (Long) request.getSession().getAttribute("userId");
 	    userCartService.bookAllCarts(userId);
