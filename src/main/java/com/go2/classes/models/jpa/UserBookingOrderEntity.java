@@ -3,6 +3,7 @@ package com.go2.classes.models.jpa;
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -30,6 +31,9 @@ public class UserBookingOrderEntity implements Serializable {
 
     @Column(name = "ammount")
     private Double ammount;
+
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, mappedBy = "userBookingOrder")
+    private List<UserCartEntity> listOfUserCarts;
 
     public UserBookingOrderEntity() {
 	super();
@@ -85,6 +89,14 @@ public class UserBookingOrderEntity implements Serializable {
 	sb.append("|");
 	sb.append(date);
 	return sb.toString();
+    }
+
+    public List<UserCartEntity> getListOfUserCarts() {
+        return listOfUserCarts;
+    }
+
+    public void setListOfUserCarts(List<UserCartEntity> listOfUserCarts) {
+        this.listOfUserCarts = listOfUserCarts;
     }
 
 }

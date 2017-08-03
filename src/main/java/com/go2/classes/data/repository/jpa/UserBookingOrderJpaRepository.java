@@ -19,4 +19,7 @@ public interface UserBookingOrderJpaRepository extends PagingAndSortingRepositor
 	@Query(value = "select UCO.date,UCO.classes_count from user_booking_order UCO where UCO.date > (NOW() - INTERVAL 1 MONTH)", nativeQuery = true)
 	List<Object> getLastMonthBookings();
 
+	@Query(value = "select UCO.* from user_booking_order UCO where UCO.student_id = :studentId", nativeQuery = true)
+	List<UserBookingOrderEntity> getAllByStudentId(@Param("studentId") Long studentId);
+
 }

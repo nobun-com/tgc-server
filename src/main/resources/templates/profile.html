@@ -97,11 +97,48 @@
 							</form>
 						</div>
 						<hr />
-						<div class="person-information">
-							<h2>Your Booking Information</h2>
-							<div class="form-group row"></div>
-
 						</div>
+					</div>
+					<div class="person-information">
+							<div class="form-group row">
+							
+		                        <div class="col-lg-8 listing-style3 hotel">
+								<h2>My Booking's</h2>
+		                        
+		                        <div th:each="booking : ${userBookings}">
+		                        
+		                    		<article class="box" th:each="cart : ${booking.value}">
+		                                  <div class="details col-xs-12 col-sm-10 col-md-10">
+		                                      <div>
+		                                          <div>
+		                                          		<h2 class="box-title col-xs-12" th:text="${cart.calssName}"></h2>
+		                                          		<div class="amenities">
+			                                          		<span class="price"><small>coupon</small><div th:text="${cart.coupon}"></div></span>
+		                                            	</div>
+		                                          		<div class="amenities">
+			                                          		<span class="price"><small>fees</small><div th:text="${cart.fee}"></div></span>
+		                                            	</div>
+		                                          </div>
+		                                          <div>
+		                                          		<span class="price"><small>Cost</small><div th:text="${cart.finalCost}"></div></span>
+		                                          </div>
+		                                      </div>
+		                                      <div>
+		                                       <div>
+		                                          	  <p style="margin: 0px;" th:text="${cart.date + ' ' + cart.day + '( ' + cart.time + ' )'}"></p>
+		                                              <br></br>
+								                      <h3 th:text="${'Booking date : ' + #dates.format(booking.key.date, 'dd-MMM-yyyy')}"></h3>
+								                      
+		                                       </div>
+		                                          <div>
+		                                              <a class="button btn-small red full-width text-center" title="" th:href="${'/cancleBooking?userCartId=XXX'}" >Cancel</a>
+		                                          </div>
+		                                      </div>
+		                                  </div>
+			                        </article>
+		                        </div>
+		                          
+		                        </div>
 					</div>
 				</div>
 				<div class="sidebar col-sms-6 col-sm-4 col-md-3"></div>

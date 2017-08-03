@@ -34,7 +34,7 @@ public class CartController extends BaseController {
     public String openMyCart(Model model, HttpSession session) {
 	Long userId = (Long) session.getAttribute("userId");
 	model.addAttribute("userCartClasses", timeTableService.getAllClassesInCart(userId));
-	model.addAttribute("total", "$" + userCartService.getToatlFees(userId));
+	model.addAttribute("total", "HKD" + userCartService.getToatlFees(userId));
 	session.setAttribute("userCartSize", timeTableService.getUserCartSize(userId));
 	return "my-cart";
     }

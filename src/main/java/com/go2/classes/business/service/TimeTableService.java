@@ -28,11 +28,13 @@ public interface TimeTableService {
 
 	Map<String, Object> getClassesSearchResult(ClassesSearch classesSearch, Long centerId) throws ParseException;
 
-	Object getAllClassesInCart(Long userId);
+	List<Map<String, Object>> getAllClassesInCart(Long userId);
 	
 	Integer getUserCartSize(Long userId);
 
 	Double findFeesFromClases(Long timeTableId);
 
 	void invalidByClass(Long id);
+
+	List<Map<String, Object>> getAllBookedClasses(Long userId);
 }

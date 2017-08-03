@@ -136,7 +136,7 @@ public class UserCartServiceImpl implements UserCartService {
 	Integer classesCount = 0;
 	for (UserCartEntity userCartEntity : inCart) {
 	    userCartEntity.setStatus("Booked");
-	    userCartEntity.setUserBookingOrderEntity(userBookingOrderEntity);
+	    userCartEntity.setUserBookingOrder(userBookingOrderEntity);
 	    userCartJpaRepository.save(userCartEntity);
 	    classesService.bookClass(userCartEntity.getTimeTable().getClasses());
 	    classesCount++;
@@ -162,7 +162,7 @@ public class UserCartServiceImpl implements UserCartService {
 	    userCart.setFinalCost(getDiscount(userCart.getFees(), coupon));
 	    update(userCart);
 	    result.put("success", true);
-	    result.put("message", "coupon applied fees will be $" + userCart.getFinalCost().toString());
+	    result.put("message", "coupon applied fees will be HKD" + userCart.getFinalCost().toString());
 	    result.put("cost", userCart.getFinalCost());
 	    result.put("totalCost", getToatlFees(userCart.getUserId()));
 	}
@@ -197,4 +197,21 @@ public class UserCartServiceImpl implements UserCartService {
 	return userBookingOrderJpaRepository.getAllBookingsByMonth(fromDate, toDate);
     }
 
+    public List<UserBookingOrderEntity> getAllBookedClasses(Long userId) {
+	return userBookingOrderJpaRepository.getAllByStudentId(userId);
+    }
+
+    @Override
+    public Map<UserBookingOrderEntity, List<Map<String, Object>>> getAllUserBookings(Long userId) {
+	Map<UserBookingOrderEntity, List<Map<String, Object>>> result = new HashMap<>();
+	for(UserBookingOrderEntity bookingOrder : getAllBookedClasses(userId)){
+		System.out.println(bookingOrder.getListOfUserCarts().size());
+		List<Map<String, Object>> carts = new ArrayList<>();
+		for(UserCartEntity cart : bookingOrder.getListOfUserCarts()) {
+		    carts.add(userCartServiceMapper.mapTimeTableEntityToJSONMap(cart));
+		}
+		result.put(bookingOrder, carts);
+	}
+	return result;
+    }
 }

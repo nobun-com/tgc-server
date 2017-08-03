@@ -4043,7 +4043,8 @@ ul.check-circle li:before {
   .listing-style3.hotel .box-title i {
     font-size: 15px; }
 .listing-style3.hotel .amenities {
-  float: right; }
+  float: right; 
+  padding: 0px 10px;}
 .listing-style3.hotel .details {
   padding: 15px 0 15px 20px;
   display: table; }

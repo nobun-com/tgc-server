@@ -156,14 +156,29 @@ public class TimeTableServiceImpl implements TimeTableService {
     }
 
     @Override
-    public Object getAllClassesInCart(Long userId) {
+    public List<Map<String, Object>> getAllClassesInCart(Long userId) {
 	List<Map<String, Object>> beans = new ArrayList<Map<String, Object>>();
 	Iterable<UserCartEntity> userCarts = userCartJpaRepository.findAllUserCartsByStudentId(userId);
 	for (UserCartEntity userCart : userCarts) {
 	    Map<String, Object> bean = timeTableServiceMapper.mapTimeTableEntityToJSONMap(userCart.getTimeTable());
 	    bean.put("userCartId", userCart.getId());
-	    bean.put("cost", "$" + userCart.getFinalCost());
-	    bean.put("fee", "$" + userCart.getFees());
+	    bean.put("cost", "HKD" + userCart.getFinalCost());
+	    bean.put("fee", "HKD" + userCart.getFees());
+	    bean.put("coupon", userCart.getCouponEntity() == null ? null : userCart.getCouponEntity().getCode());
+	    beans.add(bean);
+	}
+	return beans;
+    }
+
+    @Override
+    public List<Map<String, Object>> getAllBookedClasses(Long userId) {
+	List<Map<String, Object>> beans = new ArrayList<Map<String, Object>>();
+	Iterable<UserCartEntity> userCarts = userCartJpaRepository.findAllUserCartsByStudentId(userId);
+	for (UserCartEntity userCart : userCarts) {
+	    Map<String, Object> bean = timeTableServiceMapper.mapTimeTableEntityToJSONMap(userCart.getTimeTable());
+	    bean.put("userCartId", userCart.getId());
+	    bean.put("cost", "HKD" + userCart.getFinalCost());
+	    bean.put("fee", "HKD" + userCart.getFees());
 	    bean.put("coupon", userCart.getCouponEntity() == null ? null : userCart.getCouponEntity().getCode());
 	    beans.add(bean);
 	}

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.go2.classes.models.UserCart;
+import com.go2.classes.models.jpa.UserBookingOrderEntity;
 
 public interface UserCartService {
 
@@ -32,5 +33,7 @@ public interface UserCartService {
     List<Object> getAllBookingsByMonth(String fromDate, String toDate);
 
     List<Object> getLastMonthBookings();
+
+    Map<UserBookingOrderEntity, List<Map<String, Object>>> getAllUserBookings(Long userId);
 
 }

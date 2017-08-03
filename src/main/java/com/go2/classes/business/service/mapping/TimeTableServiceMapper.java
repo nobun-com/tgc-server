@@ -51,7 +51,7 @@ public class TimeTableServiceMapper extends AbstractServiceMapper {
 		map.put("day", Utilities.dayOnly.format(timeTableEntity.getStartTime()));
 		map.put("time", Utilities.timeOnly.format(timeTableEntity.getStartTime()) + " to " + Utilities.timeOnly.format(timeTableEntity.getEndTime()));
 		map.put("date", Utilities.dateWithoutTime.format(timeTableEntity.getStartTime()));
-		map.put("fee", "$" + timeTableEntity.getClasses().getFee());
+		map.put("fee", "HKD" + timeTableEntity.getClasses().getFee());
 		map.put("slots", timeTableEntity.getClasses().getSlotsAvailable() + " SLOTS LEFT");
 		map.put("name", timeTableEntity.getClasses().getClassName());
 

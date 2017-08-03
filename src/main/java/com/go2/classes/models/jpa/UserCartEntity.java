@@ -27,7 +27,7 @@ public class UserCartEntity implements Serializable {
     
     @ManyToOne
     @JoinColumn(name="order_id", referencedColumnName="id")
-    private UserBookingOrderEntity userBookingOrderEntity;
+    private UserBookingOrderEntity userBookingOrder;
     
     @Column(name="status", nullable=false, length=10)
     private String status;
@@ -46,12 +46,12 @@ public class UserCartEntity implements Serializable {
     @Column(name="date", nullable=false)
     private Date date;
 
-    public UserBookingOrderEntity getUserBookingOrderEntity() {
-		return userBookingOrderEntity;
+    public UserBookingOrderEntity getUserBookingOrder() {
+		return userBookingOrder;
 	}
 
-	public void setUserBookingOrderEntity(UserBookingOrderEntity userBookingOrderEntity) {
-		this.userBookingOrderEntity = userBookingOrderEntity;
+	public void setUserBookingOrder(UserBookingOrderEntity userBookingOrder) {
+		this.userBookingOrder = userBookingOrder;
 	}
 
 	public String getStatus() {
