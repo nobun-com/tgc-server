@@ -35,6 +35,4 @@ public interface TimeTableService {
 	Double findFeesFromClases(Long timeTableId);
 
 	void invalidByClass(Long id);
-
-	List<Map<String, Object>> getAllBookedClasses(Long userId);
 }

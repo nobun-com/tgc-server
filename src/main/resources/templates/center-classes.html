@@ -63,25 +63,27 @@
 			                                   <div class="details col-sm-9 col-md-12">
 			                                       <div>
 			                                           <div>
-			                                           <h2><a title="" th:text="${classObj.name}" th:href="${'/class-details?timeTableId=' + classObj.id}"></a>
-			                                           </h2>
-			                                           		<!-- <h2 class="box-title" ></h2> -->
-			                                           	<br></br>
+							                               <a th:href="${'/class-details?timeTableId=' + classObj.id}">
+					                                           <h2 class="box-title" th:text="${classObj.name}"></h2>
+				    	                                       <br></br>
+			            			                       </a>
 			                                           </div>
 			                                           <div class="class-cost">
 			                                           		<h1 th:text="${classObj.fee}"></h1>
 			                                           </div>
 			                                       </div>
 			                                       <div>
-				                                       <div>
-			                                           		<p style="margin: 0px;" class="filter-date" th:text="${classObj.date}"></p>
-			                                               <h4 class="box-title" th:text="${classObj.day + '( ' + classObj.time + ' )'}"></h4><br></br><br></br>
-			                                               <u><h4 class="box-title" th:text="${classObj.slots}"></h4></u><br></br>
-				                                       </div>
-			                                           <div>
-			                                               <a class="button btn-small full-width text-center" th:if="${session.isLoggedIn==true}" th:href="${'/addToCart?classId=' + classObj.id}">BOOK NOW</a>
-			                                               <a class="button btn-small full-width text-center" th:if="!${session.isLoggedIn==true}" th:onclick="'doLogin(\'' + ${classObj.id} + '\');'" >BOOK NOW</a>
-			                                           </div>
+				                                       <a th:href="${'/class-details?timeTableId=' + classObj.id}">
+					                                       <div>
+				                                           		<p style="margin: 0px;" class="filter-date" th:text="${classObj.date}"></p>
+				                                               <h4 class="box-title" th:text="${classObj.day + '( ' + classObj.time + ' )'}"></h4><br></br><br></br>
+				                                               <u><h4 class="box-title" th:text="${classObj.slots}"></h4></u><br></br>
+					                                       </div>
+				                                           <div>
+				                                               <a class="button btn-small full-width text-center" th:if="${session.isLoggedIn==true}" th:href="${'/addToCart?classId=' + classObj.id}">BOOK NOW</a>
+				                                               <a class="button btn-small full-width text-center" th:if="!${session.isLoggedIn==true}" th:onclick="'doLogin(\'' + ${classObj.id} + '\');'" >BOOK NOW</a>
+				                                           </div>
+			                                           </a>
 			                                       </div>
 			                                   </div>
 			                               </article>

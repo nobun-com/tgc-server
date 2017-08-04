@@ -171,21 +171,6 @@ public class TimeTableServiceImpl implements TimeTableService {
     }
 
     @Override
-    public List<Map<String, Object>> getAllBookedClasses(Long userId) {
-	List<Map<String, Object>> beans = new ArrayList<Map<String, Object>>();
-	Iterable<UserCartEntity> userCarts = userCartJpaRepository.findAllUserCartsByStudentId(userId);
-	for (UserCartEntity userCart : userCarts) {
-	    Map<String, Object> bean = timeTableServiceMapper.mapTimeTableEntityToJSONMap(userCart.getTimeTable());
-	    bean.put("userCartId", userCart.getId());
-	    bean.put("cost", "HKD" + userCart.getFinalCost());
-	    bean.put("fee", "HKD" + userCart.getFees());
-	    bean.put("coupon", userCart.getCouponEntity() == null ? null : userCart.getCouponEntity().getCode());
-	    beans.add(bean);
-	}
-	return beans;
-    }
-
-    @Override
     public Integer getUserCartSize(Long userId) {
 	return userCartJpaRepository.getUserCartSize(userId);
     }

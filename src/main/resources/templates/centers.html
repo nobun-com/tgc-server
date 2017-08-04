@@ -24,28 +24,30 @@
                             <div class="hotel-list listing-style3 hotel">
 
                                 <article class="box search_item" th:each="center : ${centers}">
-                                    <figure class="col-sm-3 col-md-2">
-                                    	<img th:src="${'getImage/' + center.logoName}" alt="" style="height:120px; width:120px;"/>
-                                    </figure>
-                                    <div class="details col-sm-9 col-md-10">
-                                        <div>
-                                            <div>
-                                                <h4 class="box-title searchee" th:text="${center.centerName}"></h4><br></br>
-                                                <i class="soap-icon-departure yellow-color"></i><small th:text="${' ' + center.address.area + ', ' + center.address.district}"></small>
-                                            </div>
-                                            <div>
-                                            	<a th:href="${'/map?centerId=' + center.id}" target="_blank"><i class="soap-icon-departure yellow-color"></i>
-                                                <span class="review">see on map</span></a>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <p th:text="${center.about}"></p>
-                                            <div>
-                                                <a class="button btn-small full-width text-center" title="" th:href="${'/center-classes?centerId=' + center.id}">CLASSES</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
+                                    <a th:href="${'/center-classes?centerId=' + center.id}">
+	                                    <figure class="col-sm-3 col-md-2">
+	                                    	<img th:src="${'getImage/' + center.logoName}" alt="" style="height:120px; width:120px;"/>
+	                                    </figure>
+	                                    <div class="details col-sm-9 col-md-10">
+	                                        <div>
+	                                            <div>
+	                                                <h4 class="box-title searchee" th:text="${center.centerName}"></h4><br></br>
+	                                                <i class="soap-icon-departure yellow-color"></i><small th:text="${' ' + center.address.area + ', ' + center.address.district}"></small>
+	                                            </div>
+	                                            <div>
+	                                            	<a th:href="${'/map?centerId=' + center.id}" target="_blank"><i class="soap-icon-departure yellow-color"></i>
+	                                                <span class="review">see on map</span></a>
+	                                            </div>
+	                                        </div>
+	                                        <div>
+	                                            <p th:text="${center.about}"></p>
+	                                            <div>
+	                                                <a class="button btn-small full-width text-center" title="" th:href="${'/center-classes?centerId=' + center.id}">CLASSES</a>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </a>
+	                            </article>
 
                             </div>
                         </div>
