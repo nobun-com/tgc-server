@@ -39,5 +39,9 @@ public interface UserCartService {
     String getTransactionId(Long userId, Long bookingId);
 
     void cancelBooking(Long bookingId);
+    
+    List<Object> getLastMonthBookingsByEducator(Long teacherId);
+    
+    Integer getBookingsCountByEducator(Long teacherId);
 
 }

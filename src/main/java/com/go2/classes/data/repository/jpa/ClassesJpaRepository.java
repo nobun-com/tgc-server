@@ -24,6 +24,9 @@ public interface ClassesJpaRepository extends PagingAndSortingRepository<Classes
 	
 	@Query(value="select count(CC.id) from classes CC where CC.status != 'invalid'", nativeQuery = true)
 	Integer getActiveClassesCount();
+	
+	@Query(value="select count(CC.id) from classes CC where CC.status = 'valid' and CC.teacher_id =:teacherId", nativeQuery = true)
+	Integer getActiveClassesCountByEducator(@Param("teacherId") Long teacherId);
 
 
 }

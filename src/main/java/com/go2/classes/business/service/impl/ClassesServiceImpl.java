@@ -165,8 +165,12 @@ public class ClassesServiceImpl implements ClassesService {
 	classesJpaRepository.save(classes);
     }
 	@Override
-		public Integer getActiveClassesCount() {
-			return classesJpaRepository.getActiveClassesCount();
-		}
+	public Integer getActiveClassesCount() {
+		return classesJpaRepository.getActiveClassesCount();
+	}
+	@Override
+	public Integer getActiveClassesCountByEducator(Long teacherId) {
+		return classesJpaRepository.getActiveClassesCountByEducator(teacherId);
+	}
 
 }

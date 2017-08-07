@@ -14,6 +14,8 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.go2.classes.business.service.AdminService;
@@ -156,6 +159,53 @@ public class CommonRestController extends BaseController {
 		result.put("teachersCount", teacherService.getTeachersCount());
 		result.put("bookingsCount", userCartService.getBookingsCount());
 		result.put("activeClassesCount", classesService.getActiveClassesCount());
+		result.put("barChartData", finalResult);
+
+		return result;
+	}
+
+	@RequestMapping(value = "/educatorDashboard/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public Map<String, Object> educatorDashboardData(@PathVariable("id") Long teacherId) {
+
+		Map<String, Object> result = new HashMap<String, Object>();
+
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, -1);
+		Date fromDate = cal.getTime();
+		Date toDate = new Date();
+
+		Calendar start = Calendar.getInstance();
+		start.setTime(fromDate);
+		Calendar end = Calendar.getInstance();
+		end.setTime(toDate);
+
+		List<Object> lst = userCartService.getLastMonthBookingsByEducator(teacherId);
+		Map<String, Integer> map1 = new HashMap<String, Integer>();
+		Iterator it = lst.iterator();
+		while (it.hasNext()) {
+			Object[] o = (Object[]) it.next();
+			map1.put(formatter.format(o[0]) + "", Integer.parseInt(o[1] + ""));
+		}
+		/*
+		 * System.out.println("map1"); for (Map.Entry<String, Integer> entry :
+		 * map1.entrySet()) { System.out.println("Key = " + entry.getKey() +
+		 * ", Value = " + entry.getValue()); }
+		 */
+
+		LinkedHashMap<String, Integer> finalResult = new LinkedHashMap<String, Integer>();
+		for (Date date = start.getTime(); !start.after(end); start.add(Calendar.DATE, 1), date = start.getTime()) {
+			if (map1.containsKey(formatter.format(date))) {
+				finalResult.put(formatter.format(date), map1.get(formatter.format(date)));
+			} else {
+				finalResult.put(formatter.format(date), 0);
+			}
+		}
+
+		result.put("bookingsCount", userCartService.getBookingsCountByEducator(teacherId));
+		result.put("activeClassesCount", classesService.getActiveClassesCountByEducator(teacherId));
 		result.put("barChartData", finalResult);
 
 		return result;

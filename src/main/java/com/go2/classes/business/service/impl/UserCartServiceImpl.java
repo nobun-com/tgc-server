@@ -192,13 +192,21 @@ public class UserCartServiceImpl implements UserCartService {
     public List<Object> getLastMonthBookings() {
 	return userBookingOrderJpaRepository.getLastMonthBookings();
     }
+    @Override
+    public Integer getBookingsCountByEducator(Long teacherId) {
+	return userBookingOrderJpaRepository.getBookingsCountByEducator(teacherId);
+    }
+
+    @Override
+    public List<Object> getLastMonthBookingsByEducator(Long teacherId) {
+	return userBookingOrderJpaRepository.getLastMonthBookingsByEducator(teacherId);
+    }
 
     @Override
     public List<Object> getAllBookingsByMonth(String fromDate, String toDate) {
 	return userBookingOrderJpaRepository.getAllBookingsByMonth(fromDate, toDate);
     }
-
-    @Override
+ @Override
     public Map<UserBookingOrderEntity, List<Map<String, Object>>> getAllUserBookings(Long userId) {
 	Map<UserBookingOrderEntity, List<Map<String, Object>>> result = new HashMap<>();
 	for (UserBookingOrderEntity bookingOrder : userBookingOrderJpaRepository.getAllByStudentId(userId)) {

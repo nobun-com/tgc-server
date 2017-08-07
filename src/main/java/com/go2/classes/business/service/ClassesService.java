@@ -29,4 +29,6 @@ public interface ClassesService {
     void bookClass(ClassesEntity classes);
     
     Integer getActiveClassesCount();
+    
+    Integer getActiveClassesCountByEducator(Long teacherId);
 }
