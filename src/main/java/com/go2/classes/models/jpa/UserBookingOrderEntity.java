@@ -32,6 +32,12 @@ public class UserBookingOrderEntity implements Serializable {
     @Column(name = "ammount")
     private Double ammount;
 
+    @Column(name = "transactionId", nullable = false)
+    String transactionId;
+    
+    @Column(name = "status", nullable = false)
+    String status;
+    
     @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, mappedBy = "userBookingOrder")
     private List<UserCartEntity> listOfUserCarts;
 
@@ -97,6 +103,22 @@ public class UserBookingOrderEntity implements Serializable {
 
     public void setListOfUserCarts(List<UserCartEntity> listOfUserCarts) {
         this.listOfUserCarts = listOfUserCarts;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.go2.classes.business.service.UserCartService;
 
@@ -63,13 +65,35 @@ public class PaymentController {
 	model.addAttribute("ack", strAck);
 	if (strAck.equalsIgnoreCase("Success")) {
 	    Long userId = (Long) request.getSession().getAttribute("userId");
-	    userCartService.bookAllCarts(userId);
+	    String transactionId = nvp.get("PAYMENTINFO_0_TRANSACTIONID");
+	    userCartService.bookAllCarts(userId, transactionId);
 	    model.addAttribute("message", "Payment ammount : " + nvp.get("PAYMENTINFO_0_AMT"));
 	} else {
 	    model.addAttribute("message", nvp.get("L_SHORTMESSAGE0"));
 	}
 	return ("payment-completed");
     }
+
+    @RequestMapping(value = "/refund")
+    public String refundPayment(Model model, @RequestParam(name = "bookingId") Long bookingId, HttpServletRequest request) throws ParseException {
+	Long userId = (Long) request.getSession().getAttribute("userId");
+	String tranctionID = userCartService.getTransactionId(userId, bookingId);
+
+	String nvpstr = "&TRANSACTIONID=" + tranctionID + "&REFUNDTYPE==" + "Full"; //transaction_ID
+
+	HashMap<String, String> nvp = httpcall("RefundTransaction", nvpstr, request);
+	
+	String strAck = nvp.get("ACK");
+	model.addAttribute("ack", strAck);
+	if (strAck.equalsIgnoreCase("Success")) {
+	    userCartService.cancelBooking(bookingId);
+	    model.addAttribute("message", "Refunded ammount : " + nvp.get("FEEREFUNDAMT"));
+	} else {
+	    model.addAttribute("message", nvp.get("L_LONGMESSAGE0"));
+	}
+	return ("payment-completed");
+    }
+
 
     public String callShortcutExpressCheckout(HttpServletRequest request) {
 	Long userId = (Long) request.getSession().getAttribute("userId");
@@ -92,7 +116,7 @@ public class PaymentController {
 	String gv_APIUserName = "nobun.paypal-facilitator_api1.gmail.com";
 	String gv_APIPassword = "MD4FN9RF97BAEUXH";
 	String gv_APISignature = "An5ns1Kso7MWUdW4ErQKJJJ4qi4-ACKNhncRaNp0W7rpHUesxigkpH0H";
-	String gv_Version = "98";
+	String gv_Version = "94";
 	String gv_BNCode = "PP-ECWizard";
 
 	String agent = request.getHeader("User-Agent");

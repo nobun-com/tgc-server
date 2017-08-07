@@ -45,7 +45,6 @@ public class UserController extends BaseController {
 	Long userId = (Long) session.getAttribute("userId");
 	model.addAttribute("user", studentService.findById(userId));
 	model.addAttribute("childs", childService.getAllChildsByStudent(userId));
-	model.addAttribute("userCartClasses", timeTableService.getAllClassesInCart(userId));
 	model.addAttribute("userBookings", userCartService.getAllUserBookings(userId));
 	return "profile";
     }

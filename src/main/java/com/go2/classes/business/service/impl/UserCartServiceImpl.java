@@ -126,10 +126,11 @@ public class UserCartServiceImpl implements UserCartService {
     }
 
     @Override
-    public Double bookAllCarts(Long userId) {
+    public void bookAllCarts(Long userId, String transactionId) {
 	UserBookingOrderEntity userBookingOrderEntity = new UserBookingOrderEntity();
 	userBookingOrderEntity.setStudent(studentJpaRepository.findOne(userId));
 	userBookingOrderEntity.setDate(new Date());
+	userBookingOrderEntity.setTransactionId(transactionId);
 	userBookingOrderEntity = userBookingOrderJpaRepository.save(userBookingOrderEntity);
 	Double cost = 0d;
 	Iterable<UserCartEntity> inCart = userCartJpaRepository.findAllUserCartsByStudentId(userId);
@@ -143,9 +144,9 @@ public class UserCartServiceImpl implements UserCartService {
 	    cost += userCartEntity.getFinalCost();
 	}
 	userBookingOrderEntity.setAmmount(cost);
+	userBookingOrderEntity.setStatus("Done");
 	userBookingOrderEntity.setClassesCount(classesCount);
 	userBookingOrderJpaRepository.save(userBookingOrderEntity);
-	return cost;
     }
 
     @Override
@@ -197,15 +198,10 @@ public class UserCartServiceImpl implements UserCartService {
 	return userBookingOrderJpaRepository.getAllBookingsByMonth(fromDate, toDate);
     }
 
-    public List<UserBookingOrderEntity> getAllBookedClasses(Long userId) {
-	return userBookingOrderJpaRepository.getAllByStudentId(userId);
-    }
-
     @Override
     public Map<UserBookingOrderEntity, List<Map<String, Object>>> getAllUserBookings(Long userId) {
 	Map<UserBookingOrderEntity, List<Map<String, Object>>> result = new HashMap<>();
-	for (UserBookingOrderEntity bookingOrder : getAllBookedClasses(userId)) {
-	    System.out.println(bookingOrder.getListOfUserCarts().size());
+	for (UserBookingOrderEntity bookingOrder : userBookingOrderJpaRepository.getAllByStudentId(userId)) {
 	    List<Map<String, Object>> carts = new ArrayList<>();
 	    for (UserCartEntity cart : bookingOrder.getListOfUserCarts()) {
 		carts.add(userCartServiceMapper.mapTimeTableEntityToJSONMap(cart));
@@ -214,4 +210,18 @@ public class UserCartServiceImpl implements UserCartService {
 	}
 	return result;
     }
+
+    @Override
+    public String getTransactionId(Long userId, Long bookingId) {
+	UserBookingOrderEntity order = userBookingOrderJpaRepository.findOne(bookingId);
+	return order.getTransactionId();
+    }
+
+    @Override
+    public void cancelBooking(Long bookingId) {
+	UserBookingOrderEntity order = userBookingOrderJpaRepository.findOne(bookingId);
+	order.setStatus("Canceled");
+	userBookingOrderJpaRepository.save(order);
+    }
+
 }
