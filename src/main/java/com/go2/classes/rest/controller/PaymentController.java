@@ -87,7 +87,7 @@ public class PaymentController {
 	model.addAttribute("ack", strAck);
 	if (strAck.equalsIgnoreCase("Success")) {
 	    userCartService.cancelBooking(bookingId);
-	    model.addAttribute("message", "Refunded ammount : " + nvp.get("FEEREFUNDAMT"));
+	    model.addAttribute("message", "Refunded ammount : " + nvp.get("GROSSREFUNDAMT"));
 	} else {
 	    model.addAttribute("message", nvp.get("L_LONGMESSAGE0"));
 	}
