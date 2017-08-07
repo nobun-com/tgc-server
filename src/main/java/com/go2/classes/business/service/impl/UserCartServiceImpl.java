@@ -131,6 +131,7 @@ public class UserCartServiceImpl implements UserCartService {
 	userBookingOrderEntity.setStudent(studentJpaRepository.findOne(userId));
 	userBookingOrderEntity.setDate(new Date());
 	userBookingOrderEntity.setTransactionId(transactionId);
+	userBookingOrderEntity.setStatus("Done");
 	userBookingOrderEntity = userBookingOrderJpaRepository.save(userBookingOrderEntity);
 	Double cost = 0d;
 	Iterable<UserCartEntity> inCart = userCartJpaRepository.findAllUserCartsByStudentId(userId);
@@ -144,7 +145,6 @@ public class UserCartServiceImpl implements UserCartService {
 	    cost += userCartEntity.getFinalCost();
 	}
 	userBookingOrderEntity.setAmmount(cost);
-	userBookingOrderEntity.setStatus("Done");
 	userBookingOrderEntity.setClassesCount(classesCount);
 	userBookingOrderJpaRepository.save(userBookingOrderEntity);
     }
