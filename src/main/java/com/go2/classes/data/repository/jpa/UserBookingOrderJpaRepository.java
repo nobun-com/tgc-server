@@ -16,10 +16,10 @@ public interface UserBookingOrderJpaRepository extends PagingAndSortingRepositor
 	@Query(value = "select UCO.`date`,CC.class_name,TT.start_time,TT.end_time,SD.name,UC.fees,UC.coupon_code,UC.final_cost from user_cart UC inner join student SD on UC.student_id = SD.id inner join user_booking_order UCO on UCO.student_id=SD.id inner join time_table TT on UC.timetable_id = TT.id inner join classes CC on TT.classes_id = CC.id where UC.status='Booked' and UCO.date between :fromDate and :toDate", nativeQuery = true)
 	List<Object> getAllBookingsByMonth(@Param("fromDate") String fromDate, @Param("toDate") String toDate);
 
-	@Query(value = "select UCO.date as dates,sum(UCO.classes_count) from user_booking_order UCO where UCO.date > (NOW() - INTERVAL 1 MONTH) group by date(dates)", nativeQuery = true)
+	@Query(value = "select date(UCO.date) as dateOnly,sum(UCO.classes_count) from user_booking_order UCO where UCO.date > (NOW() - INTERVAL 1 MONTH) group by dateOnly", nativeQuery = true)
 	List<Object> getLastMonthBookings();
 
-	@Query(value = "select ubo.date as dates,sum(ubo.classes_count) from user_booking_order ubo RIGHT join user_cart uc on uc.order_id = ubo.id RIGHT join time_table tt on tt.id = uc.timetable_id RIGHT join classes c on c.id = tt.classes_id  and c.teacher_id= :teacherId where ubo.date > (NOW() - INTERVAL 1 MONTH) group by date(dates);", nativeQuery = true)
+	@Query(value = "select date(ubo.date) as dateOnly,sum(ubo.classes_count) from user_booking_order ubo RIGHT join user_cart uc on uc.order_id = ubo.id RIGHT join time_table tt on tt.id = uc.timetable_id RIGHT join classes c on c.id = tt.classes_id  and c.teacher_id= :teacherId where ubo.date > (NOW() - INTERVAL 1 MONTH) group by dateOnly;", nativeQuery = true)
 	List<Object> getLastMonthBookingsByEducator(@Param("teacherId") Long teacherId);
 
 	@Query(value = "select sum(ubo.classes_count) from user_booking_order ubo RIGHT join user_cart uc on uc.order_id = ubo.id RIGHT join time_table tt on tt.id = uc.timetable_id RIGHT join classes c on c.id = tt.classes_id  and c.teacher_id= :teacherId where ubo.date > (NOW() - INTERVAL 1 MONTH);", nativeQuery = true)
