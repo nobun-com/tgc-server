@@ -79,21 +79,20 @@ public class PaymentController {
 	Long userId = (Long) request.getSession().getAttribute("userId");
 	String tranctionID = userCartService.getTransactionId(userId, bookingId);
 
-	String nvpstr = "&TRANSACTIONID=" + tranctionID + "&REFUNDTYPE==" + "Full"; //transaction_ID
+	String nvpstr = "&TRANSACTIONID=" + tranctionID + "&REFUNDTYPE==" + "Full"; // transaction_ID
 
 	HashMap<String, String> nvp = httpcall("RefundTransaction", nvpstr, request);
-	
+
 	String strAck = nvp.get("ACK");
 	model.addAttribute("ack", strAck);
 	if (strAck.equalsIgnoreCase("Success")) {
-	    userCartService.cancelBooking(bookingId);
+	    userCartService.cancelBooking(userId, bookingId);
 	    model.addAttribute("message", "Refunded ammount : " + nvp.get("GROSSREFUNDAMT"));
 	} else {
 	    model.addAttribute("message", nvp.get("L_LONGMESSAGE0"));
 	}
 	return ("payment-completed");
     }
-
 
     public String callShortcutExpressCheckout(HttpServletRequest request) {
 	Long userId = (Long) request.getSession().getAttribute("userId");

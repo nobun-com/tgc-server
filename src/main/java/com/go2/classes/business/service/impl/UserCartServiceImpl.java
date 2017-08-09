@@ -16,11 +16,14 @@ import com.go2.classes.business.service.ClassesService;
 import com.go2.classes.business.service.CouponService;
 import com.go2.classes.business.service.UserCartService;
 import com.go2.classes.business.service.mapping.UserCartServiceMapper;
+import com.go2.classes.common.EmailUtil;
 import com.go2.classes.data.repository.jpa.StudentJpaRepository;
 import com.go2.classes.data.repository.jpa.UserBookingOrderJpaRepository;
 import com.go2.classes.data.repository.jpa.UserCartJpaRepository;
 import com.go2.classes.models.Coupon;
 import com.go2.classes.models.UserCart;
+import com.go2.classes.models.jpa.StudentEntity;
+import com.go2.classes.models.jpa.TeacherEntity;
 import com.go2.classes.models.jpa.UserBookingOrderEntity;
 import com.go2.classes.models.jpa.UserCartEntity;
 
@@ -127,8 +130,10 @@ public class UserCartServiceImpl implements UserCartService {
 
     @Override
     public void bookAllCarts(Long userId, String transactionId) {
+	String msg = "";
+	StudentEntity student = studentJpaRepository.findOne(userId);
 	UserBookingOrderEntity userBookingOrderEntity = new UserBookingOrderEntity();
-	userBookingOrderEntity.setStudent(studentJpaRepository.findOne(userId));
+	userBookingOrderEntity.setStudent(student);
 	userBookingOrderEntity.setDate(new Date());
 	userBookingOrderEntity.setTransactionId(transactionId);
 	userBookingOrderEntity.setStatus("Done");
@@ -143,10 +148,15 @@ public class UserCartServiceImpl implements UserCartService {
 	    classesService.bookClass(userCartEntity.getTimeTable().getClasses());
 	    classesCount++;
 	    cost += userCartEntity.getFinalCost();
+	    TeacherEntity teacher = userCartEntity.getTimeTable().getClasses().getTeacher();
+	    msg = "Dear educator " + student.getName() + " has booked your class " + userCartEntity.getTimeTable().getClasses().getClassName();
+	    EmailUtil.sendEmail("Class Booked", msg, teacher.getEmail());
 	}
 	userBookingOrderEntity.setAmmount(cost);
 	userBookingOrderEntity.setClassesCount(classesCount);
 	userBookingOrderJpaRepository.save(userBookingOrderEntity);
+	msg = "Dear " + student.getName() + " you have booked " + classesCount + " classes and payment of HKD" + cost + " done";
+	EmailUtil.sendEmail("Class Booked", msg, student.getEmail());
     }
 
     @Override
@@ -192,6 +202,7 @@ public class UserCartServiceImpl implements UserCartService {
     public List<Object> getLastMonthBookings() {
 	return userBookingOrderJpaRepository.getLastMonthBookings();
     }
+
     @Override
     public Integer getBookingsCountByEducator(Long teacherId) {
 	return userBookingOrderJpaRepository.getBookingsCountByEducator(teacherId);
@@ -206,7 +217,8 @@ public class UserCartServiceImpl implements UserCartService {
     public List<Object> getAllBookingsByMonth(String fromDate, String toDate) {
 	return userBookingOrderJpaRepository.getAllBookingsByMonth(fromDate, toDate);
     }
- @Override
+
+    @Override
     public Map<UserBookingOrderEntity, List<Map<String, Object>>> getAllUserBookings(Long userId) {
 	Map<UserBookingOrderEntity, List<Map<String, Object>>> result = new HashMap<>();
 	for (UserBookingOrderEntity bookingOrder : userBookingOrderJpaRepository.getAllByStudentId(userId)) {
@@ -226,10 +238,19 @@ public class UserCartServiceImpl implements UserCartService {
     }
 
     @Override
-    public void cancelBooking(Long bookingId) {
+    public void cancelBooking(Long userId, Long bookingId) {
 	UserBookingOrderEntity order = userBookingOrderJpaRepository.findOne(bookingId);
 	order.setStatus("Canceled");
 	userBookingOrderJpaRepository.save(order);
+	StudentEntity student = studentJpaRepository.findOne(userId);
+	String msg = "Dear " + student.getName() + " you have cancled booking.";
+	EmailUtil.sendEmail("Class Booking canceled", msg, student.getEmail());
+
+	for (UserCartEntity cart : order.getListOfUserCarts()) {
+	    msg = "Dear educator " + student.getName() + " has cancled booking of your class " + cart.getTimeTable().getClasses().getClassName();
+	    EmailUtil.sendEmail("Class Booking canceled", msg, cart.getTimeTable().getClasses().getTeacher().getEmail());
+	}
+
     }
 
 }
