@@ -17,6 +17,7 @@ import com.go2.classes.business.service.CouponService;
 import com.go2.classes.business.service.UserCartService;
 import com.go2.classes.business.service.mapping.UserCartServiceMapper;
 import com.go2.classes.common.EmailUtil;
+import com.go2.classes.common.Utilities;
 import com.go2.classes.data.repository.jpa.StudentJpaRepository;
 import com.go2.classes.data.repository.jpa.UserBookingOrderJpaRepository;
 import com.go2.classes.data.repository.jpa.UserCartJpaRepository;
@@ -234,7 +235,20 @@ public class UserCartServiceImpl implements UserCartService {
     @Override
     public String getTransactionId(Long userId, Long bookingId) {
 	UserBookingOrderEntity order = userBookingOrderJpaRepository.findOne(bookingId);
-	return order.getTransactionId();
+	String msg = "";
+	if(order.getStudent().getId() != userId) {
+	    msg = "msg_This is not your transaction to refund";
+	}
+	for(UserCartEntity cart : order.getListOfUserCarts()) {
+	    if(cart.getTimeTable().getStartTime().before(new Date())) {
+		msg = "msg_Booking can't refunded now class date " + Utilities.dateWithoutTime.format(cart.getTimeTable().getStartTime()) + " is passed.";
+	    }
+	}
+	if(msg.equals("")) {
+		return order.getTransactionId();
+	} else {
+	    return msg;
+	}
     }
 
     @Override

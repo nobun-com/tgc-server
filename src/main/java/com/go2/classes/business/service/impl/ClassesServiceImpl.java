@@ -1,5 +1,6 @@
 package com.go2.classes.business.service.impl;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,12 +13,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.go2.classes.business.service.ClassesService;
+import com.go2.classes.business.service.StudentService;
 import com.go2.classes.business.service.TimeTableService;
 import com.go2.classes.business.service.impl.helper.ClassMetadataHelper;
 import com.go2.classes.business.service.mapping.ClassesServiceMapper;
+import com.go2.classes.common.EmailUtil;
 import com.go2.classes.data.repository.jpa.ClassesCategoryJpaRepository;
 import com.go2.classes.data.repository.jpa.ClassesJpaRepository;
 import com.go2.classes.models.Classes;
+import com.go2.classes.models.Student;
 import com.go2.classes.models.jpa.ClassesCategoryEntity;
 import com.go2.classes.models.jpa.ClassesEntity;
 
@@ -27,7 +31,10 @@ public class ClassesServiceImpl implements ClassesService {
 
     @Resource
     private ClassesJpaRepository classesJpaRepository;
-
+    
+    @Resource
+    private StudentService studentService;
+    
     @Resource
     private ClassesCategoryJpaRepository classesCategoryJpaRepository;
 
@@ -112,9 +119,16 @@ public class ClassesServiceImpl implements ClassesService {
 	    throw new IllegalStateException("class.not.found");
 	}
 	timeTableService.invalidByClass(classes.getId());
+	for(BigInteger studentId : classesJpaRepository.getUsersOfClass(classes.getId())){
+	    Student student = studentService.findById(studentId.longValue());
+	    String email = student.getEmail();
+	    String msg = "Dear " + student.getName() + " schedule of class " + classesEntity.getClassName() + " is changed please have a look";
+	    EmailUtil.sendEmail("Class schedule updated", msg, email);
+	}
 	classesServiceMapper.mapClassesToClassesEntity(classes, classesEntity);
 	ClassesEntity classesEntitySaved = classesJpaRepository.save(classesEntity);
 	classMetadataHelper.parseClassesMetaData(classes);
+	
 	return classesServiceMapper.mapClassesEntityToClasses(classesEntitySaved);
     }
 
@@ -128,6 +142,12 @@ public class ClassesServiceImpl implements ClassesService {
 	    throw new IllegalStateException("class.not.found");
 	}
 	timeTableService.invalidByClass(id);
+	for(BigInteger studentId : classesJpaRepository.getUsersOfClass(id)){
+	    Student student = studentService.findById(studentId.longValue());
+	    String email = student.getEmail();
+	    String msg = "Dear " + student.getName() + " class " + classesEntity.getClassName() + " is closed";
+	    EmailUtil.sendEmail("Class canceled", msg, email);
+	}
 	classesJpaRepository.invalid(id);
     }
 

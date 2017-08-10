@@ -79,6 +79,12 @@ public class PaymentController {
 	Long userId = (Long) request.getSession().getAttribute("userId");
 	String tranctionID = userCartService.getTransactionId(userId, bookingId);
 
+	if (tranctionID.startsWith("msg_")) {
+	    model.addAttribute("ack", "Failure");
+	    model.addAttribute("message", tranctionID.replaceFirst("msg_", ""));
+	    return ("payment-completed");
+	}
+
 	String nvpstr = "&TRANSACTIONID=" + tranctionID + "&REFUNDTYPE==" + "Full"; // transaction_ID
 
 	HashMap<String, String> nvp = httpcall("RefundTransaction", nvpstr, request);

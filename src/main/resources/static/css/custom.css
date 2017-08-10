@@ -199,3 +199,14 @@ footer .socialIcons img {
     font-family: 'Gotham-Condensed';
     color: #08365D;
 }
+
+
+.promo {
+	padding : 0px;
+}
+
+@media (max-width: 992px) {
+	.promo {
+		margin : 15px 35px;
+	}
+}

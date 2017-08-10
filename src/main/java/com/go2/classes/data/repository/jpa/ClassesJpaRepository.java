@@ -1,5 +1,8 @@
 package com.go2.classes.data.repository.jpa;
 
+import java.math.BigInteger;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -27,6 +30,7 @@ public interface ClassesJpaRepository extends PagingAndSortingRepository<Classes
 	
 	@Query(value="select count(CC.id) from classes CC where CC.status = 'valid' and CC.teacher_id =:teacherId", nativeQuery = true)
 	Integer getActiveClassesCountByEducator(@Param("teacherId") Long teacherId);
-
-
+	
+	@Query(value="select distinct UC.student_id from user_cart UC, time_table TT where UC.timetable_id = TT.id and TT.classes_id = :classesId", nativeQuery = true)
+	List<BigInteger> getUsersOfClass(@Param("classesId") Long classesId);
 }
