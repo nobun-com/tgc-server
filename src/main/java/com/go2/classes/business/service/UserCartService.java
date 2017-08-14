@@ -29,6 +29,8 @@ public interface UserCartService {
     Map<String, Object> applyCoupon(Long userCartId, String couponCode);
 
     List<Object> getAllBookingsByMonth(String fromDate, String toDate);
+    
+    List<Object> getAllBookingsByEducator(Long userId,String strFromDate,String strToDate);
 
     List<Object> getLastMonthBookings();
 

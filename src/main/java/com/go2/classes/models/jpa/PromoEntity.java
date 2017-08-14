@@ -23,185 +23,165 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name="promo")
+@Table(name = "promo")
 // Define named queries here
-@NamedQueries ( {
-  @NamedQuery ( name="PromoEntity.countAll", query="SELECT COUNT(x) FROM PromoEntity x" )
-} )
+@NamedQueries({ @NamedQuery(name = "PromoEntity.countAll", query = "SELECT COUNT(x) FROM PromoEntity x") })
 public class PromoEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    //----------------------------------------------------------------------
-    // ENTITY PRIMARY KEY ( BASED ON A SINGLE FIELD )
-    //----------------------------------------------------------------------
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="id", nullable=false)
-    private Long       id           ;
+	// ----------------------------------------------------------------------
+	// ENTITY PRIMARY KEY ( BASED ON A SINGLE FIELD )
+	// ----------------------------------------------------------------------
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id", nullable = false)
+	private Long id;
 
+	// ----------------------------------------------------------------------
+	// ENTITY DATA FIELDS
+	// ----------------------------------------------------------------------
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_time")
+	private Date createdTime;
 
-    //----------------------------------------------------------------------
-    // ENTITY DATA FIELDS 
-    //----------------------------------------------------------------------    
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="created_time")
-    private Date       createdTime  ;
+	@Column(name = "promo_image_four", length = 100)
+	private String promoImageFour;
 
-    @Column(name="promo_image_four", length=100)
-    private String     promoImageFour ;
+	@Column(name = "promo_image_one", length = 100)
+	private String promoImageOne;
 
-    @Column(name="promo_image_one", length=100)
-    private String     promoImageOne ;
+	@Column(name = "promo_image_three", length = 100)
+	private String promoImageThree;
 
-    @Column(name="promo_image_three", length=100)
-    private String     promoImageThree ;
+	@Column(name = "promo_image_two", length = 100)
+	private String promoImageTwo;
 
-    @Column(name="promo_image_two", length=100)
-    private String     promoImageTwo ;
+	@Column(name = "promo_url_four", length = 100)
+	private String promoUrlFour;
 
-	// "centerFourId" (column "center_four_id") is not defined by itself because used as FK in a link 
-	// "centerOneId" (column "center_one_id") is not defined by itself because used as FK in a link 
-	// "centerThreeId" (column "center_three_id") is not defined by itself because used as FK in a link 
-	// "centerTwoId" (column "center_two_id") is not defined by itself because used as FK in a link 
+	@Column(name = "promo_url_one", length = 100)
+	private String promoUrlOne;
 
+	@Column(name = "promo_url_three", length = 100)
+	private String promoUrlThree;
 
-    //----------------------------------------------------------------------
-    // ENTITY LINKS ( RELATIONSHIP )
-    //----------------------------------------------------------------------
-    @ManyToOne
-    @JoinColumn(name="center_four_id", referencedColumnName="id")
-    private CenterEntity centerFour    ;
+	@Column(name = "promo_url_two", length = 100)
+	private String promoUrlTwo;
 
-    @ManyToOne
-    @JoinColumn(name="center_one_id", referencedColumnName="id")
-    private CenterEntity centerOne   ;
-
-    @ManyToOne
-    @JoinColumn(name="center_two_id", referencedColumnName="id")
-    private CenterEntity centerTwo   ;
-
-    @ManyToOne
-    @JoinColumn(name="center_three_id", referencedColumnName="id")
-    private CenterEntity centerThree   ;
-
-
-    //----------------------------------------------------------------------
-    // CONSTRUCTOR(S)
-    //----------------------------------------------------------------------
-    public PromoEntity() {
+	// ----------------------------------------------------------------------
+	// CONSTRUCTOR(S)
+	// ----------------------------------------------------------------------
+	public PromoEntity() {
 		super();
-    }
-    
-    //----------------------------------------------------------------------
-    // GETTER & SETTER FOR THE KEY FIELD
-    //----------------------------------------------------------------------
-    public void setId( Long id ) {
-        this.id = id ;
-    }
-    public Long getId() {
-        return this.id;
-    }
-
-    //----------------------------------------------------------------------
-    // GETTERS & SETTERS FOR FIELDS
-    //----------------------------------------------------------------------
-    //--- DATABASE MAPPING : created_time ( DATETIME ) 
-    public void setCreatedTime( Date createdTime ) {
-        this.createdTime = createdTime;
-    }
-    public Date getCreatedTime() {
-        return this.createdTime;
-    }
-
-    //--- DATABASE MAPPING : promo_image_four ( VARCHAR ) 
-    public void setPromoImageFour( String promoImageFour ) {
-        this.promoImageFour = promoImageFour;
-    }
-    public String getPromoImageFour() {
-        return this.promoImageFour;
-    }
-
-    //--- DATABASE MAPPING : promo_image_one ( VARCHAR ) 
-    public void setPromoImageOne( String promoImageOne ) {
-        this.promoImageOne = promoImageOne;
-    }
-    public String getPromoImageOne() {
-        return this.promoImageOne;
-    }
-
-    //--- DATABASE MAPPING : promo_image_three ( VARCHAR ) 
-    public void setPromoImageThree( String promoImageThree ) {
-        this.promoImageThree = promoImageThree;
-    }
-    public String getPromoImageThree() {
-        return this.promoImageThree;
-    }
-
-    //--- DATABASE MAPPING : promo_image_two ( VARCHAR ) 
-    public void setPromoImageTwo( String promoImageTwo ) {
-        this.promoImageTwo = promoImageTwo;
-    }
-    public String getPromoImageTwo() {
-        return this.promoImageTwo;
-    }
-
-
-    //----------------------------------------------------------------------
-    // GETTERS & SETTERS FOR LINKS
-    //----------------------------------------------------------------------
-    
-
-    //----------------------------------------------------------------------
-    // toString METHOD
-    //----------------------------------------------------------------------
-    public String toString() { 
-        StringBuffer sb = new StringBuffer(); 
-        sb.append("["); 
-        sb.append(id);
-        sb.append("]:"); 
-        sb.append(createdTime);
-        sb.append("|");
-        sb.append(promoImageFour);
-        sb.append("|");
-        sb.append(promoImageOne);
-        sb.append("|");
-        sb.append(promoImageThree);
-        sb.append("|");
-        sb.append(promoImageTwo);
-        return sb.toString(); 
-    }
-
-	public CenterEntity getCenterFour() {
-		return centerFour;
 	}
 
-	public void setCenterFour(CenterEntity centerFour) {
-		this.centerFour = centerFour;
+	public Long getId() {
+		return id;
 	}
 
-	public CenterEntity getCenterOne() {
-		return centerOne;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public void setCenterOne(CenterEntity centerOne) {
-		this.centerOne = centerOne;
+	public Date getCreatedTime() {
+		return createdTime;
 	}
 
-	public CenterEntity getCenterTwo() {
-		return centerTwo;
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
 	}
 
-	public void setCenterTwo(CenterEntity centerTwo) {
-		this.centerTwo = centerTwo;
+	public String getPromoImageFour() {
+		return promoImageFour;
 	}
 
-	public CenterEntity getCenterThree() {
-		return centerThree;
+	public void setPromoImageFour(String promoImageFour) {
+		this.promoImageFour = promoImageFour;
 	}
 
-	public void setCenterThree(CenterEntity centerThree) {
-		this.centerThree = centerThree;
+	public String getPromoImageOne() {
+		return promoImageOne;
+	}
+
+	public void setPromoImageOne(String promoImageOne) {
+		this.promoImageOne = promoImageOne;
+	}
+
+	public String getPromoImageThree() {
+		return promoImageThree;
+	}
+
+	public void setPromoImageThree(String promoImageThree) {
+		this.promoImageThree = promoImageThree;
+	}
+
+	public String getPromoImageTwo() {
+		return promoImageTwo;
+	}
+
+	public void setPromoImageTwo(String promoImageTwo) {
+		this.promoImageTwo = promoImageTwo;
+	}
+
+	public String getPromoUrlFour() {
+		return promoUrlFour;
+	}
+
+	public void setPromoUrlFour(String promoUrlFour) {
+		this.promoUrlFour = promoUrlFour;
+	}
+
+	public String getPromoUrlOne() {
+		return promoUrlOne;
+	}
+
+	public void setPromoUrlOne(String promoUrlOne) {
+		this.promoUrlOne = promoUrlOne;
+	}
+
+	public String getPromoUrlThree() {
+		return promoUrlThree;
+	}
+
+	public void setPromoUrlThree(String promoUrlThree) {
+		this.promoUrlThree = promoUrlThree;
+	}
+
+	public String getPromoUrlTwo() {
+		return promoUrlTwo;
+	}
+
+	public void setPromoUrlTwo(String promoUrlTwo) {
+		this.promoUrlTwo = promoUrlTwo;
+	}
+
+	// ----------------------------------------------------------------------
+	// toString METHOD
+	// ----------------------------------------------------------------------
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("[");
+		sb.append(id);
+		sb.append("]:");
+		sb.append(createdTime);
+		sb.append("|");
+		sb.append(promoImageFour);
+		sb.append("|");
+		sb.append(promoImageOne);
+		sb.append("|");
+		sb.append(promoImageThree);
+		sb.append("|");
+		sb.append(promoImageTwo);
+		sb.append("|");
+		sb.append(promoUrlFour);
+		sb.append("|");
+		sb.append(promoUrlOne);
+		sb.append("|");
+		sb.append(promoUrlThree);
+		sb.append("|");
+		sb.append(promoUrlTwo);
+		return sb.toString();
 	}
 
 }

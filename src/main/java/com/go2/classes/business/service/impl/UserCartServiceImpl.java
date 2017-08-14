@@ -264,7 +264,12 @@ public class UserCartServiceImpl implements UserCartService {
 	    msg = "Dear educator " + student.getName() + " has cancled booking of your class " + cart.getTimeTable().getClasses().getClassName();
 	    EmailUtil.sendEmail("Class Booking canceled", msg, cart.getTimeTable().getClasses().getTeacher().getEmail());
 	}
-
     }
+
+	@Override
+	public List<Object> getAllBookingsByEducator(Long teacherId, String strFromDate, String strToDate) {
+
+		return userBookingOrderJpaRepository.getAllBookingsByEducator(teacherId, strFromDate, strToDate);
+	}
 
 }

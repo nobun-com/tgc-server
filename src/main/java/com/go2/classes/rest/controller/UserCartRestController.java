@@ -88,6 +88,20 @@ public class UserCartRestController {
 		return userCartService.getAllBookingsByMonth(fromDate,toDate);
 	}
 	
+	@RequestMapping( value="/getBookingsByEducator/{id}",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public List<Object> getAllBookingsByEducator(@PathVariable("id") Long userId) {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, -1);
+		Date result = cal.getTime();
+		String fromDate =Utilities.dateWithoutTime.format(result);
+		String toDate =Utilities.dateWithoutTime.format(new Date());
+		return userCartService.getAllBookingsByEducator(userId,fromDate,toDate);
+	}
+	
 	@RequestMapping( value="/getAllBookingsByDate",
 			method = RequestMethod.POST,
 			produces = MediaType.APPLICATION_JSON_VALUE)
@@ -102,8 +116,14 @@ public class UserCartRestController {
 		String strFromDate=format1.format(date1);
 		Date date2 = format2.parse(data.get("toDate"));
 		String strToDate=format1.format(date2);
+		String role=data.get("role");
+		if(role.equals("admin")){
+			return userCartService.getAllBookingsByMonth(strFromDate,strToDate);
+		}else{
+			Long userId=Long.valueOf(data.get("userId"));
+			return userCartService.getAllBookingsByEducator(userId,strFromDate,strToDate);
+		}
 		
-		return userCartService.getAllBookingsByMonth(strFromDate,strToDate);
 	}
 	
 }

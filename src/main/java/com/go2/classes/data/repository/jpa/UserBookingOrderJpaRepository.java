@@ -27,5 +27,10 @@ public interface UserBookingOrderJpaRepository extends PagingAndSortingRepositor
 
 	@Query(value = "select UBO.* from user_booking_order UBO where UBO.status = 'Done' and UBO.student_id = :studentId", nativeQuery = true)
 	List<UserBookingOrderEntity> getAllByStudentId(@Param("studentId") Long studentId);
+	
+	
+	@Query(value = "select UCO.`date`,CC.class_name,TT.start_time,TT.end_time,SD.name,UC.fees,UC.coupon_code,UC.final_cost from user_cart UC inner join student SD on UC.student_id = SD.id inner join user_booking_order UCO on UCO.student_id=SD.id inner join time_table TT on UC.timetable_id = TT.id inner join classes CC on TT.classes_id = CC.id AND CC.teacher_id = :teacherId where UC.status='Booked' and UCO.date between :fromDate and :toDate", nativeQuery = true)
+	List<Object> getAllBookingsByEducator(@Param("teacherId") Long teacherId, @Param("fromDate") String fromDate, @Param("toDate") String toDate);
+
 
 }
