@@ -233,12 +233,9 @@ public class UserCartServiceImpl implements UserCartService {
     }
 
     @Override
-    public String getTransactionId(Long userId, Long bookingId) {
+    public String getTransactionId(Long bookingId) {
 	UserBookingOrderEntity order = userBookingOrderJpaRepository.findOne(bookingId);
 	String msg = "";
-	if(order.getStudent().getId() != userId) {
-	    msg = "msg_This is not your transaction to refund";
-	}
 	for(UserCartEntity cart : order.getListOfUserCarts()) {
 	    if(cart.getTimeTable().getStartTime().before(new Date())) {
 		msg = "msg_Booking can't refunded now class date " + Utilities.dateWithoutTime.format(cart.getTimeTable().getStartTime()) + " is passed.";
@@ -252,16 +249,16 @@ public class UserCartServiceImpl implements UserCartService {
     }
 
     @Override
-    public void cancelBooking(Long userId, Long bookingId) {
+    public void cancelBooking(Long bookingId) {
 	UserBookingOrderEntity order = userBookingOrderJpaRepository.findOne(bookingId);
 	order.setStatus("Canceled");
 	userBookingOrderJpaRepository.save(order);
-	StudentEntity student = studentJpaRepository.findOne(userId);
+	StudentEntity student = order.getStudent();
 	String msg = "Dear " + student.getName() + " you have cancled booking.";
 	EmailUtil.sendEmail("Class Booking canceled", msg, student.getEmail());
 
 	for (UserCartEntity cart : order.getListOfUserCarts()) {
-	    msg = "Dear educator " + student.getName() + " has cancled booking of your class " + cart.getTimeTable().getClasses().getClassName();
+	    msg = "Dear educator " + cart.getStudent().getName() + " has cancled booking of your class " + cart.getTimeTable().getClasses().getClassName();
 	    EmailUtil.sendEmail("Class Booking canceled", msg, cart.getTimeTable().getClasses().getTeacher().getEmail());
 	}
     }

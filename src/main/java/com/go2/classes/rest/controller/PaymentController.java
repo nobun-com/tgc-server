@@ -20,9 +20,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.go2.classes.business.service.UserCartService;
 
@@ -74,15 +76,14 @@ public class PaymentController {
 	return ("payment-completed");
     }
 
-    @RequestMapping(value = "/refund")
-    public String refundPayment(Model model, @RequestParam(name = "bookingId") Long bookingId, HttpServletRequest request) throws ParseException {
-	Long userId = (Long) request.getSession().getAttribute("userId");
-	String tranctionID = userCartService.getTransactionId(userId, bookingId);
-
+    @ResponseBody
+    @RequestMapping(value = "/refund/{bookingId}", method = RequestMethod.GET)
+    public HashMap<String, String> refundPayment(@PathVariable(name = "bookingId") Long bookingId, HttpServletRequest request) throws ParseException {
+	String tranctionID = userCartService.getTransactionId(bookingId);
+	HashMap<String, String> result = new HashMap<String, String>();
 	if (tranctionID.startsWith("msg_")) {
-	    model.addAttribute("ack", "Failure");
-	    model.addAttribute("message", tranctionID.replaceFirst("msg_", ""));
-	    return ("payment-completed");
+	    result.put("message", tranctionID.replaceFirst("msg_", ""));
+	    return result;
 	}
 
 	String nvpstr = "&TRANSACTIONID=" + tranctionID + "&REFUNDTYPE==" + "Full"; // transaction_ID
@@ -90,14 +91,13 @@ public class PaymentController {
 	HashMap<String, String> nvp = httpcall("RefundTransaction", nvpstr, request);
 
 	String strAck = nvp.get("ACK");
-	model.addAttribute("ack", strAck);
 	if (strAck.equalsIgnoreCase("Success")) {
-	    userCartService.cancelBooking(userId, bookingId);
-	    model.addAttribute("message", "Refunded ammount : " + nvp.get("GROSSREFUNDAMT"));
+	    userCartService.cancelBooking(bookingId);
+	    result.put("message", "Refunded ammount : " + nvp.get("GROSSREFUNDAMT"));
 	} else {
-	    model.addAttribute("message", nvp.get("L_LONGMESSAGE0"));
+	    result.put("message", nvp.get("L_LONGMESSAGE0"));
 	}
-	return ("payment-completed");
+	return result;
     }
 
     public String callShortcutExpressCheckout(HttpServletRequest request) {

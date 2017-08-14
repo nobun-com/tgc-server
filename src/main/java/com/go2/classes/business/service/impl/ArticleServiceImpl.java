@@ -104,4 +104,14 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleCategoryJpaRepository.findAllCategories();
 	}
 
+	@Override
+	public Object getAllPublished() {
+		Iterable<ArticleEntity> entities = articleJpaRepository.findAllPublished();
+		List<Article> beans = new ArrayList<Article>();
+		for(ArticleEntity articleEntity : entities) {
+			beans.add(articleServiceMapper.mapArticleEntityToArticle(articleEntity));
+		}
+		return beans;
+	}
+
 }

@@ -19,4 +19,6 @@ public interface ArticleService {
 	void delete( Long id );
 
 	List<String> findAllArticleCategory();
+
+	Object getAllPublished();
 }

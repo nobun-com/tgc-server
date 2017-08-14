@@ -19,7 +19,7 @@
 			<div class="cruise-list listing-style3 cruise col-sm-10 col-md-8">
 				<article class="box" th:each="article : ${articles}">
 					<figure class="col-sm-4">
-						<img width="270" height="160" alt="" th:src="${'getImage/' + article.imageUrl}" />
+						<a th:href="${'article?articleId='+article.id}"><img width="270" height="160" alt="" th:src="${'getImage/' + article.imageUrl}" /></a>
 					</figure>
 					<div class="details col-sm-8">
 						<div class="clearfix">
