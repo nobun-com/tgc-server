@@ -43,9 +43,6 @@ public class ChildEntity implements Serializable {
 	@JoinColumn(name = "student_id", referencedColumnName = "id")
 	private StudentEntity student;
 
-	@Column(name = "image_name", length = 100)
-	private String imageName;
-
 	@Column(name = "image_url", length = 500)
 	private String imageUrl;
 
@@ -101,14 +98,6 @@ public class ChildEntity implements Serializable {
 		this.student = student;
 	}
 
-	public String getImageName() {
-		return imageName;
-	}
-
-	public void setImageName(String imageName) {
-		this.imageName = imageName;
-	}
-
 	public String getImageUrl() {
 		return imageUrl;
 	}
@@ -136,8 +125,6 @@ public class ChildEntity implements Serializable {
 		sb.append(location);
 		sb.append("|");
 		sb.append(student);
-		sb.append("|");
-		sb.append(imageName);
 		sb.append("|");
 		sb.append(imageUrl);
 		return sb.toString();

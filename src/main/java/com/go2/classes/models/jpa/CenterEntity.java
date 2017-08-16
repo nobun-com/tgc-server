@@ -32,9 +32,6 @@ public class CenterEntity implements Serializable {
     @Column(name="created_time")
     private Date       createdTime  ;
 
-    @Column(name="logo_name", length=100)
-    private String     logoName     ;
-
     @Column(name="logo_url", length=500)
     private String     logoUrl      ;
 
@@ -82,14 +79,6 @@ public class CenterEntity implements Serializable {
         return this.createdTime;
     }
 
-    //--- DATABASE MAPPING : logo_name ( VARCHAR ) 
-    public void setLogoName( String logoName ) {
-        this.logoName = logoName;
-    }
-    public String getLogoName() {
-        return this.logoName;
-    }
-
     //--- DATABASE MAPPING : logo_url ( VARCHAR ) 
     public void setLogoUrl( String logoUrl ) {
         this.logoUrl = logoUrl;
@@ -130,8 +119,6 @@ public class CenterEntity implements Serializable {
         sb.append(centerName);
         sb.append("|");
         sb.append(createdTime);
-        sb.append("|");
-        sb.append(logoName);
         sb.append("|");
         sb.append(logoUrl);
         return sb.toString(); 

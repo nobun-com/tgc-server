@@ -23,9 +23,6 @@ public class Center implements Serializable {
 
     private Date createdTime;
 
-    @Size( max = 100 )
-    private String logoName;
-
     @Size( max = 500 )
     private String logoUrl;
 
@@ -65,13 +62,6 @@ public class Center implements Serializable {
         return this.createdTime;
     }
 
-    public void setLogoName( String logoName ) {
-        this.logoName = logoName;
-    }
-    public String getLogoName() {
-        return this.logoName;
-    }
-
     public void setLogoUrl( String logoUrl ) {
         this.logoUrl = logoUrl;
     }
@@ -109,8 +99,6 @@ public class Center implements Serializable {
         sb.append(centerName);
         sb.append("|");
         sb.append(createdTime);
-        sb.append("|");
-        sb.append(logoName);
         sb.append("|");
         sb.append(logoUrl);
         sb.append("|[");

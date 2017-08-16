@@ -45,28 +45,28 @@ public class PromoEntity implements Serializable {
 	@Column(name = "created_time")
 	private Date createdTime;
 
-	@Column(name = "promo_image_four", length = 100)
+	@Column(name = "promo_image_four", length = 300)
 	private String promoImageFour;
 
-	@Column(name = "promo_image_one", length = 100)
+	@Column(name = "promo_image_one", length = 300)
 	private String promoImageOne;
 
-	@Column(name = "promo_image_three", length = 100)
+	@Column(name = "promo_image_three", length = 300)
 	private String promoImageThree;
 
-	@Column(name = "promo_image_two", length = 100)
+	@Column(name = "promo_image_two", length = 300)
 	private String promoImageTwo;
 
-	@Column(name = "promo_url_four", length = 100)
+	@Column(name = "promo_url_four", length = 300)
 	private String promoUrlFour;
 
-	@Column(name = "promo_url_one", length = 100)
+	@Column(name = "promo_url_one", length = 300)
 	private String promoUrlOne;
 
-	@Column(name = "promo_url_three", length = 100)
+	@Column(name = "promo_url_three", length = 300)
 	private String promoUrlThree;
 
-	@Column(name = "promo_url_two", length = 100)
+	@Column(name = "promo_url_two", length = 300)
 	private String promoUrlTwo;
 
 	// ----------------------------------------------------------------------

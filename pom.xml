@@ -70,7 +70,12 @@
 		    <groupId>javax.mail</groupId>
 		    <artifactId>mail</artifactId>
 		    <version>1.4.4</version>
-		</dependency>		
+		</dependency>
+		<dependency>
+		   <groupId>com.amazonaws</groupId>
+		   <artifactId>aws-java-sdk</artifactId>
+		   <version>1.11.13</version>
+		</dependency>
 	</dependencies>
 
 	<build>
