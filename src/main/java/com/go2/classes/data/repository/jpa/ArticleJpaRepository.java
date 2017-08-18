@@ -9,4 +9,7 @@ public interface ArticleJpaRepository extends PagingAndSortingRepository<Article
     @Query(value="select * from article A where A.published = true order by A.post_date DESC", nativeQuery=true)
     Iterable<ArticleEntity> findAllPublished();
 
+    @Query(value="select * from article A where A.featured = true order by A.created_date DESC limit 5", nativeQuery=true)
+    Iterable<ArticleEntity> findFiveFeatured();
+
 }

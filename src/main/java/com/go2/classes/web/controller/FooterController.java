@@ -48,6 +48,7 @@ public class FooterController extends BaseController {
     @RequestMapping(value = "/articles")
     public String openWhatsNew(Model model, HttpSession session) {
 	model.addAttribute("articles", articleService.getAllPublished());
+	model.addAttribute("featured", articleService.getFiveFeatured());
 	return "articles";
     }
 

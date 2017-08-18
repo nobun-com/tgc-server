@@ -15,6 +15,29 @@
 	</div>
 	<section id="content" class="gray-area">
 		<div class="container">
+		
+		<br></br>
+		<br></br>
+		<br></br>
+		<br></br>
+
+
+				<div id="carousel_main" class="carousel slide" data-ride="carousel">
+				  <!-- Wrapper for slides -->
+				  <div class="carousel-inner" role="listbox" style="height: 235px; max-height: 70vw">
+				    <div class="item text-center" th:classappend="${iter.index}==1 ? 'active' : ''" th:each="farticle,iter : ${featured}">
+				      <div><a th:href="${'article?articleId='+farticle.id}"><img width="270" height="160" alt="" th:src="${farticle.imageUrl}" /></a></div>
+				      <div class="text-normal media-middle" style="max-width: 388px;">
+					      <div class="text1" th:text="${farticle.title}"></div>
+				      </div>
+				    </div>
+				  </div>
+				<ol class="carousel-indicators"><li data-target="#carousel_main" data-slide-to="0" class=""></li><li data-target="#carousel_main" data-slide-to="1" class=""></li><li data-target="#carousel_main" data-slide-to="2" class="active"></li><li data-target="#carousel_main" data-slide-to="3" class=""></li></ol><a href="#carousel_main" role="button" class="left carousel-control" data-slide="prev"><span class="fa fa-angle-left" aria-hidden="true"></span></a><a href="#carousel_main" role="button" class="right carousel-control" data-slide="next"><span class="fa fa-angle-right" aria-hidden="true"></span></a></div>
+
+
+
+		<br></br>
+		<br></br>
 
 			<div class="cruise-list listing-style3 cruise col-sm-10 col-md-8">
 				<article class="box" th:each="article : ${articles}">

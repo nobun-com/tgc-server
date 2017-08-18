@@ -20,5 +20,7 @@ public interface ArticleService {
 
 	List<String> findAllArticleCategory();
 
-	Object getAllPublished();
+	List<Article> getAllPublished();
+
+	List<Article> getFiveFeatured();
 }

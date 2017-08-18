@@ -105,8 +105,18 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public Object getAllPublished() {
+	public List<Article> getAllPublished() {
 		Iterable<ArticleEntity> entities = articleJpaRepository.findAllPublished();
+		List<Article> beans = new ArrayList<Article>();
+		for(ArticleEntity articleEntity : entities) {
+			beans.add(articleServiceMapper.mapArticleEntityToArticle(articleEntity));
+		}
+		return beans;
+	}
+
+	@Override
+	public List<Article> getFiveFeatured() {
+		Iterable<ArticleEntity> entities = articleJpaRepository.findFiveFeatured();
 		List<Article> beans = new ArrayList<Article>();
 		for(ArticleEntity articleEntity : entities) {
 			beans.add(articleServiceMapper.mapArticleEntityToArticle(articleEntity));

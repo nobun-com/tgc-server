@@ -15,6 +15,7 @@ import javax.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +35,7 @@ import com.go2.classes.common.Utilities;
 import com.go2.classes.models.Admin;
 import com.go2.classes.models.Teacher;
 
+@CrossOrigin("*")
 @Controller
 public class CommonRestController extends BaseController {
 
