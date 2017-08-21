@@ -17,27 +17,34 @@
 		<div class="container">
 		
 		<br></br>
-		<br></br>
-		<br></br>
-		<br></br>
 
-
-				<div id="carousel_main" class="carousel slide" data-ride="carousel">
-				  <!-- Wrapper for slides -->
-				  <div class="carousel-inner" role="listbox" style="height: 235px; max-height: 70vw">
-				    <div class="item text-center" th:classappend="${iter.index}==1 ? 'active' : ''" th:each="farticle,iter : ${featured}">
-				      <div><a th:href="${'article?articleId='+farticle.id}"><img width="270" height="160" alt="" th:src="${farticle.imageUrl}" /></a></div>
-				      <div class="text-normal media-middle" style="max-width: 388px;">
-					      <div class="text1" th:text="${farticle.title}"></div>
-				      </div>
-				    </div>
-				  </div>
-				<ol class="carousel-indicators"><li data-target="#carousel_main" data-slide-to="0" class=""></li><li data-target="#carousel_main" data-slide-to="1" class=""></li><li data-target="#carousel_main" data-slide-to="2" class="active"></li><li data-target="#carousel_main" data-slide-to="3" class=""></li></ol><a href="#carousel_main" role="button" class="left carousel-control" data-slide="prev"><span class="fa fa-angle-left" aria-hidden="true"></span></a><a href="#carousel_main" role="button" class="right carousel-control" data-slide="next"><span class="fa fa-angle-right" aria-hidden="true"></span></a></div>
-
-
-
-		<br></br>
-		<br></br>
+		<div id="carousel_main" class="carousel slide" data-ride="carousel"><div class="carousel-inner" role="listbox">
+			<div class="item grouped">
+			<a th:href="${'article?articleId='+featured[0].id}"><img th:src="${featured[0].imageUrl}" th:title="${featured[0].title}"></img></a>
+			<a th:href="${'article?articleId='+featured[1].id}"><img th:src="${featured[1].imageUrl}" th:title="${featured[1].title}"></img></a>
+			<a th:href="${'article?articleId='+featured[2].id}"><img th:src="${featured[2].imageUrl}" th:title="${featured[2].title}"></img></a>
+			</div>
+			<div class="item grouped">
+			<a th:href="${'article?articleId='+featured[1].id}"><img th:src="${featured[1].imageUrl}" th:title="${featured[1].title}"></img></a>
+			<a th:href="${'article?articleId='+featured[2].id}"><img th:src="${featured[2].imageUrl}" th:title="${featured[2].title}"></img></a>
+			<a th:href="${'article?articleId='+featured[3].id}"><img th:src="${featured[3].imageUrl}" th:title="${featured[3].title}"></img></a>
+			</div>
+			<div class="item grouped active">
+			<a th:href="${'article?articleId='+featured[2].id}"><img th:src="${featured[2].imageUrl}" th:title="${featured[2].title}"></img></a>
+			<a th:href="${'article?articleId='+featured[3].id}"><img th:src="${featured[3].imageUrl}" th:title="${featured[3].title}"></img></a>
+			<a th:href="${'article?articleId='+featured[4].id}"><img th:src="${featured[4].imageUrl}" th:title="${featured[4].title}"></img></a>
+			</div>
+			<div class="item grouped">
+			<a th:href="${'article?articleId='+featured[3].id}"><img th:src="${featured[3].imageUrl}" th:title="${featured[3].title}"></img></a>
+			<a th:href="${'article?articleId='+featured[4].id}"><img th:src="${featured[4].imageUrl}" th:title="${featured[4].title}"></img></a>
+			<a th:href="${'article?articleId='+featured[0].id}"><img th:src="${featured[0].imageUrl}" th:title="${featured[0].title}"></img></a>
+			</div>
+			<div class="item grouped">
+			<a th:href="${'article?articleId='+featured[4].id}"><img th:src="${featured[4].imageUrl}" th:title="${featured[4].title}"></img></a>
+			<a th:href="${'article?articleId='+featured[0].id}"><img th:src="${featured[0].imageUrl}" th:title="${featured[0].title}"></img></a>
+			<a th:href="${'article?articleId='+featured[1].id}"><img th:src="${featured[1].imageUrl}" th:title="${featured[1].title}"></img></a>
+			</div>
+		</div><ol class="carousel-indicators"><li data-target="#carousel_main" data-slide-to="0" class=""></li><li data-target="#carousel_main" data-slide-to="1" class=""></li><li data-target="#carousel_main" data-slide-to="2" class="active"></li><li data-target="#carousel_main" data-slide-to="3" class=""></li><li data-target="#carousel_main" data-slide-to="4" class=""></li></ol><a href="#carousel_main" role="button" class="left carousel-control" data-slide="prev"><span class="fa fa-angle-left" aria-hidden="true"></span></a><a href="#carousel_main" role="button" class="right carousel-control" data-slide="next"><span class="fa fa-angle-right" aria-hidden="true"></span></a></div>
 
 			<div class="cruise-list listing-style3 cruise col-sm-10 col-md-8">
 				<article class="box" th:each="article : ${articles}">

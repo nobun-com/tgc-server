@@ -209,4 +209,28 @@ footer .socialIcons img {
 	.promo {
 		margin : 15px 35px;
 	}
+	.grouped {
+		width: 200% !important;
+	}
+}
+
+@media (min-width: 992px) {
+	.grouped {
+		width: 100% !important;
+	}
+}
+
+
+.grouped {
+	margin: 0; font-size: 0 !important;
+}
+
+.grouped>a {
+    display: block !important;
+}
+    
+.grouped>a>img {
+	float: left !important;
+	width: 33.333333333% !important;
+	display: inline-block !important;
 }
