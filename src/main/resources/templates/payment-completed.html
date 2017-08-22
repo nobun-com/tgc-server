@@ -1,16 +1,16 @@
 <html>
-	<script type="text/javascript" th:inline="javascript">
-		var okay = function() {
-			window.opener.location.reload(true);
-			window.close();
-		}
-	</script>
-	
-	<body>
-		<div style="text-align: center">
-			<h1 th:text="'Payment ' + ${ack}"></h1>
-			<h2 th:text="${message}"></h2>
-			<input type="button" onclick="okay()" value="OK"></input>
-		</div>
-	</body>
+<script type="text/javascript" th:inline="javascript">
+	var okay = function() {
+		window.opener.location.reload(true);
+		window.close();
+	}
+</script>
+
+<body>
+	<div style="text-align: center">
+		<h1 th:text="'Payment ' + ${ack}"></h1>
+		<h2 th:text="${message}"></h2>
+		<a class="button btn-small blue full-width text-center" title="return to my cart" href="/my-cart">OK</a>
+	</div>
+</body>
 </html>
