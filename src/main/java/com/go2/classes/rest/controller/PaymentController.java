@@ -80,8 +80,10 @@ public class PaymentController {
 	    String transactionId = nvp.get("PAYMENTINFO_0_TRANSACTIONID");
 	    userCartService.bookAllCarts(userId, transactionId);
 	    model.addAttribute("message", "Payment ammount : " + nvp.get("PAYMENTINFO_0_AMT"));
+	    model.addAttribute("status", true);
 	} else {
 	    model.addAttribute("message", nvp.get("L_SHORTMESSAGE0"));
+	    model.addAttribute("status", false);
 	}
 	return ("payment-completed");
     }
@@ -201,6 +203,7 @@ public class PaymentController {
     @RequestMapping(value = "/cancel", method = RequestMethod.GET)
     public String aboutus(Model model, HttpServletRequest request) {
 	model.addAttribute("ack", "Canceled");
+    model.addAttribute("status", false);
 	return ("payment-completed");
     }
 }
