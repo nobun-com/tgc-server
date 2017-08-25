@@ -1,5 +1,8 @@
 package com.go2.classes.rest.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -9,9 +12,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -25,6 +31,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.go2.classes.business.service.AdminService;
 import com.go2.classes.business.service.CenterService;
 import com.go2.classes.business.service.ClassesService;
@@ -39,166 +51,192 @@ import com.go2.classes.models.Teacher;
 @Controller
 public class CommonRestController extends BaseController {
 
-    @Resource
-    private AdminService adminService; // Injected by Spring
+	@Resource
+	private AdminService adminService; // Injected by Spring
 
-    @Resource
-    private TeacherService teacherService; // Injected by Spring
+	@Resource
+	private TeacherService teacherService; // Injected by Spring
 
-    @Resource
-    private CenterService centerService; // Injected by Spring
+	@Resource
+	private CenterService centerService; // Injected by Spring
 
-    @Resource
-    private UserCartService userCartService; // Injected by Spring
+	@Resource
+	private UserCartService userCartService; // Injected by Spring
 
-    @Resource
-    private ClassesService classesService; // Injected by Spring
+	@Resource
+	private ClassesService classesService; // Injected by Spring
 
-    @RequestMapping(value = "/uploadImage", method = RequestMethod.POST)
-    public @ResponseBody String saveFile(@RequestParam("logo") MultipartFile file) {
-	return Utilities.saveImage(file);
-    }
+	@Value("${awscredentialsaccesskey}")
+	private String awsCredentialsAccessKey = "";
 
-    @RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> adminLogin(@RequestBody Map<String, String> data) {
-	Map<String, Object> result = new HashMap<String, Object>();
-	String email = data.get("email");
-	String password = data.get("password");
+	@Value("${awscredentialssecretkey}")
+	private String awsCredentialsSecretKey = "";
 
-	Admin admin = adminService.findByEmail(email);
-	String token = "";
-	if (Objects.isNull(admin)) {
-	    result.put("message", "user not found");
-	} else {
-	    if (password.equals(admin.getPassword())) {
-		token = getToken(admin.getEmail(), admin.getId());
-		result.put("message", "login success");
-		result.put("token", token);
-		result.put("admin", admin);
-	    } else {
-		result.put("message", "login failed");
-	    }
-	}
-	return result;
-    }
+	@Value("${awscredentialsbucketname}")
+	private String awsCredentialsBucketName = "";
 
-    @RequestMapping(value = "/teacherLogin", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> teacherLogin(@RequestBody Map<String, String> data) {
-	Map<String, Object> result = new HashMap<String, Object>();
-	String email = data.get("email");
-	String password = data.get("password");
+	@RequestMapping(value = "/uploadImage", method = RequestMethod.POST)
+	public @ResponseBody String saveFile(@RequestParam("logo") MultipartFile receivedFile) {
+		String uuid = UUID.randomUUID().toString();
+		String path = "images/" + Utilities.date.format(new Date()) + "/";
+		File file;
+		try {
+			file = File.createTempFile(uuid, "." + FilenameUtils.getExtension(receivedFile.getOriginalFilename()));
+			FileOutputStream fos = new FileOutputStream(file);
+			fos.write(receivedFile.getBytes());
+			fos.close();
+		} catch (Exception e) {
+			throw new IllegalStateException("unable to upload file");
+		}
 
-	Teacher teacher = teacherService.findByEmail(email);
-	String token = "";
-	if (Objects.isNull(teacher)) {
-	    result.put("message", "teacher not found");
-	} else {
-	    if (password.equals(teacher.getPassword())) {
-		token = getToken(teacher.getEmail(), teacher.getId());
-		result.put("message", "login success");
-		result.put("token", token);
-		result.put("teacher", teacher);
-	    } else {
-		result.put("message", "login failed");
-	    }
-	}
-	return result;
-    }
-
-    @RequestMapping(value = "/adminDashboard", method = RequestMethod.GET)
-    @ResponseBody
-    public Map<String, Object> adminDashboardData() {
-	Map<String, Object> result = new HashMap<String, Object>();
-
-	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-	Calendar cal = Calendar.getInstance();
-	cal.add(Calendar.MONTH, -1);
-	Date fromDate = cal.getTime();
-	Date toDate = new Date();
-
-	Calendar start = Calendar.getInstance();
-	start.setTime(fromDate);
-	Calendar end = Calendar.getInstance();
-	end.setTime(toDate);
-
-	List<Object> lst = userCartService.getLastMonthBookings();
-	Map<String, Integer> map1 = new HashMap<String, Integer>();
-	Iterator it = lst.iterator();
-	while (it.hasNext()) {
-	    Object[] o = (Object[]) it.next();
-	    map1.put(formatter.format(o[0]) + "", Integer.parseInt(o[1] + ""));
-	}
-	/*
-	 * System.out.println("map1"); for (Map.Entry<String, Integer> entry :
-	 * map1.entrySet()) { System.out.println("Key = " + entry.getKey() +
-	 * ", Value = " + entry.getValue()); }
-	 */
-
-	LinkedHashMap<String, Integer> finalResult = new LinkedHashMap<String, Integer>();
-	for (Date date = start.getTime(); start.before(end); start.add(Calendar.DATE, 1), date = start.getTime()) {
-	    if (map1.containsKey(formatter.format(date))) {
-		finalResult.put(formatter.format(date), map1.get(formatter.format(date)));
-	    } else {
-		finalResult.put(formatter.format(date), 0);
-	    }
+		AWSCredentials credentials = new BasicAWSCredentials(awsCredentialsAccessKey, awsCredentialsSecretKey);
+		AmazonS3 s3client = new AmazonS3Client(credentials);
+		s3client.putObject(new PutObjectRequest(awsCredentialsBucketName, path + file.getName(), file)
+				.withCannedAcl(CannedAccessControlList.PublicRead));
+		URL url = s3client.getUrl(awsCredentialsBucketName, path + file.getName());
+		return url.toExternalForm();
 	}
 
-	result.put("centersCount", centerService.getCentersCount());
-	result.put("teachersCount", teacherService.getTeachersCount());
-	result.put("bookingsCount", userCartService.getBookingsCount());
-	result.put("activeClassesCount", classesService.getActiveClassesCount());
-	result.put("barChartData", finalResult);
+	@RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> adminLogin(@RequestBody Map<String, String> data) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		String email = data.get("email");
+		String password = data.get("password");
 
-	return result;
-    }
-
-    @RequestMapping(value = "/educatorDashboard/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public Map<String, Object> educatorDashboardData(@PathVariable("id") Long teacherId) {
-
-	Map<String, Object> result = new HashMap<String, Object>();
-
-	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-	Calendar cal = Calendar.getInstance();
-	cal.add(Calendar.MONTH, -1);
-	Date fromDate = cal.getTime();
-	Date toDate = new Date();
-
-	Calendar start = Calendar.getInstance();
-	start.setTime(fromDate);
-	Calendar end = Calendar.getInstance();
-	end.setTime(toDate);
-
-	List<Object> lst = userCartService.getLastMonthBookingsByEducator(teacherId);
-	Map<String, Integer> map1 = new HashMap<String, Integer>();
-	Iterator it = lst.iterator();
-	while (it.hasNext()) {
-	    Object[] o = (Object[]) it.next();
-	    map1.put(formatter.format(o[0]) + "", Integer.parseInt(o[1] + ""));
-	}
-	/*
-	 * System.out.println("map1"); for (Map.Entry<String, Integer> entry :
-	 * map1.entrySet()) { System.out.println("Key = " + entry.getKey() +
-	 * ", Value = " + entry.getValue()); }
-	 */
-
-	LinkedHashMap<String, Integer> finalResult = new LinkedHashMap<String, Integer>();
-	for (Date date = start.getTime(); !start.after(end); start.add(Calendar.DATE, 1), date = start.getTime()) {
-	    if (map1.containsKey(formatter.format(date))) {
-		finalResult.put(formatter.format(date), map1.get(formatter.format(date)));
-	    } else {
-		finalResult.put(formatter.format(date), 0);
-	    }
+		Admin admin = adminService.findByEmail(email);
+		String token = "";
+		if (Objects.isNull(admin)) {
+			result.put("message", "user not found");
+		} else {
+			if (password.equals(admin.getPassword())) {
+				token = getToken(admin.getEmail(), admin.getId());
+				result.put("message", "login success");
+				result.put("token", token);
+				result.put("admin", admin);
+			} else {
+				result.put("message", "login failed");
+			}
+		}
+		return result;
 	}
 
-	result.put("bookingsCount", userCartService.getBookingsCountByEducator(teacherId));
-	result.put("activeClassesCount", classesService.getActiveClassesCountByEducator(teacherId));
-	result.put("barChartData", finalResult);
+	@RequestMapping(value = "/teacherLogin", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> teacherLogin(@RequestBody Map<String, String> data) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		String email = data.get("email");
+		String password = data.get("password");
 
-	return result;
-    }
+		Teacher teacher = teacherService.findByEmail(email);
+		String token = "";
+		if (Objects.isNull(teacher)) {
+			result.put("message", "teacher not found");
+		} else {
+			if (password.equals(teacher.getPassword())) {
+				token = getToken(teacher.getEmail(), teacher.getId());
+				result.put("message", "login success");
+				result.put("token", token);
+				result.put("teacher", teacher);
+			} else {
+				result.put("message", "login failed");
+			}
+		}
+		return result;
+	}
+
+	@RequestMapping(value = "/adminDashboard", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> adminDashboardData() {
+		Map<String, Object> result = new HashMap<String, Object>();
+
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, -1);
+		Date fromDate = cal.getTime();
+		Date toDate = new Date();
+
+		Calendar start = Calendar.getInstance();
+		start.setTime(fromDate);
+		Calendar end = Calendar.getInstance();
+		end.setTime(toDate);
+
+		List<Object> lst = userCartService.getLastMonthBookings();
+		Map<String, Integer> map1 = new HashMap<String, Integer>();
+		Iterator it = lst.iterator();
+		while (it.hasNext()) {
+			Object[] o = (Object[]) it.next();
+			map1.put(formatter.format(o[0]) + "", Integer.parseInt(o[1] + ""));
+		}
+		/*
+		 * System.out.println("map1"); for (Map.Entry<String, Integer> entry :
+		 * map1.entrySet()) { System.out.println("Key = " + entry.getKey() +
+		 * ", Value = " + entry.getValue()); }
+		 */
+
+		LinkedHashMap<String, Integer> finalResult = new LinkedHashMap<String, Integer>();
+		for (Date date = start.getTime(); start.before(end); start.add(Calendar.DATE, 1), date = start.getTime()) {
+			if (map1.containsKey(formatter.format(date))) {
+				finalResult.put(formatter.format(date), map1.get(formatter.format(date)));
+			} else {
+				finalResult.put(formatter.format(date), 0);
+			}
+		}
+
+		result.put("centersCount", centerService.getCentersCount());
+		result.put("teachersCount", teacherService.getTeachersCount());
+		result.put("bookingsCount", userCartService.getBookingsCount());
+		result.put("activeClassesCount", classesService.getActiveClassesCount());
+		result.put("barChartData", finalResult);
+
+		return result;
+	}
+
+	@RequestMapping(value = "/educatorDashboard/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public Map<String, Object> educatorDashboardData(@PathVariable("id") Long teacherId) {
+
+		Map<String, Object> result = new HashMap<String, Object>();
+
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, -1);
+		Date fromDate = cal.getTime();
+		Date toDate = new Date();
+
+		Calendar start = Calendar.getInstance();
+		start.setTime(fromDate);
+		Calendar end = Calendar.getInstance();
+		end.setTime(toDate);
+
+		List<Object> lst = userCartService.getLastMonthBookingsByEducator(teacherId);
+		Map<String, Integer> map1 = new HashMap<String, Integer>();
+		Iterator it = lst.iterator();
+		while (it.hasNext()) {
+			Object[] o = (Object[]) it.next();
+			map1.put(formatter.format(o[0]) + "", Integer.parseInt(o[1] + ""));
+		}
+		/*
+		 * System.out.println("map1"); for (Map.Entry<String, Integer> entry :
+		 * map1.entrySet()) { System.out.println("Key = " + entry.getKey() +
+		 * ", Value = " + entry.getValue()); }
+		 */
+
+		LinkedHashMap<String, Integer> finalResult = new LinkedHashMap<String, Integer>();
+		for (Date date = start.getTime(); !start.after(end); start.add(Calendar.DATE, 1), date = start.getTime()) {
+			if (map1.containsKey(formatter.format(date))) {
+				finalResult.put(formatter.format(date), map1.get(formatter.format(date)));
+			} else {
+				finalResult.put(formatter.format(date), 0);
+			}
+		}
+
+		result.put("bookingsCount", userCartService.getBookingsCountByEducator(teacherId));
+		result.put("activeClassesCount", classesService.getActiveClassesCountByEducator(teacherId));
+		result.put("barChartData", finalResult);
+
+		return result;
+	}
 
 }

@@ -39,6 +39,16 @@ public class PaymentController {
     @Value("${serverurl}")
     private String serverUrl = "";
 
+    @Value("${paypalusername}")
+    private String gv_APIUserName = "";
+
+    @Value("${paypalpassword}")
+    private String gv_APIPassword = "";
+
+    @Value("${paypalsignature}")
+    private String gv_APISignature = "";
+    
+    
     private String returnURL = "/paymentcomplete";
     private String cancelURL = "/cancel";
 
@@ -118,9 +128,6 @@ public class PaymentController {
 
     public HashMap<String, String> httpcall(String methodName, String nvpStr, HttpServletRequest request) {
 
-	String gv_APIUserName = "nobun.paypal-facilitator_api1.gmail.com";
-	String gv_APIPassword = "MD4FN9RF97BAEUXH";
-	String gv_APISignature = "An5ns1Kso7MWUdW4ErQKJJJ4qi4-ACKNhncRaNp0W7rpHUesxigkpH0H";
 	String gv_Version = "94";
 	String gv_BNCode = "PP-ECWizard";
 
