@@ -40,8 +40,8 @@ public class ChildEntity implements Serializable {
 	private String location;
 
 	@ManyToOne
-	@JoinColumn(name = "student_id", referencedColumnName = "id")
-	private StudentEntity student;
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private UserEntity user;
 
 	@Column(name = "image_url", length = 500)
 	private String imageUrl;
@@ -90,12 +90,12 @@ public class ChildEntity implements Serializable {
 		this.location = location;
 	}
 
-	public StudentEntity getStudent() {
-		return student;
+	public UserEntity getUser() {
+		return user;
 	}
 
-	public void setStudent(StudentEntity student) {
-		this.student = student;
+	public void setUser(UserEntity user) {
+		this.user = user;
 	}
 
 	public String getImageUrl() {
@@ -124,7 +124,7 @@ public class ChildEntity implements Serializable {
 		sb.append("|");
 		sb.append(location);
 		sb.append("|");
-		sb.append(student);
+		sb.append(user);
 		sb.append("|");
 		sb.append(imageUrl);
 		return sb.toString();

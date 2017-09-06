@@ -3,37 +3,37 @@ package com.go2.classes.business.service.mapping;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Component;
-import com.go2.classes.models.Teacher;
-import com.go2.classes.models.jpa.TeacherEntity;
+import com.go2.classes.models.User;
+import com.go2.classes.models.jpa.UserEntity;
 
 @Component
-public class TeacherServiceMapper extends AbstractServiceMapper {
+public class UserServiceMapper extends AbstractServiceMapper {
 
 	private ModelMapper modelMapper;
 	
-	public TeacherServiceMapper() {
+	public UserServiceMapper() {
 		modelMapper = new ModelMapper();
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 	}
 
-	public Teacher mapTeacherEntityToTeacher(TeacherEntity teacherEntity) {
-		if(teacherEntity == null) {
+	public User mapUserEntityToUser(UserEntity userEntity) {
+		if(userEntity == null) {
 			return null;
 		}
 
 		//--- Generic mapping 
-		Teacher teacher = map(teacherEntity, Teacher.class);
+		User user = map(userEntity, User.class);
 
-		return teacher;
+		return user;
 	}
 	
-	public void mapTeacherToTeacherEntity(Teacher teacher, TeacherEntity teacherEntity) {
-		if(teacher == null) {
+	public void mapUserToUserEntity(User user, UserEntity userEntity) {
+		if(user == null) {
 			return;
 		}
 
 		//--- Generic mapping 
-		map(teacher, teacherEntity);
+		map(user, userEntity);
 
 	}
 	

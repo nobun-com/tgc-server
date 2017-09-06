@@ -21,7 +21,7 @@ public class Classes implements Serializable {
 	private String about;
 
 	@NotNull
-	private Long teacherId;
+	private Long educatorId;
 
 	@NotNull
 	private Long centerId;
@@ -95,12 +95,12 @@ public class Classes implements Serializable {
 		this.about = about;
 	}
 
-	public Long getTeacherId() {
-		return teacherId;
+	public Long getEducatorId() {
+		return educatorId;
 	}
 
-	public void setTeacherId(Long teacherId) {
-		this.teacherId = teacherId;
+	public void setEducatorId(Long educatorId) {
+		this.educatorId = educatorId;
 	}
 
 	public Date getCreatedTime() {

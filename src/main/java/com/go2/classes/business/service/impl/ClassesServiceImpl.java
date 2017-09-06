@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.go2.classes.business.service.ClassesService;
-import com.go2.classes.business.service.StudentService;
+import com.go2.classes.business.service.UserService;
 import com.go2.classes.business.service.TimeTableService;
 import com.go2.classes.business.service.impl.helper.ClassMetadataHelper;
 import com.go2.classes.business.service.mapping.ClassesServiceMapper;
@@ -21,7 +21,7 @@ import com.go2.classes.common.EmailUtil;
 import com.go2.classes.data.repository.jpa.ClassesCategoryJpaRepository;
 import com.go2.classes.data.repository.jpa.ClassesJpaRepository;
 import com.go2.classes.models.Classes;
-import com.go2.classes.models.Student;
+import com.go2.classes.models.User;
 import com.go2.classes.models.jpa.ClassesCategoryEntity;
 import com.go2.classes.models.jpa.ClassesEntity;
 
@@ -33,7 +33,7 @@ public class ClassesServiceImpl implements ClassesService {
     private ClassesJpaRepository classesJpaRepository;
     
     @Resource
-    private StudentService studentService;
+    private UserService userService;
     
     @Resource
     private ClassesCategoryJpaRepository classesCategoryJpaRepository;
@@ -77,8 +77,8 @@ public class ClassesServiceImpl implements ClassesService {
     }
 
     @Override
-    public List<Classes> getAllClassesByTeacher(Long teacherId) {
-	Iterable<ClassesEntity> entities = classesJpaRepository.findAllClassesByTeacherId(teacherId);
+    public List<Classes> getAllClassesByEducator(Long educatorId) {
+	Iterable<ClassesEntity> entities = classesJpaRepository.findAllClassesByEducatorId(educatorId);
 	List<Classes> beans = new ArrayList<Classes>();
 	for (ClassesEntity classesEntity : entities) {
 	    beans.add(classesServiceMapper.mapClassesEntityToClasses(classesEntity));
@@ -119,10 +119,10 @@ public class ClassesServiceImpl implements ClassesService {
 	    throw new IllegalStateException("class.not.found");
 	}
 	timeTableService.invalidByClass(classes.getId());
-	for(BigInteger studentId : classesJpaRepository.getUsersOfClass(classes.getId())){
-	    Student student = studentService.findById(studentId.longValue());
-	    String email = student.getEmail();
-	    String msg = "Dear " + student.getName() + " schedule of class " + classesEntity.getClassName() + " is changed please have a look";
+	for(BigInteger userId : classesJpaRepository.getUsersOfClass(classes.getId())){
+	    User user = userService.findById(userId.longValue());
+	    String email = user.getEmail();
+	    String msg = "Dear " + user.getName() + " schedule of class " + classesEntity.getClassName() + " is changed please have a look";
 	    EmailUtil.sendEmail("Class schedule updated", msg, email);
 	}
 	classesServiceMapper.mapClassesToClassesEntity(classes, classesEntity);
@@ -142,10 +142,10 @@ public class ClassesServiceImpl implements ClassesService {
 	    throw new IllegalStateException("class.not.found");
 	}
 	timeTableService.invalidByClass(id);
-	for(BigInteger studentId : classesJpaRepository.getUsersOfClass(id)){
-	    Student student = studentService.findById(studentId.longValue());
-	    String email = student.getEmail();
-	    String msg = "Dear " + student.getName() + " class " + classesEntity.getClassName() + " is closed";
+	for(BigInteger userId : classesJpaRepository.getUsersOfClass(id)){
+	    User user = userService.findById(userId.longValue());
+	    String email = user.getEmail();
+	    String msg = "Dear " + user.getName() + " class " + classesEntity.getClassName() + " is closed";
 	    EmailUtil.sendEmail("Class canceled", msg, email);
 	}
 	classesJpaRepository.invalid(id);
@@ -189,8 +189,8 @@ public class ClassesServiceImpl implements ClassesService {
 		return classesJpaRepository.getActiveClassesCount();
 	}
 	@Override
-	public Integer getActiveClassesCountByEducator(Long teacherId) {
-		return classesJpaRepository.getActiveClassesCountByEducator(teacherId);
+	public Integer getActiveClassesCountByEducator(Long educatorId) {
+		return classesJpaRepository.getActiveClassesCountByEducator(educatorId);
 	}
 
 }

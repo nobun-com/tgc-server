@@ -148,7 +148,7 @@ public class ClassMetadataHelper {
 
 	private static Classes getClasses() throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		String str = "{\"id\": 21,    \"className\": \"mathematics\",    \"about\": \"m3 mech cse it entc\",    \"teacherId\": 3,    \"createdTime\": 1493942400000,    \"startDate\": \"2017-05-02\",        \"fee\": 6500.5,    \"occurrence\": 1,    \"frequency\": \"Daily\",    \"frequencyMetadata\": \"{'daily': {'startTime': 70,'endTime': 80}}\",    \"logoUrl\": null,    \"rrule\": null}";
+		String str = "{\"id\": 21,    \"className\": \"mathematics\",    \"about\": \"m3 mech cse it entc\",    \"educatorId\": 3,    \"createdTime\": 1493942400000,    \"startDate\": \"2017-05-02\",        \"fee\": 6500.5,    \"occurrence\": 1,    \"frequency\": \"Daily\",    \"frequencyMetadata\": \"{'daily': {'startTime': 70,'endTime': 80}}\",    \"logoUrl\": null,    \"rrule\": null}";
 		return mapper.readValue(str, Classes.class);
 	}
 	

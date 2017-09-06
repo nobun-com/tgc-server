@@ -13,58 +13,58 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import com.go2.classes.models.Teacher;
-import com.go2.classes.business.service.TeacherService;
+import com.go2.classes.models.User;
+import com.go2.classes.business.service.UserService;
 
 @Controller
-public class TeacherRestController {
+public class UserRestController {
 
 	@Resource
-	private TeacherService teacherService;
+	private UserService userService;
 	
-	@RequestMapping( value="/getAllTeachers",
+	@RequestMapping( value="/user",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<Teacher> findAll() {
-		return teacherService.findAll();
+	public List<User> findAll() {
+		return userService.findAll();
 	}
 
-	@RequestMapping( value="/getTeacher/{id}",
+	@RequestMapping( value="/user/{id}",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Teacher findOne(@PathVariable("id") Long id) {
-		return teacherService.findById(id);
+	public User findOne(@PathVariable("id") Long id) {
+		return userService.findById(id);
 	}
 	
-	@RequestMapping( value="/createTeacher",
+	@RequestMapping( value="/user",
 			method = RequestMethod.POST,
 			produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Teacher create(@RequestBody Teacher teacher) {
-		return teacherService.create(teacher);
+	public User create(@RequestBody User user) {
+		return userService.create(user);
 	}
 
-	@RequestMapping( value="/updateTeacher",
+	@RequestMapping( value="/user/{id}",
 			method = RequestMethod.PUT,
 			produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Teacher update(@RequestBody Teacher teacher) {
-		return teacherService.update(teacher);
+	public User update(@PathVariable("id") Long id, @RequestBody User user) {
+		return userService.update(user);
 	}
 
-	@RequestMapping( value="/deleteTeacher/{id}",
+	@RequestMapping( value="/user/{id}",
 			method = RequestMethod.DELETE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public void delete(@PathVariable("id") Long id) {
-		teacherService.delete(id);
+		userService.delete(id);
 	}
 	
 }

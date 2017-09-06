@@ -16,17 +16,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.go2.classes.business.service.PromoService;
-import com.go2.classes.business.service.StudentService;
+import com.go2.classes.business.service.UserService;
 import com.go2.classes.business.service.TimeTableService;
 import com.go2.classes.common.BaseController;
-import com.go2.classes.models.Student;
+import com.go2.classes.models.User;
 
 @Controller
 @RequestMapping("/")
 public class OpenController extends BaseController {
 
     @Resource
-    private StudentService studentService; // Injected by Spring
+    private UserService userService; // Injected by Spring
 
     @Resource
     private TimeTableService timeTableService; // Injected by Spring
@@ -39,15 +39,15 @@ public class OpenController extends BaseController {
     public String openLogin(Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
 	String email = request.getParameter("email");
 	String password = request.getParameter("password");
-	Student student = studentService.findByEmail(email);
-	if (Objects.isNull(student)) {
+	User user = userService.findByEmail(email);
+	if (Objects.isNull(user)) {
 	    throw new IllegalStateException("User not exists");
 	} else {
-	    if (password.equals(student.getPassword())) {
-		session.setAttribute("userName", student.getName());
-		session.setAttribute("userId", student.getId());
+	    if (password.equals(user.getPassword())) {
+		session.setAttribute("userName", user.getName());
+		session.setAttribute("userId", user.getId());
 		session.setAttribute("isLoggedIn", true);
-		session.setAttribute("userCartSize", timeTableService.getUserCartSize(student.getId()));
+		session.setAttribute("userCartSize", timeTableService.getUserCartSize(user.getId()));
 		return "Login success";
 	    } else {
 		throw new IllegalStateException("Bad credentials");
@@ -57,11 +57,11 @@ public class OpenController extends BaseController {
 
     @ResponseBody
     @RequestMapping(value = "/openRegister", method = RequestMethod.POST)
-    public String openRegister(HttpSession session, @ModelAttribute Student student) throws IOException {
+    public String openRegister(HttpSession session, @ModelAttribute User user) throws IOException {
 
-	student = studentService.create(student);
-	session.setAttribute("userName", student.getName());
-	session.setAttribute("userId", student.getId());
+	user = userService.create(user);
+	session.setAttribute("userName", user.getName());
+	session.setAttribute("userId", user.getId());
 	session.setAttribute("isLoggedIn", true);
 	session.setAttribute("userCartSize", 0);
 	return "User created";

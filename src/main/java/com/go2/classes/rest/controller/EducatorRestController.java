@@ -13,58 +13,58 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import com.go2.classes.models.Student;
-import com.go2.classes.business.service.StudentService;
+import com.go2.classes.models.Educator;
+import com.go2.classes.business.service.EducatorService;
 
 @Controller
-public class StudentRestController {
+public class EducatorRestController {
 
 	@Resource
-	private StudentService studentService;
+	private EducatorService educatorService;
 	
-	@RequestMapping( value="/student",
+	@RequestMapping( value="/getAllEducators",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<Student> findAll() {
-		return studentService.findAll();
+	public List<Educator> findAll() {
+		return educatorService.findAll();
 	}
 
-	@RequestMapping( value="/student/{id}",
+	@RequestMapping( value="/getEducator/{id}",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Student findOne(@PathVariable("id") Long id) {
-		return studentService.findById(id);
+	public Educator findOne(@PathVariable("id") Long id) {
+		return educatorService.findById(id);
 	}
 	
-	@RequestMapping( value="/student",
+	@RequestMapping( value="/createEducator",
 			method = RequestMethod.POST,
 			produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Student create(@RequestBody Student student) {
-		return studentService.create(student);
+	public Educator create(@RequestBody Educator educator) {
+		return educatorService.create(educator);
 	}
 
-	@RequestMapping( value="/student/{id}",
+	@RequestMapping( value="/updateEducator",
 			method = RequestMethod.PUT,
 			produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Student update(@PathVariable("id") Long id, @RequestBody Student student) {
-		return studentService.update(student);
+	public Educator update(@RequestBody Educator educator) {
+		return educatorService.update(educator);
 	}
 
-	@RequestMapping( value="/student/{id}",
+	@RequestMapping( value="/deleteEducator/{id}",
 			method = RequestMethod.DELETE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public void delete(@PathVariable("id") Long id) {
-		studentService.delete(id);
+		educatorService.delete(id);
 	}
 	
 }

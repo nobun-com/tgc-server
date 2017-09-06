@@ -158,7 +158,7 @@ public class TimeTableServiceImpl implements TimeTableService {
     @Override
     public List<Map<String, Object>> getAllClassesInCart(Long userId) {
 	List<Map<String, Object>> beans = new ArrayList<Map<String, Object>>();
-	Iterable<UserCartEntity> userCarts = userCartJpaRepository.findAllUserCartsByStudentId(userId);
+	Iterable<UserCartEntity> userCarts = userCartJpaRepository.findAllUserCartsByUserId(userId);
 	for (UserCartEntity userCart : userCarts) {
 	    Map<String, Object> bean = timeTableServiceMapper.mapTimeTableEntityToJSONMap(userCart.getTimeTable());
 	    bean.put("userCartId", userCart.getId());

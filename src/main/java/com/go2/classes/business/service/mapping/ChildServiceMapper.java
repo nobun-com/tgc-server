@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.go2.classes.models.Child;
 import com.go2.classes.models.jpa.ChildEntity;
 import com.go2.classes.models.jpa.ChildInterestsEntity;
-import com.go2.classes.models.jpa.StudentEntity;
+import com.go2.classes.models.jpa.UserEntity;
 
 @Component
 public class ChildServiceMapper extends AbstractServiceMapper {
@@ -28,8 +28,8 @@ public class ChildServiceMapper extends AbstractServiceMapper {
 
 		// --- Generic mapping
 		Child child = map(childEntity, Child.class);
-		if (childEntity.getStudent() != null) {
-			child.setStudentId(childEntity.getStudent().getId());
+		if (childEntity.getUser() != null) {
+			child.setUserId(childEntity.getUser().getId());
 		}
 
 		if(childEntity.getListOfChildInterests() != null) {
@@ -51,12 +51,12 @@ public class ChildServiceMapper extends AbstractServiceMapper {
 		// --- Generic mapping
 		map(child, childEntity);
 
-		if (child.getStudentId() != null) {
-			StudentEntity studentEntity = new StudentEntity();
-			studentEntity.setId(child.getStudentId());
-			childEntity.setStudent(studentEntity);
+		if (child.getUserId() != null) {
+			UserEntity userEntity = new UserEntity();
+			userEntity.setId(child.getUserId());
+			childEntity.setUser(userEntity);
 		} else {
-			childEntity.setStudent(null);
+			childEntity.setUser(null);
 		}
 
 	}

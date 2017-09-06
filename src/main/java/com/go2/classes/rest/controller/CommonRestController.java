@@ -40,12 +40,12 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.go2.classes.business.service.AdminService;
 import com.go2.classes.business.service.CenterService;
 import com.go2.classes.business.service.ClassesService;
-import com.go2.classes.business.service.TeacherService;
+import com.go2.classes.business.service.EducatorService;
 import com.go2.classes.business.service.UserCartService;
 import com.go2.classes.common.BaseController;
 import com.go2.classes.common.Utilities;
 import com.go2.classes.models.Admin;
-import com.go2.classes.models.Teacher;
+import com.go2.classes.models.Educator;
 
 @CrossOrigin("*")
 @Controller
@@ -55,7 +55,7 @@ public class CommonRestController extends BaseController {
 	private AdminService adminService; // Injected by Spring
 
 	@Resource
-	private TeacherService teacherService; // Injected by Spring
+	private EducatorService educatorService; // Injected by Spring
 
 	@Resource
 	private CenterService centerService; // Injected by Spring
@@ -121,23 +121,23 @@ public class CommonRestController extends BaseController {
 		return result;
 	}
 
-	@RequestMapping(value = "/teacherLogin", method = RequestMethod.POST)
+	@RequestMapping(value = "/educatorLogin", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> teacherLogin(@RequestBody Map<String, String> data) {
+	public Map<String, Object> educatorLogin(@RequestBody Map<String, String> data) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		String email = data.get("email");
 		String password = data.get("password");
 
-		Teacher teacher = teacherService.findByEmail(email);
+		Educator educator = educatorService.findByEmail(email);
 		String token = "";
-		if (Objects.isNull(teacher)) {
-			result.put("message", "teacher not found");
+		if (Objects.isNull(educator)) {
+			result.put("message", "educator not found");
 		} else {
-			if (password.equals(teacher.getPassword())) {
-				token = getToken(teacher.getEmail(), teacher.getId());
+			if (password.equals(educator.getPassword())) {
+				token = getToken(educator.getEmail(), educator.getId());
 				result.put("message", "login success");
 				result.put("token", token);
-				result.put("teacher", teacher);
+				result.put("educator", educator);
 			} else {
 				result.put("message", "login failed");
 			}
@@ -184,7 +184,7 @@ public class CommonRestController extends BaseController {
 		}
 
 		result.put("centersCount", centerService.getCentersCount());
-		result.put("teachersCount", teacherService.getTeachersCount());
+		result.put("educatorsCount", educatorService.getEducatorsCount());
 		result.put("bookingsCount", userCartService.getBookingsCount());
 		result.put("activeClassesCount", classesService.getActiveClassesCount());
 		result.put("barChartData", finalResult);
@@ -195,7 +195,7 @@ public class CommonRestController extends BaseController {
 	@RequestMapping(value = "/educatorDashboard/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public Map<String, Object> educatorDashboardData(@PathVariable("id") Long teacherId) {
+	public Map<String, Object> educatorDashboardData(@PathVariable("id") Long educatorId) {
 
 		Map<String, Object> result = new HashMap<String, Object>();
 
@@ -210,7 +210,7 @@ public class CommonRestController extends BaseController {
 		Calendar end = Calendar.getInstance();
 		end.setTime(toDate);
 
-		List<Object> lst = userCartService.getLastMonthBookingsByEducator(teacherId);
+		List<Object> lst = userCartService.getLastMonthBookingsByEducator(educatorId);
 		Map<String, Integer> map1 = new HashMap<String, Integer>();
 		Iterator it = lst.iterator();
 		while (it.hasNext()) {
@@ -232,8 +232,8 @@ public class CommonRestController extends BaseController {
 			}
 		}
 
-		result.put("bookingsCount", userCartService.getBookingsCountByEducator(teacherId));
-		result.put("activeClassesCount", classesService.getActiveClassesCountByEducator(teacherId));
+		result.put("bookingsCount", userCartService.getBookingsCountByEducator(educatorId));
+		result.put("activeClassesCount", classesService.getActiveClassesCountByEducator(educatorId));
 		result.put("barChartData", finalResult);
 
 		return result;

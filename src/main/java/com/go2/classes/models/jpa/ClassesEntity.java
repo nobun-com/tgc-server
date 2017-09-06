@@ -25,8 +25,8 @@ public class ClassesEntity implements Serializable {
 	private String about;
 
 	@ManyToOne
-	@JoinColumn(name = "teacher_id", referencedColumnName = "id")
-	private TeacherEntity teacher;
+	@JoinColumn(name = "educator_id", referencedColumnName = "id")
+	private EducatorEntity educator;
 
 	@ManyToOne
 	@JoinColumn(name = "center_id", referencedColumnName = "id")
@@ -173,12 +173,12 @@ public class ClassesEntity implements Serializable {
 		return this.startDate;
 	}
 
-	public TeacherEntity getTeacher() {
-		return teacher;
+	public EducatorEntity getEducator() {
+		return educator;
 	}
 
-	public void setTeacher(TeacherEntity teacher) {
-		this.teacher = teacher;
+	public void setEducator(EducatorEntity educator) {
+		this.educator = educator;
 	}
 
 	public Integer getOccurrence() {

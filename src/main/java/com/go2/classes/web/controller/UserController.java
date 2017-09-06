@@ -15,18 +15,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.go2.classes.business.service.ChildInterestsService;
 import com.go2.classes.business.service.ChildService;
-import com.go2.classes.business.service.StudentService;
+import com.go2.classes.business.service.UserService;
 import com.go2.classes.business.service.TimeTableService;
 import com.go2.classes.business.service.UserCartService;
 import com.go2.classes.common.BaseController;
-import com.go2.classes.models.Student;
+import com.go2.classes.models.User;
 
 @Controller
 @RequestMapping("/")
 public class UserController extends BaseController {
 
     @Resource
-    private StudentService studentService; // Injected by Spring
+    private UserService userService; // Injected by Spring
 
     @Resource
     private UserCartService userCartService; // Injected by Spring
@@ -43,14 +43,14 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/profile")
     public String openMyCart(Model model, HttpSession session) {
 	Long userId = (Long) session.getAttribute("userId");
-	model.addAttribute("user", studentService.findById(userId));
-	model.addAttribute("childs", childService.getAllChildsByStudent(userId));
+	model.addAttribute("user", userService.findById(userId));
+	model.addAttribute("childs", childService.getAllChildsByUser(userId));
 	model.addAttribute("userBookings", userCartService.getAllUserBookings(userId));
 	return "profile";
     }
 
-    @RequestMapping(value = "/updateStudent", method = RequestMethod.POST)
-    public void updateStudent(Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+    @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+    public void updateUser(Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
 
 	Long id = Long.parseLong(request.getParameter("id"));
 	String name = request.getParameter("name");
@@ -59,21 +59,21 @@ public class UserController extends BaseController {
 	String mobile = request.getParameter("mobile");
 	String refrralCode = request.getParameter("refrralCode");
 
-	Student student = studentService.findById(id);
+	User user = userService.findById(id);
 
-	if (Objects.isNull(student)) {
+	if (Objects.isNull(user)) {
 	    model.addAttribute("message", "User not found");
 	} else {
-	    student.setEmail(email);
-	    student.setName(name);
-	    student.setGender(gender);
-	    student.setPhone(mobile);
-	    student.setRefrralCode(refrralCode);
-	    student = studentService.update(student);
-	    if (Objects.isNull(student)) {
+	    user.setEmail(email);
+	    user.setName(name);
+	    user.setGender(gender);
+	    user.setPhone(mobile);
+	    user.setRefrralCode(refrralCode);
+	    user = userService.update(user);
+	    if (Objects.isNull(user)) {
 		model.addAttribute("message", "Unable to update user");
 	    } else {
-		session.setAttribute("userName", student.getName());
+		session.setAttribute("userName", user.getName());
 	    }
 	}
 

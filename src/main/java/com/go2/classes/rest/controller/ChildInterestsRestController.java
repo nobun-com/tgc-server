@@ -68,13 +68,13 @@ public class ChildInterestsRestController {
 		childInterestsService.delete(id);
 	}
 	
-	/*@RequestMapping( value="/getAllChildInterestssByStudent/{studentId}",
+	/*@RequestMapping( value="/getAllChildInterestssByUser/{userId}",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<ChildInterests> getAllChildInterestssByStudent(@PathVariable("studentId") Long studentId) {
-		return childInterestsService.getAllChildInterestsByStudent(studentId);
+	public List<ChildInterests> getAllChildInterestssByUser(@PathVariable("userId") Long userId) {
+		return childInterestsService.getAllChildInterestsByUser(userId);
 	}*/
 	
 }

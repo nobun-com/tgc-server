@@ -91,8 +91,8 @@ public class ClassesCategoryServiceImpl implements ClassesCategoryService {
 
 	
 	/*@Override
-	public List<ClassesCategory> getAllClassesCategorysByStudent(Long studentId) {
-		Iterable<ClassesCategoryEntity> entities = classesCategoryJpaRepository.findAllClassesCategorysByStudentId(studentId);
+	public List<ClassesCategory> getAllClassesCategorysByUser(Long userId) {
+		Iterable<ClassesCategoryEntity> entities = classesCategoryJpaRepository.findAllClassesCategorysByUserId(userId);
 		List<ClassesCategory> beans = new ArrayList<ClassesCategory>();
 		for(ClassesCategoryEntity classesCategoryEntity : entities) {
 			beans.add(classesCategoryServiceMapper.mapClassesCategoryEntityToClassesCategory(classesCategoryEntity));

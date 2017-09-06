@@ -15,8 +15,8 @@ public interface ClassesJpaRepository extends PagingAndSortingRepository<Classes
 	@Query(value="select * from classes CC where CC.status = 'valid' and CC.center_id =:centerId", nativeQuery = true)
 	Iterable<ClassesEntity> findAllClassesByCenterId(@Param("centerId") Long centerId);
 
-	@Query(value="select * from classes CC where CC.status = 'valid' and CC.teacher_id =:teacherId", nativeQuery = true)
-	Iterable<ClassesEntity> findAllClassesByTeacherId(@Param("teacherId") Long teacherId);
+	@Query(value="select * from classes CC where CC.status = 'valid' and CC.educator_id =:educatorId", nativeQuery = true)
+	Iterable<ClassesEntity> findAllClassesByEducatorId(@Param("educatorId") Long educatorId);
 
 	@Query(value="select * from classes CC where CC.status = 'valid'", nativeQuery = true)
 	Iterable<ClassesEntity> findAll();
@@ -28,9 +28,9 @@ public interface ClassesJpaRepository extends PagingAndSortingRepository<Classes
 	@Query(value="select count(CC.id) from classes CC where CC.status != 'invalid'", nativeQuery = true)
 	Integer getActiveClassesCount();
 	
-	@Query(value="select count(CC.id) from classes CC where CC.status = 'valid' and CC.teacher_id =:teacherId", nativeQuery = true)
-	Integer getActiveClassesCountByEducator(@Param("teacherId") Long teacherId);
+	@Query(value="select count(CC.id) from classes CC where CC.status = 'valid' and CC.educator_id =:educatorId", nativeQuery = true)
+	Integer getActiveClassesCountByEducator(@Param("educatorId") Long educatorId);
 	
-	@Query(value="select distinct UC.student_id from user_cart UC, time_table TT where UC.timetable_id = TT.id and TT.classes_id = :classesId", nativeQuery = true)
+	@Query(value="select distinct UC.user_id from user_cart UC, time_table TT where UC.timetable_id = TT.id and TT.classes_id = :classesId", nativeQuery = true)
 	List<BigInteger> getUsersOfClass(@Param("classesId") Long classesId);
 }

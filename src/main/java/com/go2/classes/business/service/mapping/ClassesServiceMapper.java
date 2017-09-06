@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import com.go2.classes.models.Classes;
 import com.go2.classes.models.jpa.CenterEntity;
 import com.go2.classes.models.jpa.ClassesEntity;
-import com.go2.classes.models.jpa.TeacherEntity;
+import com.go2.classes.models.jpa.EducatorEntity;
 
 @Component
 public class ClassesServiceMapper extends AbstractServiceMapper {
@@ -19,8 +19,8 @@ public class ClassesServiceMapper extends AbstractServiceMapper {
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 	}
 
-	private boolean hasLinkToTeacher(Classes classes) {
-		if(classes.getTeacherId() != null) {
+	private boolean hasLinkToEducator(Classes classes) {
+		if(classes.getEducatorId() != null) {
 			return true;
 		}
 		return false;
@@ -32,8 +32,8 @@ public class ClassesServiceMapper extends AbstractServiceMapper {
 		}
 		Classes classes = map(classesEntity, Classes.class);
 
-		if(classesEntity.getTeacher() != null) {
-			classes.setTeacherId(classesEntity.getTeacher().getId());
+		if(classesEntity.getEducator() != null) {
+			classes.setEducatorId(classesEntity.getEducator().getId());
 		}
 
 		if(classesEntity.getCenter() != null) {
@@ -48,12 +48,12 @@ public class ClassesServiceMapper extends AbstractServiceMapper {
 			return;
 		}
 
-		if(hasLinkToTeacher(classes)) {
-			TeacherEntity teacher = new TeacherEntity();
-			teacher.setId(classes.getTeacherId());
-			classesEntity.setTeacher(teacher);
+		if(hasLinkToEducator(classes)) {
+			EducatorEntity educator = new EducatorEntity();
+			educator.setId(classes.getEducatorId());
+			classesEntity.setEducator(educator);
 		} else {
-			classesEntity.setTeacher(null);
+			classesEntity.setEducator(null);
 		}
 
 		if(hasLinkToCenter(classes)) {
@@ -61,7 +61,7 @@ public class ClassesServiceMapper extends AbstractServiceMapper {
 			center.setId(classes.getCenterId());
 			classesEntity.setCenter(center);
 		} else {
-			classesEntity.setTeacher(null);
+			classesEntity.setEducator(null);
 		}
 		//--- Generic mapping 
 		map(classes, classesEntity);

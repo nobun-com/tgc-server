@@ -18,6 +18,6 @@ public interface ChildService {
 
 	void delete( Long id );
 	
-	List<Child> getAllChildsByStudent(Long studentId);
+	List<Child> getAllChildsByUser(Long userId);
 
 }

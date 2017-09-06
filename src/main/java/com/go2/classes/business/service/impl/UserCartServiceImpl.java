@@ -18,13 +18,13 @@ import com.go2.classes.business.service.UserCartService;
 import com.go2.classes.business.service.mapping.UserCartServiceMapper;
 import com.go2.classes.common.EmailUtil;
 import com.go2.classes.common.Utilities;
-import com.go2.classes.data.repository.jpa.StudentJpaRepository;
+import com.go2.classes.data.repository.jpa.UserJpaRepository;
 import com.go2.classes.data.repository.jpa.UserBookingOrderJpaRepository;
 import com.go2.classes.data.repository.jpa.UserCartJpaRepository;
 import com.go2.classes.models.Coupon;
 import com.go2.classes.models.UserCart;
-import com.go2.classes.models.jpa.StudentEntity;
-import com.go2.classes.models.jpa.TeacherEntity;
+import com.go2.classes.models.jpa.UserEntity;
+import com.go2.classes.models.jpa.EducatorEntity;
 import com.go2.classes.models.jpa.UserBookingOrderEntity;
 import com.go2.classes.models.jpa.UserCartEntity;
 
@@ -42,7 +42,7 @@ public class UserCartServiceImpl implements UserCartService {
     private UserCartJpaRepository userCartJpaRepository;
 
     @Resource
-    private StudentJpaRepository studentJpaRepository;
+    private UserJpaRepository userJpaRepository;
 
     @Resource
     UserBookingOrderJpaRepository userBookingOrderJpaRepository;
@@ -91,8 +91,8 @@ public class UserCartServiceImpl implements UserCartService {
     }
 
     @Override
-    public List<UserCart> findAllClassInstancesByStudent(Long userId) {
-	Iterable<UserCartEntity> entities = userCartJpaRepository.findAllUserCartsByStudentId(userId);
+    public List<UserCart> findAllClassInstancesByUser(Long userId) {
+	Iterable<UserCartEntity> entities = userCartJpaRepository.findAllUserCartsByUserId(userId);
 	List<UserCart> beans = new ArrayList<UserCart>();
 	for (UserCartEntity UserCartEntity : entities) {
 	    beans.add(userCartServiceMapper.mapUserCartEntityToUserCart(UserCartEntity));
@@ -132,15 +132,15 @@ public class UserCartServiceImpl implements UserCartService {
     @Override
     public void bookAllCarts(Long userId, String transactionId) {
 	String msg = "";
-	StudentEntity student = studentJpaRepository.findOne(userId);
+	UserEntity user = userJpaRepository.findOne(userId);
 	UserBookingOrderEntity userBookingOrderEntity = new UserBookingOrderEntity();
-	userBookingOrderEntity.setStudent(student);
+	userBookingOrderEntity.setUser(user);
 	userBookingOrderEntity.setDate(new Date());
 	userBookingOrderEntity.setTransactionId(transactionId);
 	userBookingOrderEntity.setStatus("Done");
 	userBookingOrderEntity = userBookingOrderJpaRepository.save(userBookingOrderEntity);
 	Double cost = 0d;
-	Iterable<UserCartEntity> inCart = userCartJpaRepository.findAllUserCartsByStudentId(userId);
+	Iterable<UserCartEntity> inCart = userCartJpaRepository.findAllUserCartsByUserId(userId);
 	Integer classesCount = 0;
 	for (UserCartEntity userCartEntity : inCart) {
 	    userCartEntity.setStatus("Booked");
@@ -149,15 +149,15 @@ public class UserCartServiceImpl implements UserCartService {
 	    classesService.bookClass(userCartEntity.getTimeTable().getClasses());
 	    classesCount++;
 	    cost += userCartEntity.getFinalCost();
-	    TeacherEntity teacher = userCartEntity.getTimeTable().getClasses().getTeacher();
-	    msg = "Dear educator " + student.getName() + " has booked your class " + userCartEntity.getTimeTable().getClasses().getClassName();
-	    EmailUtil.sendEmail("Class Booked", msg, teacher.getEmail());
+	    EducatorEntity educator = userCartEntity.getTimeTable().getClasses().getEducator();
+	    msg = "Dear educator " + user.getName() + " has booked your class " + userCartEntity.getTimeTable().getClasses().getClassName();
+	    EmailUtil.sendEmail("Class Booked", msg, educator.getEmail());
 	}
 	userBookingOrderEntity.setAmmount(cost);
 	userBookingOrderEntity.setClassesCount(classesCount);
 	userBookingOrderJpaRepository.save(userBookingOrderEntity);
-	msg = "Dear " + student.getName() + " you have booked " + classesCount + " classes and payment of HKD" + cost + " done";
-	EmailUtil.sendEmail("Class Booked", msg, student.getEmail());
+	msg = "Dear " + user.getName() + " you have booked " + classesCount + " classes and payment of HKD" + cost + " done";
+	EmailUtil.sendEmail("Class Booked", msg, user.getEmail());
     }
 
     @Override
@@ -205,13 +205,13 @@ public class UserCartServiceImpl implements UserCartService {
     }
 
     @Override
-    public Integer getBookingsCountByEducator(Long teacherId) {
-	return userBookingOrderJpaRepository.getBookingsCountByEducator(teacherId);
+    public Integer getBookingsCountByEducator(Long educatorId) {
+	return userBookingOrderJpaRepository.getBookingsCountByEducator(educatorId);
     }
 
     @Override
-    public List<Object> getLastMonthBookingsByEducator(Long teacherId) {
-	return userBookingOrderJpaRepository.getLastMonthBookingsByEducator(teacherId);
+    public List<Object> getLastMonthBookingsByEducator(Long educatorId) {
+	return userBookingOrderJpaRepository.getLastMonthBookingsByEducator(educatorId);
     }
 
     @Override
@@ -222,7 +222,7 @@ public class UserCartServiceImpl implements UserCartService {
     @Override
     public Map<UserBookingOrderEntity, List<Map<String, Object>>> getAllUserBookings(Long userId) {
 	Map<UserBookingOrderEntity, List<Map<String, Object>>> result = new HashMap<>();
-	for (UserBookingOrderEntity bookingOrder : userBookingOrderJpaRepository.getAllByStudentId(userId)) {
+	for (UserBookingOrderEntity bookingOrder : userBookingOrderJpaRepository.getAllByUserId(userId)) {
 	    List<Map<String, Object>> carts = new ArrayList<>();
 	    for (UserCartEntity cart : bookingOrder.getListOfUserCarts()) {
 		carts.add(userCartServiceMapper.mapTimeTableEntityToJSONMap(cart));
@@ -253,20 +253,20 @@ public class UserCartServiceImpl implements UserCartService {
 	UserBookingOrderEntity order = userBookingOrderJpaRepository.findOne(bookingId);
 	order.setStatus("Canceled");
 	userBookingOrderJpaRepository.save(order);
-	StudentEntity student = order.getStudent();
-	String msg = "Dear " + student.getName() + " you have cancled booking.";
-	EmailUtil.sendEmail("Class Booking canceled", msg, student.getEmail());
+	UserEntity user = order.getUser();
+	String msg = "Dear " + user.getName() + " you have cancled booking.";
+	EmailUtil.sendEmail("Class Booking canceled", msg, user.getEmail());
 
 	for (UserCartEntity cart : order.getListOfUserCarts()) {
-	    msg = "Dear educator " + cart.getStudent().getName() + " has cancled booking of your class " + cart.getTimeTable().getClasses().getClassName();
-	    EmailUtil.sendEmail("Class Booking canceled", msg, cart.getTimeTable().getClasses().getTeacher().getEmail());
+	    msg = "Dear educator " + cart.getUser().getName() + " has cancled booking of your class " + cart.getTimeTable().getClasses().getClassName();
+	    EmailUtil.sendEmail("Class Booking canceled", msg, cart.getTimeTable().getClasses().getEducator().getEmail());
 	}
     }
 
 	@Override
-	public List<Object> getAllBookingsByEducator(Long teacherId, String strFromDate, String strToDate) {
+	public List<Object> getAllBookingsByEducator(Long educatorId, String strFromDate, String strToDate) {
 
-		return userBookingOrderJpaRepository.getAllBookingsByEducator(teacherId, strFromDate, strToDate);
+		return userBookingOrderJpaRepository.getAllBookingsByEducator(educatorId, strFromDate, strToDate);
 	}
 
 }

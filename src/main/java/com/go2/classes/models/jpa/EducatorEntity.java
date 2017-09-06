@@ -7,12 +7,12 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Entity
-@Table(name="teacher")
+@Table(name="educator")
 // Define named queries here
 @NamedQueries ( {
-  @NamedQuery ( name="TeacherEntity.countAll", query="SELECT COUNT(x) FROM TeacherEntity x" )
+  @NamedQuery ( name="EducatorEntity.countAll", query="SELECT COUNT(x) FROM EducatorEntity x" )
 } )
-public class TeacherEntity implements Serializable {
+public class EducatorEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -46,7 +46,7 @@ public class TeacherEntity implements Serializable {
     @Column(name="profile_image_url", length=500)
     private String profileImageUrl;
 
-    public TeacherEntity() {
+    public EducatorEntity() {
 		super();
     }
     

@@ -103,8 +103,8 @@ public class ChildServiceImpl implements ChildService {
 	}
 
 	@Override
-	public List<Child> getAllChildsByStudent(Long studentId) {
-		Iterable<ChildEntity> entities = childJpaRepository.findAllChildsByStudentId(studentId);
+	public List<Child> getAllChildsByUser(Long userId) {
+		Iterable<ChildEntity> entities = childJpaRepository.findAllChildsByUserId(userId);
 		List<Child> beans = new ArrayList<Child>();
 		for (ChildEntity childEntity : entities) {
 			beans.add(childServiceMapper.mapChildEntityToChild(childEntity));

@@ -22,7 +22,7 @@ public interface ClassesService {
 
     List<Classes> getAllClassesByCenter(Long centerId);
 
-    List<Classes> getAllClassesByTeacher(Long teacherId);
+    List<Classes> getAllClassesByEducator(Long educatorId);
 
     List<Map<String, Object>> findAllClassesCategory();
 
@@ -30,5 +30,5 @@ public interface ClassesService {
     
     Integer getActiveClassesCount();
     
-    Integer getActiveClassesCountByEducator(Long teacherId);
+    Integer getActiveClassesCountByEducator(Long educatorId);
 }

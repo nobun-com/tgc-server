@@ -6,7 +6,7 @@ import javax.validation.constraints.*;
 
 import java.util.Date;
 
-public class Teacher implements Serializable {
+public class Educator implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

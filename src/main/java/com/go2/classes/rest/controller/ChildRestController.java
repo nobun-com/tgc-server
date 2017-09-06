@@ -68,13 +68,13 @@ public class ChildRestController {
 		childService.delete(id);
 	}
 	
-	@RequestMapping( value="/getAllChildsByStudent/{studentId}",
+	@RequestMapping( value="/getAllChildsByUser/{userId}",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public List<Child> getAllChildsByStudent(@PathVariable("studentId") Long studentId) {
-		return childService.getAllChildsByStudent(studentId);
+	public List<Child> getAllChildsByUser(@PathVariable("userId") Long userId) {
+		return childService.getAllChildsByUser(userId);
 	}
 	
 }

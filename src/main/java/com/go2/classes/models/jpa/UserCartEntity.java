@@ -22,8 +22,8 @@ public class UserCartEntity implements Serializable {
     private TimeTableEntity timeTable;
 
     @ManyToOne
-    @JoinColumn(name="student_id", nullable=false, referencedColumnName="id")
-    private StudentEntity student;
+    @JoinColumn(name="user_id", nullable=false, referencedColumnName="id")
+    private UserEntity user;
     
     @ManyToOne
     @JoinColumn(name="order_id", referencedColumnName="id")
@@ -105,12 +105,12 @@ public class UserCartEntity implements Serializable {
 		this.finalCost = finalCost;
 	}
 
-	public StudentEntity getStudent() {
-		return student;
+	public UserEntity getUser() {
+		return user;
 	}
 
-	public void setStudent(StudentEntity student) {
-		this.student = student;
+	public void setUser(UserEntity user) {
+		this.user = user;
 	}
 
 	public Date getDate() {
@@ -128,7 +128,7 @@ public class UserCartEntity implements Serializable {
         sb.append("]:"); 
         sb.append(timeTable);
         sb.append("|");
-        sb.append(student);
+        sb.append(user);
         sb.append("|");
         sb.append(date);
         return sb.toString(); 

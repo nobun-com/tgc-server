@@ -18,7 +18,7 @@ import com.go2.classes.business.service.ChildInterestsService;
 import com.go2.classes.business.service.ChildService;
 import com.go2.classes.business.service.ClassesCategoryService;
 import com.go2.classes.business.service.NotificationService;
-import com.go2.classes.business.service.StudentService;
+import com.go2.classes.business.service.UserService;
 import com.go2.classes.common.BaseController;
 import com.go2.classes.models.Child;
 import com.go2.classes.models.ClassesSearch;
@@ -34,7 +34,7 @@ public class ChildController extends BaseController {
 	private ChildInterestsService childInterestsService; // Injected by Spring
 
 	@Resource
-	private StudentService studentService; // Injected by Spring
+	private UserService userService; // Injected by Spring
 
 	@Resource
 	private ClassesCategoryService classesCategoryService; // Injected by Spring
@@ -45,7 +45,7 @@ public class ChildController extends BaseController {
 	@RequestMapping(value = "/add-child")
 	public String openChild(Model model, HttpSession session) {
 		Long userId=(Long) session.getAttribute("userId");
-		model.addAttribute("user", studentService.findById(userId));
+		model.addAttribute("user", userService.findById(userId));
 		return "add-child";
 	}
 

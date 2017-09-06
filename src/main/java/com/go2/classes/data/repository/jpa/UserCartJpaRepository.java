@@ -9,14 +9,14 @@ import com.go2.classes.models.jpa.UserCartEntity;
 
 public interface UserCartJpaRepository extends PagingAndSortingRepository<UserCartEntity, Long> {
 	
-	@Query(value="select UC.* from user_cart UC where UC.status = 'InCart' and UC.student_id = :studentId", nativeQuery = true)
-	Iterable<UserCartEntity> findAllUserCartsByStudentId(@Param("studentId") Long studentId);
+	@Query(value="select UC.* from user_cart UC where UC.status = 'InCart' and UC.user_id = :userId", nativeQuery = true)
+	Iterable<UserCartEntity> findAllUserCartsByUserId(@Param("userId") Long userId);
 	
-	@Query(value="select sum(UC.final_cost) from user_cart UC where UC.status = 'InCart' and UC.student_id = :studentId", nativeQuery = true)
-	Double findFees(@Param("studentId") Long studentId);
+	@Query(value="select sum(UC.final_cost) from user_cart UC where UC.status = 'InCart' and UC.user_id = :userId", nativeQuery = true)
+	Double findFees(@Param("userId") Long userId);
 	
-	@Query(value="select count(UC.id) from user_cart UC where UC.status = 'InCart' and UC.student_id = :studentId", nativeQuery = true)
-	Integer getUserCartSize(@Param("studentId") Long studentId);
+	@Query(value="select count(UC.id) from user_cart UC where UC.status = 'InCart' and UC.user_id = :userId", nativeQuery = true)
+	Integer getUserCartSize(@Param("userId") Long userId);
 
 	@Modifying
 	@Query(value="update user_cart UC set UC.status = 'invalid' where UC.timetable_id = :timeTableId", nativeQuery = true)

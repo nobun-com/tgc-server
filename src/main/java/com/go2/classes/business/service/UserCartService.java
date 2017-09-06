@@ -20,7 +20,7 @@ public interface UserCartService {
 
     void delete(Long id);
 
-    List<UserCart> findAllClassInstancesByStudent(Long userId);
+    List<UserCart> findAllClassInstancesByUser(Long userId);
 
     Double getToatlFees(Long userId);
 
@@ -42,8 +42,8 @@ public interface UserCartService {
 
     void cancelBooking(Long bookingId);
     
-    List<Object> getLastMonthBookingsByEducator(Long teacherId);
+    List<Object> getLastMonthBookingsByEducator(Long educatorId);
     
-    Integer getBookingsCountByEducator(Long teacherId);
+    Integer getBookingsCountByEducator(Long educatorId);
 
 }

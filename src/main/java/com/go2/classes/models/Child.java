@@ -26,7 +26,7 @@ public class Child implements Serializable {
 	private String location;
 
 	@NotNull
-	private Long studentId;
+	private Long userId;
 
 	@Size(max = 100)
 	private String imageName;
@@ -84,12 +84,12 @@ public class Child implements Serializable {
 		this.location = location;
 	}
 
-	public Long getStudentId() {
-		return studentId;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setStudentId(Long studentId) {
-		this.studentId = studentId;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public String getImageName() {
@@ -118,7 +118,7 @@ public class Child implements Serializable {
 		sb.append("|");
 		sb.append(location);
 		sb.append("|");
-		sb.append(studentId);
+		sb.append(userId);
 		sb.append("|");
 		sb.append(imageName);
 		sb.append("|");

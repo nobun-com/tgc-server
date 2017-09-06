@@ -19,8 +19,8 @@ public class UserBookingOrderEntity implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "student_id", referencedColumnName = "id", nullable = false)
-    private StudentEntity student;
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private UserEntity user;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date", nullable = false)
@@ -69,12 +69,12 @@ public class UserBookingOrderEntity implements Serializable {
 	this.classesCount = classesCount;
     }
 
-    public StudentEntity getStudent() {
-	return student;
+    public UserEntity getUser() {
+	return user;
     }
 
-    public void setStudent(StudentEntity student) {
-	this.student = student;
+    public void setUser(UserEntity user) {
+	this.user = user;
     }
 
     public Date getDate() {
@@ -91,7 +91,7 @@ public class UserBookingOrderEntity implements Serializable {
 	sb.append(id);
 	sb.append("]:");
 	sb.append("|");
-	sb.append(student);
+	sb.append(user);
 	sb.append("|");
 	sb.append(date);
 	return sb.toString();

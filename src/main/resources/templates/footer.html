@@ -20,15 +20,12 @@
 					</ul>
 				</div>
                 <div class="ft-contact">
-				<div class="col-sm-6 text-right ">
+				<div class="col-sm-6 text-right" th:if="${session.links}">
 					<div class="socialIcons">
 						<h3 class="colorBlue">Connect With Us</h3>
-						<a href="http://www.facebook.com"
-							target="_blank"><img src="images/icon/fbBottom.svg" /></a>
-						<a href="https://www.instagram.com"
-							target="_blank"><img src="images/icon/instagramBottom.svg" /></a>
-						<a href="mailto:test@gmail.com" target="_blank"><img
-								src="images/icon/mailBottom.svg" /></a>
+						<a th:href="${session.links.facebookUrl}" target="_blank"><img src="images/icon/fbBottom.svg"></img></a>
+						<a th:href="${session.links.instagramUrl}" target="_blank"><img src="images/icon/instagramBottom.svg"></img></a>
+						<a th:href="'mailto:' + ${session.links.contactEmail}" target="_blank"><img src="images/icon/mailBottom.svg"></img></a>
 					</div>
 				</div>
 				</div>

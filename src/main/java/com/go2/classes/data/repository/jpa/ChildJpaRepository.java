@@ -10,8 +10,8 @@ import com.go2.classes.models.jpa.ChildEntity;
 
 public interface ChildJpaRepository extends PagingAndSortingRepository<ChildEntity, Long> {
 	
-	@Query(value = "select * from child C where C.student_id = :studentId", nativeQuery = true)
-	Iterable<ChildEntity> findAllChildsByStudentId(@Param("studentId") Long studentId);
+	@Query(value = "select * from child C where C.user_id = :userId", nativeQuery = true)
+	Iterable<ChildEntity> findAllChildsByUserId(@Param("userId") Long userId);
 	
 	@Query(value = "select distinct id from child", nativeQuery = true)
 	List<String> getAllChildIds();
