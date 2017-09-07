@@ -1,0 +1,8 @@
+<ion-tabs>
+	<ion-tab [root]="tab1Root" tabTitle="About" tabIcon="home"></ion-tab>
+	<ion-tab tabTitle="About" tabIcon="home" (ionSelect)="about()"></ion-tab>
+	<ion-tab tabTitle="How it works" tabIcon="bulb" (ionSelect)="howItWorks()"></ion-tab>
+	<ion-tab tabTitle="Book Now" tabIcon="briefcase" (ionSelect)="bookNow()"></ion-tab>
+	<ion-tab tabTitle="Articles" tabIcon="albums" (ionSelect)="whatsNew()"></ion-tab>
+	<ion-tab [root]="tab5Root" tabTitle="More" tabIcon="ios-more"></ion-tab>
+</ion-tabs>
