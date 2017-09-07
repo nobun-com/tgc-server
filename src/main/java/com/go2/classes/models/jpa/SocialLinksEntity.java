@@ -6,7 +6,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "social_links", catalog = "go2classes")
+@Table(name = "social_links")
 // Define named queries here
 @NamedQueries({ @NamedQuery(name = "SocialLinksEntity.countAll", query = "SELECT COUNT(x) FROM SocialLinksEntity x") })
 public class SocialLinksEntity implements Serializable {

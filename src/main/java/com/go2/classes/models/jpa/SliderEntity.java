@@ -23,7 +23,7 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name="slider", catalog="go2classes" )
+@Table(name="slider")
 // Define named queries here
 @NamedQueries ( {
   @NamedQuery ( name="SliderEntity.countAll", query="SELECT COUNT(x) FROM SliderEntity x" )
