@@ -7,7 +7,6 @@
 package com.go2.classes.models;
 
 import java.io.Serializable;
-
 import java.util.Date;
 
 /**
@@ -16,193 +15,110 @@ import java.util.Date;
  * @author Telosys Tools Generator
  *
  */
-public class Slider implements Serializable
-{
-    private static final long serialVersionUID = 1L;
+public class Slider implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    private Long       id           ; // Primary Key
+	private Long id; // Primary Key
 
-    private Date       createdTime  ;
-    private String     sliderImageFive ;
-    private String     sliderImageFour ;
-    private String     sliderImageOne ;
-    private String     sliderImageThree ;
-    private String     sliderImageTwo ;
+	private Date createdTime;
+	private String imageUrl;
+	private String title;
+	private String description;
+	private String urlTitle;
+	private String url;
 
-    /**
-     * Default constructor
-     */
-    public Slider()
-    {
-        super();
-    }
-    
-    //----------------------------------------------------------------------
-    // GETTER(S) & SETTER(S) FOR THE PRIMARY KEY 
-    //----------------------------------------------------------------------
-    /**
-     * Set the "id" field value
-     * This field is mapped on the database column "id" ( type "BIGINT", NotNull : true ) 
-     * @param id
-     */
-	public void setId( Long id )
-    {
-        this.id = id ;
-    }
-    /**
-     * Get the "id" field value
-     * This field is mapped on the database column "id" ( type "BIGINT", NotNull : true ) 
-     * @return the field value
-     */
-	public Long getId()
-    {
-        return this.id;
-    }
+	/**
+	 * Default constructor
+	 */
+	public Slider() {
+		super();
+	}
 
-    //----------------------------------------------------------------------
-    // GETTER(S) & SETTER(S) FOR DATA FIELDS
-    //----------------------------------------------------------------------
-    //--- DATABASE MAPPING : created_time ( DATETIME ) 
-    /**
-     * Set the "createdTime" field value
-     * This field is mapped on the database column "created_time" ( type "DATETIME", NotNull : false ) 
-     * @param createdTime
-     */
-    public void setCreatedTime( Date createdTime )
-    {
-        this.createdTime = createdTime;
-    }
-    /**
-     * Get the "createdTime" field value
-     * This field is mapped on the database column "created_time" ( type "DATETIME", NotNull : false ) 
-     * @return the field value
-     */
-    public Date getCreatedTime()
-    {
-        return this.createdTime;
-    }
+	// ----------------------------------------------------------------------
+	// GETTER(S) & SETTER(S) FOR THE PRIMARY KEY
+	// ----------------------------------------------------------------------
+	/**
+	 * Set the "id" field value This field is mapped on the database column "id"
+	 * ( type "BIGINT", NotNull : true )
+	 * 
+	 * @param id
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    //--- DATABASE MAPPING : slider_image_five ( VARCHAR ) 
-    /**
-     * Set the "sliderImageFive" field value
-     * This field is mapped on the database column "slider_image_five" ( type "VARCHAR", NotNull : false ) 
-     * @param sliderImageFive
-     */
-    public void setSliderImageFive( String sliderImageFive )
-    {
-        this.sliderImageFive = sliderImageFive;
-    }
-    /**
-     * Get the "sliderImageFive" field value
-     * This field is mapped on the database column "slider_image_five" ( type "VARCHAR", NotNull : false ) 
-     * @return the field value
-     */
-    public String getSliderImageFive()
-    {
-        return this.sliderImageFive;
-    }
+	/**
+	 * Get the "id" field value This field is mapped on the database column "id"
+	 * ( type "BIGINT", NotNull : true )
+	 * 
+	 * @return the field value
+	 */
+	public Long getId() {
+		return this.id;
+	}
 
-    //--- DATABASE MAPPING : slider_image_four ( VARCHAR ) 
-    /**
-     * Set the "sliderImageFour" field value
-     * This field is mapped on the database column "slider_image_four" ( type "VARCHAR", NotNull : false ) 
-     * @param sliderImageFour
-     */
-    public void setSliderImageFour( String sliderImageFour )
-    {
-        this.sliderImageFour = sliderImageFour;
-    }
-    /**
-     * Get the "sliderImageFour" field value
-     * This field is mapped on the database column "slider_image_four" ( type "VARCHAR", NotNull : false ) 
-     * @return the field value
-     */
-    public String getSliderImageFour()
-    {
-        return this.sliderImageFour;
-    }
+	// ----------------------------------------------------------------------
+	// GETTER(S) & SETTER(S) FOR DATA FIELDS
+	// ----------------------------------------------------------------------
+	// --- DATABASE MAPPING : created_time ( DATETIME )
+	/**
+	 * Set the "createdTime" field value This field is mapped on the database
+	 * column "created_time" ( type "DATETIME", NotNull : false )
+	 * 
+	 * @param createdTime
+	 */
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
 
-    //--- DATABASE MAPPING : slider_image_one ( VARCHAR ) 
-    /**
-     * Set the "sliderImageOne" field value
-     * This field is mapped on the database column "slider_image_one" ( type "VARCHAR", NotNull : false ) 
-     * @param sliderImageOne
-     */
-    public void setSliderImageOne( String sliderImageOne )
-    {
-        this.sliderImageOne = sliderImageOne;
-    }
-    /**
-     * Get the "sliderImageOne" field value
-     * This field is mapped on the database column "slider_image_one" ( type "VARCHAR", NotNull : false ) 
-     * @return the field value
-     */
-    public String getSliderImageOne()
-    {
-        return this.sliderImageOne;
-    }
+	/**
+	 * Get the "createdTime" field value This field is mapped on the database
+	 * column "created_time" ( type "DATETIME", NotNull : false )
+	 * 
+	 * @return the field value
+	 */
+	public Date getCreatedTime() {
+		return this.createdTime;
+	}
 
-    //--- DATABASE MAPPING : slider_image_three ( VARCHAR ) 
-    /**
-     * Set the "sliderImageThree" field value
-     * This field is mapped on the database column "slider_image_three" ( type "VARCHAR", NotNull : false ) 
-     * @param sliderImageThree
-     */
-    public void setSliderImageThree( String sliderImageThree )
-    {
-        this.sliderImageThree = sliderImageThree;
-    }
-    /**
-     * Get the "sliderImageThree" field value
-     * This field is mapped on the database column "slider_image_three" ( type "VARCHAR", NotNull : false ) 
-     * @return the field value
-     */
-    public String getSliderImageThree()
-    {
-        return this.sliderImageThree;
-    }
+	public String getImageUrl() {
+		return imageUrl;
+	}
 
-    //--- DATABASE MAPPING : slider_image_two ( VARCHAR ) 
-    /**
-     * Set the "sliderImageTwo" field value
-     * This field is mapped on the database column "slider_image_two" ( type "VARCHAR", NotNull : false ) 
-     * @param sliderImageTwo
-     */
-    public void setSliderImageTwo( String sliderImageTwo )
-    {
-        this.sliderImageTwo = sliderImageTwo;
-    }
-    /**
-     * Get the "sliderImageTwo" field value
-     * This field is mapped on the database column "slider_image_two" ( type "VARCHAR", NotNull : false ) 
-     * @return the field value
-     */
-    public String getSliderImageTwo()
-    {
-        return this.sliderImageTwo;
-    }
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 
+	public String getTitle() {
+		return title;
+	}
 
-    //----------------------------------------------------------------------
-    // toString METHOD
-    //----------------------------------------------------------------------
-    public String toString() { 
-        StringBuffer sb = new StringBuffer(); 
-        sb.append(id);
-        sb.append("|");
-        sb.append(createdTime);
-        sb.append("|");
-        sb.append(sliderImageFive);
-        sb.append("|");
-        sb.append(sliderImageFour);
-        sb.append("|");
-        sb.append(sliderImageOne);
-        sb.append("|");
-        sb.append(sliderImageThree);
-        sb.append("|");
-        sb.append(sliderImageTwo);
-        return sb.toString(); 
-    } 
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getUrlTitle() {
+		return urlTitle;
+	}
+
+	public void setUrlTitle(String urlTitle) {
+		this.urlTitle = urlTitle;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
 }

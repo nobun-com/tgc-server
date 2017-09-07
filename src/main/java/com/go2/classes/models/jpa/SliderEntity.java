@@ -48,26 +48,20 @@ public class SliderEntity implements Serializable {
     @Column(name="created_time")
     private Date       createdTime  ;
 
-    @Column(name="slider_image_five", length=300)
-    private String     sliderImageFive ;
+    @Column(name="image_url", length=600)
+    private String     imageUrl ;
 
-    @Column(name="slider_image_four", length=300)
-    private String     sliderImageFour ;
+    @Column(name="title", length=300)
+    private String     title ;
 
-    @Column(name="slider_image_one", length=300)
-    private String     sliderImageOne ;
+    @Column(name="description", columnDefinition="TEXT")
+    private String     description ;
 
-    @Column(name="slider_image_three", length=300)
-    private String     sliderImageThree ;
+    @Column(name="url_title", length=300)
+    private String     urlTitle ;
 
-    @Column(name="slider_image_two", length=300)
-    private String     sliderImageTwo ;
-
-
-
-    //----------------------------------------------------------------------
-    // ENTITY LINKS ( RELATIONSHIP )
-    //----------------------------------------------------------------------
+    @Column(name="url", length=600)
+    private String     url ;
 
     //----------------------------------------------------------------------
     // CONSTRUCTOR(S)
@@ -75,93 +69,69 @@ public class SliderEntity implements Serializable {
     public SliderEntity() {
 		super();
     }
-    
-    //----------------------------------------------------------------------
-    // GETTER & SETTER FOR THE KEY FIELD
-    //----------------------------------------------------------------------
-    public void setId( Long id ) {
-        this.id = id ;
-    }
-    public Long getId() {
-        return this.id;
-    }
 
-    //----------------------------------------------------------------------
-    // GETTERS & SETTERS FOR FIELDS
-    //----------------------------------------------------------------------
-    //--- DATABASE MAPPING : created_time ( DATETIME ) 
-    public void setCreatedTime( Date createdTime ) {
-        this.createdTime = createdTime;
-    }
-    public Date getCreatedTime() {
-        return this.createdTime;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    //--- DATABASE MAPPING : slider_image_five ( VARCHAR ) 
-    public void setSliderImageFive( String sliderImageFive ) {
-        this.sliderImageFive = sliderImageFive;
-    }
-    public String getSliderImageFive() {
-        return this.sliderImageFive;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    //--- DATABASE MAPPING : slider_image_four ( VARCHAR ) 
-    public void setSliderImageFour( String sliderImageFour ) {
-        this.sliderImageFour = sliderImageFour;
-    }
-    public String getSliderImageFour() {
-        return this.sliderImageFour;
-    }
+	public Date getCreatedTime() {
+		return createdTime;
+	}
 
-    //--- DATABASE MAPPING : slider_image_one ( VARCHAR ) 
-    public void setSliderImageOne( String sliderImageOne ) {
-        this.sliderImageOne = sliderImageOne;
-    }
-    public String getSliderImageOne() {
-        return this.sliderImageOne;
-    }
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
 
-    //--- DATABASE MAPPING : slider_image_three ( VARCHAR ) 
-    public void setSliderImageThree( String sliderImageThree ) {
-        this.sliderImageThree = sliderImageThree;
-    }
-    public String getSliderImageThree() {
-        return this.sliderImageThree;
-    }
+	
+	public String getImageUrl() {
+		return imageUrl;
+	}
 
-    //--- DATABASE MAPPING : slider_image_two ( VARCHAR ) 
-    public void setSliderImageTwo( String sliderImageTwo ) {
-        this.sliderImageTwo = sliderImageTwo;
-    }
-    public String getSliderImageTwo() {
-        return this.sliderImageTwo;
-    }
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 
+	public String getTitle() {
+		return title;
+	}
 
-    //----------------------------------------------------------------------
-    // GETTERS & SETTERS FOR LINKS
-    //----------------------------------------------------------------------
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    //----------------------------------------------------------------------
-    // toString METHOD
-    //----------------------------------------------------------------------
-    public String toString() { 
-        StringBuffer sb = new StringBuffer(); 
-        sb.append("["); 
-        sb.append(id);
-        sb.append("]:"); 
-        sb.append(createdTime);
-        sb.append("|");
-        sb.append(sliderImageFive);
-        sb.append("|");
-        sb.append(sliderImageFour);
-        sb.append("|");
-        sb.append(sliderImageOne);
-        sb.append("|");
-        sb.append(sliderImageThree);
-        sb.append("|");
-        sb.append(sliderImageTwo);
-        return sb.toString(); 
-    } 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getUrlTitle() {
+		return urlTitle;
+	}
+
+	public void setUrlTitle(String urlTitle) {
+		this.urlTitle = urlTitle;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	@Override
+	public String toString() {
+		return "SliderEntity [id=" + id + ", createdTime=" + createdTime + ", imageUrl=" + imageUrl + ", title=" + title
+				+ ", description=" + description + ", urlTitle=" + urlTitle + ", url=" + url + "]";
+	}
+
 
 }
