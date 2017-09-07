@@ -39,7 +39,6 @@ public class HomeController {
 	@RequestMapping()
 	public String Home(Model model, HttpSession session) {
 		model.addAttribute("promos", promoService.findById(1l));
-		model.addAttribute("promos", sliderService.findById(1l));
 		session.setAttribute("links", socialLinksService.findById(1l));
 		return "index";
 	}
