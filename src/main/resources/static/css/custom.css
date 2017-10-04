@@ -234,3 +234,14 @@ footer .socialIcons img {
 	width: 33.333333333% !important;
 	display: inline-block !important;
 }
+
+ @media (max-width:898px){
+	.slide-image-responsive{
+	width:50%;
+	float:left;
+	}
+	.carousel .text1 {
+    font-size: 28px;
+    line-height: 90%;
+	}
+} 
