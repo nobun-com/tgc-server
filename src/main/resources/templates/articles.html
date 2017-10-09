@@ -18,7 +18,7 @@
 		
 		<br></br>
 
-		<div id="carousel_main" class="carousel slide" data-ride="carousel"><div class="carousel-inner" role="listbox">
+		<div th:if="${#lists.size(featured)} == 5" id="carousel_main" class="carousel slide" data-ride="carousel"><div class="carousel-inner" role="listbox">
 			<div class="item grouped">
 			<a th:href="${'article?articleId='+featured[0].id}"><img th:src="${featured[0].imageUrl}" th:title="${featured[0].title}"></img></a>
 			<a th:href="${'article?articleId='+featured[1].id}"><img th:src="${featured[1].imageUrl}" th:title="${featured[1].title}"></img></a>

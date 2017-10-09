@@ -17,7 +17,7 @@ import com.go2.classes.business.service.UserService;
 import com.go2.classes.business.service.TimeTableService;
 import com.go2.classes.business.service.impl.helper.ClassMetadataHelper;
 import com.go2.classes.business.service.mapping.ClassesServiceMapper;
-import com.go2.classes.common.EmailUtil;
+import com.go2.classes.common.EmailService;
 import com.go2.classes.data.repository.jpa.ClassesCategoryJpaRepository;
 import com.go2.classes.data.repository.jpa.ClassesJpaRepository;
 import com.go2.classes.models.Classes;
@@ -47,6 +47,9 @@ public class ClassesServiceImpl implements ClassesService {
     @Resource
     private ClassesServiceMapper classesServiceMapper;
 
+    @Resource
+    EmailService emailService = new EmailService();
+    
     @Override
     public Classes findById(Long id) {
 	ClassesEntity classesEntity = classesJpaRepository.findOne(id);
@@ -123,7 +126,7 @@ public class ClassesServiceImpl implements ClassesService {
 	    User user = userService.findById(userId.longValue());
 	    String email = user.getEmail();
 	    String msg = "Dear " + user.getName() + " schedule of class " + classesEntity.getClassName() + " is changed please have a look";
-	    EmailUtil.sendEmail("Class schedule updated", msg, email);
+	    emailService.sendEmail("Class schedule updated", msg, email);
 	}
 	classesServiceMapper.mapClassesToClassesEntity(classes, classesEntity);
 	ClassesEntity classesEntitySaved = classesJpaRepository.save(classesEntity);
@@ -146,7 +149,7 @@ public class ClassesServiceImpl implements ClassesService {
 	    User user = userService.findById(userId.longValue());
 	    String email = user.getEmail();
 	    String msg = "Dear " + user.getName() + " class " + classesEntity.getClassName() + " is closed";
-	    EmailUtil.sendEmail("Class canceled", msg, email);
+	    emailService.sendEmail("Class canceled", msg, email);
 	}
 	classesJpaRepository.invalid(id);
     }

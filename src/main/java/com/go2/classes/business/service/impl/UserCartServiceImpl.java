@@ -16,7 +16,7 @@ import com.go2.classes.business.service.ClassesService;
 import com.go2.classes.business.service.CouponService;
 import com.go2.classes.business.service.UserCartService;
 import com.go2.classes.business.service.mapping.UserCartServiceMapper;
-import com.go2.classes.common.EmailUtil;
+import com.go2.classes.common.EmailService;
 import com.go2.classes.common.Utilities;
 import com.go2.classes.data.repository.jpa.UserJpaRepository;
 import com.go2.classes.data.repository.jpa.UserBookingOrderJpaRepository;
@@ -50,6 +50,9 @@ public class UserCartServiceImpl implements UserCartService {
     @Resource
     private UserCartServiceMapper userCartServiceMapper;
 
+    @Resource
+    EmailService emailService = new EmailService();
+    
     @Override
     public UserCart findById(Long id) {
 	UserCartEntity userCartEntity = userCartJpaRepository.findOne(id);
@@ -151,13 +154,13 @@ public class UserCartServiceImpl implements UserCartService {
 	    cost += userCartEntity.getFinalCost();
 	    EducatorEntity educator = userCartEntity.getTimeTable().getClasses().getEducator();
 	    msg = "Dear educator " + user.getName() + " has booked your class " + userCartEntity.getTimeTable().getClasses().getClassName();
-	    EmailUtil.sendEmail("Class Booked", msg, educator.getEmail());
+	    emailService.sendEmail("Class Booked", msg, educator.getEmail());
 	}
 	userBookingOrderEntity.setAmmount(cost);
 	userBookingOrderEntity.setClassesCount(classesCount);
 	userBookingOrderJpaRepository.save(userBookingOrderEntity);
 	msg = "Dear " + user.getName() + " you have booked " + classesCount + " classes and payment of HKD" + cost + " done";
-	EmailUtil.sendEmail("Class Booked", msg, user.getEmail());
+	emailService.sendEmail("Class Booked", msg, user.getEmail());
     }
 
     @Override
@@ -255,11 +258,11 @@ public class UserCartServiceImpl implements UserCartService {
 	userBookingOrderJpaRepository.save(order);
 	UserEntity user = order.getUser();
 	String msg = "Dear " + user.getName() + " you have cancled booking.";
-	EmailUtil.sendEmail("Class Booking canceled", msg, user.getEmail());
+	emailService.sendEmail("Class Booking canceled", msg, user.getEmail());
 
 	for (UserCartEntity cart : order.getListOfUserCarts()) {
 	    msg = "Dear educator " + cart.getUser().getName() + " has cancled booking of your class " + cart.getTimeTable().getClasses().getClassName();
-	    EmailUtil.sendEmail("Class Booking canceled", msg, cart.getTimeTable().getClasses().getEducator().getEmail());
+	    emailService.sendEmail("Class Booking canceled", msg, cart.getTimeTable().getClasses().getEducator().getEmail());
 	}
     }
 
