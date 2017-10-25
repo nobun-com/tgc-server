@@ -123,7 +123,7 @@ public class ClassesSearch implements Serializable {
     }
 
     public String getSearchByCenterQuery() {
-	String sql = "select CN.center_name as 'centerName', CN.logo_name as 'logo', CN.id as 'id', count(*) as 'count' from time_table TT, classes CC, center CN, address AD where TT.classes_id = CC.id and CC.center_id = CN.id and CN.address_id = AD.id and TT.status != 'invalid' and TT.start_time > now()";
+	String sql = "select CN.center_name as 'centerName', CN.logo_url as 'logo', CN.id as 'id', count(*) as 'count' from time_table TT, classes CC, center CN, address AD where TT.classes_id = CC.id and CC.center_id = CN.id and CN.address_id = AD.id and TT.status != 'invalid' and TT.start_time > now()";
 	sql = sql + getPredicate();
 	sql = sql + " GROUP BY CN.id";
 	return sql;

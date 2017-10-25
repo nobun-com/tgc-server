@@ -97,7 +97,7 @@ public class CenterServiceMapper extends AbstractServiceMapper {
 	public Map<String, Object> mapResultToJSONMap(Object[] entitie) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("centerName", entitie[0]);
-		map.put("logoName", entitie[1]);
+		map.put("logoUrl", entitie[1]);
 		map.put("centerId", entitie[2]);
 		map.put("classCount", entitie[3]);
 		return map;
